@@ -1,0 +1,18 @@
+<serieAsignacionLadron>
+  <tituloSerie>serieAsignacionLadron</tituloSerie>
+  <infoEntornoSimulacion>
+    <tiempoInicioSimulacion>1460560719073</tiempoInicioSimulacion>
+    <nroVictimasenEntorno>1</nroVictimasenEntorno>
+    <numeroRobotsSimulacion>1</numeroRobotsSimulacion>
+    <intervaloSecuencia>100</intervaloSecuencia>
+    <equipoId>patrulla1</equipoId>
+  </infoEntornoSimulacion>
+  <tiempoInicioSimulacion>0</tiempoInicioSimulacion>
+  <nrovictimastotalasignadas>1</nrovictimastotalasignadas>
+  <serieResultados>
+    <puntoAsignacionVictima>
+      <x>1.0</x>
+      <y>198.0</y>
+    </puntoAsignacionVictima>
+  </serieResultados>
+</serieAsignacionLadron>
