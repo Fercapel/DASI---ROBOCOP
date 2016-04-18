@@ -155,7 +155,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/utilsDiseniaEscenariosRosace/Robot.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Robots"/>
+        <Property name="text" type="java.lang.String" value="Polis"/>
         <Property name="iconTextGap" type="int" value="2"/>
       </Properties>
     </Component>
@@ -173,7 +173,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/utilsDiseniaEscenariosRosace/Mujer.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Victimas"/>
+        <Property name="text" type="java.lang.String" value="Ladrones"/>
         <Property name="verticalAlignment" type="int" value="3"/>
         <Property name="horizontalTextPosition" type="int" value="4"/>
         <Property name="iconTextGap" type="int" value="2"/>

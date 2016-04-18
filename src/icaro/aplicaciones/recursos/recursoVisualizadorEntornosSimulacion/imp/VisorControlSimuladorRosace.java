@@ -130,14 +130,14 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Centro de Control");
 
-        jButtonSendVictim.setText("Salvar Victima");
+        jButtonSendVictim.setText("Detener Ladron");
         jButtonSendVictim.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSendVictimActionPerformed(evt);
             }
         });
 
-        jButtonSendVictimsSequence.setText("Salvar Victimas del escenario");
+        jButtonSendVictimsSequence.setText("Detener Ladrones del escenario");
         jButtonSendVictimsSequence.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSendVictimsSequenceActionPerformed(evt);
@@ -181,7 +181,7 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
         jScrollPaneIdentsRobots.setViewportView(jlistIdentsRobots);
         jlistIdentsRobots.getAccessibleContext().setAccessibleDescription("");
 
-        jLabel3.setText("Robots ");
+        jLabel3.setText("Polis ");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel4.setText("Ident Escenario de Simulación:");
@@ -198,7 +198,7 @@ public class VisorControlSimuladorRosace extends javax.swing.JFrame {
 
         jLabel6.setText("<html><body>Intervalo de envio  (ms)  <br>de mensajes </body></html>");
 
-        jLabel7.setText("Victimas");
+        jLabel7.setText("Ladrones");
 
         jMenuEditarEscenario.setText("Editor Escenarios");
 

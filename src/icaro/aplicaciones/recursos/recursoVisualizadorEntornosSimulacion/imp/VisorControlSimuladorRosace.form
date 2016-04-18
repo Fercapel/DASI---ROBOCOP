@@ -245,7 +245,7 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="jButtonSendVictim">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Salvar Victima"/>
+        <Property name="text" type="java.lang.String" value="Detener Ladron"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSendVictimActionPerformed"/>
@@ -253,7 +253,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButtonSendVictimsSequence">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Salvar Victimas del escenario"/>
+        <Property name="text" type="java.lang.String" value="Detener Ladrones del escenario"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonSendVictimsSequenceActionPerformed"/>
