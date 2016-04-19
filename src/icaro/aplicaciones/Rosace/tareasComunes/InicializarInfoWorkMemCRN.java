@@ -29,7 +29,7 @@ import org.w3c.dom.NodeList;
 public class InicializarInfoWorkMemCRN extends Tarea{
             String miIdentAgte ;
             String identEquipo;
-            int velocidadCruceroPorDefecto = 4; // metros por segundo
+            int velocidadCruceroPolicia = 4; // metros por segundo
    @Override
    public void ejecutar(Object... params) {
 	   try {
@@ -47,7 +47,7 @@ public class InicializarInfoWorkMemCRN extends Tarea{
              RobotStatus1 miStatus = getRobotStatusInicial ( identRolAgte);        
                 if (  miStatus != null){
                     ItfUsoMovimientoCtrl itfCompMov = (ItfUsoMovimientoCtrl) infoCompmov.getitfAccesoComponente();
-                    itfCompMov.inicializarInfoMovimiento(miStatus.getRobotCoordinate(), velocidadCruceroPorDefecto);
+                    itfCompMov.inicializarInfoMovimiento(miStatus.getRobotCoordinate(), velocidadCruceroPolicia);
                     InfoEquipo miEquipo = new InfoEquipo(miIdentAgte, identEquipo);
                     miEquipo.setTeamMemberStatus(miIdentAgte, miStatus); 
                     this.getEnvioHechos().insertarHechoWithoutFireRules(miStatus);

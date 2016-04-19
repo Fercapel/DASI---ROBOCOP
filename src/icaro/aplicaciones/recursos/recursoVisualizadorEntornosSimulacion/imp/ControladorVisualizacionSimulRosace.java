@@ -59,9 +59,9 @@ public class ControladorVisualizacionSimulRosace {
     private String mensajeEscenarioNoDefinido= "El esceneraio de simulación no esta definido ";
     private String recomendacionDefinirEscenario= " Abrir un escenario con el menu de edicion o crear un escenario nuevo";
     private String mensajeEscenarioNoSeleccionado= "No se ha seleccionado el esceneraio de simulación ";
-    private String tituloAvisoEscenSinRobotsDefinidos= "Escenario sin Robots definidos";
-    private String mensajeEscenarioSinRobots= "No se han definido Robots en el escenario ";
-    private String recomendacionDefinirRobots= " Definir Robots y Victimas con el botón derecho para poder guardar el escenario ";
+    private String tituloAvisoEscenSinRobotsDefinidos= "Escenario sin Policias definidos";
+    private String mensajeEscenarioSinRobots= "No se han definido Policias en el escenario ";
+    private String recomendacionDefinirRobots= " Definir Policias y Ladrones con el botón derecho para poder guardar el escenario ";
     private Map<String, JLabel> tablaEntidadesEnEscenario;
     private ArrayList <JLabel> listaEntidadesEnEscenario;
     private JPanel panelVisor;
@@ -361,7 +361,7 @@ public  void peticionSalvarVictima() {
             identsVictims =  escenarioSimulComp.getListIdentsVictims();
             visorControlSim.visualizarIdentsVictimas(identsVictims);
         }
-         visorControlSim.visualizarConsejo("Seleccion de Victima", "Debe seleccionar la victima a rescatar ", "Haga doble clic en el identificador de la victima");
+         visorControlSim.visualizarConsejo("Seleccion de Victima", "Debe seleccionar el ladron a detener ", "Haga doble clic en el identificador del ladron");
     }
    
       System.out.println("Desde peticionVisualizarIdentsRobots   : " + escenarioValidoObtenido + robotsVisualizados);   

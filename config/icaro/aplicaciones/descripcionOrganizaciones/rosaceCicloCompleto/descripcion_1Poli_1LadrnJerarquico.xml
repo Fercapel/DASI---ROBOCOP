@@ -9,8 +9,9 @@
      <icaro:intervaloMonitorizacionGestores>8000000</icaro:intervaloMonitorizacionGestores>
      <icaro:activarPanelTrazasDebug>true</icaro:activarPanelTrazasDebug>
         <icaro:listaPropiedades>
-            <icaro:propiedad atributo="identificadorEquipo" valor = "patrulla1" />
-            <icaro:propiedad atributo="nombreJefeEquipo" valor = "Comisaria" />   
+            <icaro:propiedad atributo="identificadorEquipoPolicia" valor = "patrulla1" />
+            <icaro:propiedad atributo="nombreJefeEquipo" valor = "Comisaria" />
+            <icaro:propiedad atributo="identificadorEquipoLadron" valor = "gang1" />   
             <icaro:propiedad atributo="organizacion" valor = "Jerarquico" />
     <!--        <icaro:propiedad atributo="rutaFicheroVictimasTest" valor = "src/utils/Esc_6Victimas_0IP_001.xml" />  -->
             <icaro:propiedad atributo="identFicheroEscenarioSimulacion" valor = "modeloOrg_JerarquicoNumPolis_1NumLadrns_1.xml" />            
@@ -52,9 +53,12 @@
     <icaro:DescComportamientoAgente
        nombreComportamiento="AgenteAplicacionAsignadorTareas" rol="AgenteAplicacion" localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionAsignadorTareasCognitivo" tipo="Cognitivo" 
        localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionAsignadorTareasCognitivo.procesoResolucionObjetivos.reglasjearqJefeCambioRol.drl"/>
-     <icaro:DescComportamientoAgente  
+    <icaro:DescComportamientoAgente  
        nombreComportamiento="AgenteAplicacionSubordinado" rol="AgenteAplicacion" localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionSubordinadoConCambioRolCognitivo" tipo="Cognitivo"
        localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionSubordinadoConCambioRolCognitivo.procesoResolucionObjetivos.reglasSubordConCambioRolNC.drl"/>
+    <icaro:DescComportamientoAgente  
+       nombreComportamiento="AgenteLadron" rol="AgenteAplicacion" localizacionComportamiento="" tipo="Cognitivo"
+       localizacionFicheroReglas=""/>
 </icaro:DescComportamientoAgentesAplicacion>
 </icaro:DescComportamientoAgentes>
 	<!--******************************************************************************************************
@@ -110,6 +114,8 @@
                 <icaro:Instancia id="patrulla1Comisaria" refDescripcion="AgenteAplicacionAsignadorTareas">
                 </icaro:Instancia>
                 <icaro:Instancia id="patrulla1Policia1" refDescripcion="AgenteAplicacionSubordinado">
+                </icaro:Instancia>
+                <icaro:Instancia id="gang1Ladron1" refDescripcion="AgenteLadron">
                 </icaro:Instancia>
                 <!--<icaro:Instancia id="rescate1RobotSubordinado2" refDescripcion="AgenteAplicacionSubordinado">
                 </icaro:Instancia>

@@ -23,7 +23,7 @@ public class GeneraryEncolarObjetivoAyudarVictima extends TareaSincrona{
 		
     @Override
    public void ejecutar(Object... params) {
-    int	velocidadCruceroPordefecto = 1;
+    int	velocidadCruceroPolicia = 1;
 //       ItfUsoRecursoEstadistica itfUsoRecursoEstadistica=null;    //Para recoger estadisticas del instante de envio de victimas desde el centro de contro    	
 	   try {
              MisObjetivos misObjs = (MisObjetivos) params[0];
@@ -75,7 +75,7 @@ public class GeneraryEncolarObjetivoAyudarVictima extends TareaSincrona{
 //                Objetivo objActual = focoActual.getFoco();
 //                victima = victimas.getVictimToRescue(objActual.getobjectReferenceId());
 //                 ItfUsoMovimientoCtrl itfcompMov = (ItfUsoMovimientoCtrl) infoComMov.getitfAccesoComponente();
-//            itfcompMov.moverAdestino(objActual.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPordefecto); // se pondra la verlocidad por defecto 
+//            itfcompMov.moverAdestino(objActual.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPolicia); // se pondra la verlocidad por defecto 
             trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se ejecuta la tarea : " + identTarea + " Se genera el  objetivo:  "+ nuevoObj+"\n");
 //                    " Se actualiza el  foco al objetivo:  " + focoActual + "\n");
 //            trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se da orden al comp Movimiento  para salvar a la victima :  " + victima + "\n");

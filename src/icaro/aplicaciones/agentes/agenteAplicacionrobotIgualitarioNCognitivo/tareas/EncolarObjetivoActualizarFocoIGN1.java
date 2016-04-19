@@ -38,12 +38,12 @@ public class EncolarObjetivoActualizarFocoIGN1 extends TareaSincrona {
         private  enum EstadoMovimientoRobot {Indefinido,RobotParado, RobotEnMovimiento, RobotBloqueado,RobotavanceImposible,enDestino,  error}
         private ItfUsoMovimientoCtrl itfcompMov;
 	private Victim victima;
-	private int velocidadCruceroPordefecto;
+	private int velocidadCruceroPolicia;
     @Override
     public void ejecutar(Object... params) {
         
         //    ItfUsoRecursoEstadistica itfUsoRecursoEstadistica=null;
-         velocidadCruceroPordefecto = 1;// metros por segundo
+         velocidadCruceroPolicia = 1;// metros por segundo
         //Para recoger estadisticas del instante de envio de victimas desde el centro de control
 
         try {
@@ -97,7 +97,7 @@ public class EncolarObjetivoActualizarFocoIGN1 extends TareaSincrona {
 				
 				public void run(){
 					
-					itfcompMov.moverAdestino(victima.getName(), victima.getCoordinateVictim(), velocidadCruceroPordefecto); 
+					itfcompMov.moverAdestino(victima.getName(), victima.getCoordinateVictim(), velocidadCruceroPolicia); 
 				}
 			};
              
@@ -105,7 +105,7 @@ public class EncolarObjetivoActualizarFocoIGN1 extends TareaSincrona {
                 objetivoAsignado.setSolving();
                 misObjs.addObjetivo(objetivoAsignado);
 //                focoActual.setFoco(obj1);
-//                itfcompMov.moverAdestino(objetivoAsignado.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPordefecto);
+//                itfcompMov.moverAdestino(objetivoAsignado.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPolicia);
                 t.run();
                 infoComMov.setidentDestino(objetivoAsignado.getobjectReferenceId());
                 infoComMov.setidentEstadoRobot(itfcompMov.getIdentEstadoMovRobot());
@@ -147,7 +147,7 @@ public class EncolarObjetivoActualizarFocoIGN1 extends TareaSincrona {
                        
                        
                        
-//                       itfcompMov.moverAdestino(objetivoAsignado.getobjectReferenceId(), victima.getCoordinateVictim(),velocidadCruceroPordefecto);
+//                       itfcompMov.moverAdestino(objetivoAsignado.getobjectReferenceId(), victima.getCoordinateVictim(),velocidadCruceroPolicia);
 //                       infoComMov.setitfAccesoComponente(itfcompMov);
 //                       this.getEnvioHechos().actualizarHechoWithoutFireRules(infoComMov);
 //                       focoActual.setFoco(nuevoObj);
