@@ -6,6 +6,7 @@ import icaro.aplicaciones.Rosace.utils.ConstantesRutasEstadisticas;
 import icaro.aplicaciones.recursos.recursoCreacionEntornosSimulacion.ItfUsoRecursoCreacionEntornosSimulacion;
 import icaro.aplicaciones.recursos.recursoPersistenciaEntornosSimulacion.ItfUsoRecursoPersistenciaEntornosSimulacion;
 import icaro.aplicaciones.recursos.recursoPersistenciaEntornosSimulacion.imp.ReadXMLTestSequence;
+import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.ItfUsoRecursoVisualizadorEntornoSimulacion;
 import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.ItfUsoRecursoVisualizadorEntornosSimulacion;
 import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.EscenarioSimulacionRobtsVictms;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
@@ -76,6 +77,11 @@ public class AccionesSemanticasAgenteAplicacionAgteControladorSimuladorRosace ex
     private EscenarioSimulacionRobtsVictms escenarioActual;
     private String identFicheroEscenario;
 
+    //----------------------------NUEVO---------------------------------//
+    private ItfUsoRecursoVisualizadorEntornoSimulacion itfUsoRecursoVisualizadorEntornoSimulacion = null;
+    //------------------------------------------------------------------//
+    
+    
     // AccionA is the action initial executed when agent manager sends the comenzar event
     public void AccionComenzar() {
         //Inicializar las interfaces a los recursos que se van a utilizar
@@ -95,6 +101,9 @@ public class AccionesSemanticasAgenteAplicacionAgteControladorSimuladorRosace ex
             itfconfig = (ItfUsoConfiguracion) this.itfUsoRepositorio.obtenerInterfaz(NombresPredefinidos.NOMBRE_ITF_USO_CONFIGURACION);
             itfUsoRecursoPersistenciaEntornosSimulacion = (ItfUsoRecursoPersistenciaEntornosSimulacion) this.itfUsoRepositorio.obtenerInterfaz(NombresPredefinidos.ITF_USO + "RecursoPersistenciaEntornosSimulacion1");
             itfUsoRecursoVisualizadorEntornosSimulacion = (ItfUsoRecursoVisualizadorEntornosSimulacion) this.itfUsoRepositorio.obtenerInterfaz(NombresPredefinidos.ITF_USO + "RecursoVisualizadorEntornosSimulacion1");
+            
+            itfUsoRecursoVisualizadorEntornoSimulacion = (ItfUsoRecursoVisualizadorEntornoSimulacion) this.itfUsoRepositorio.obtenerInterfaz(NombresPredefinidos.ITF_USO + "RecursoVisualizadorEntornosSimulacionRobocop");
+            
             itfUsoRecursoVisualizadorEntornosSimulacion.setIdentAgenteAReportar(this.nombreAgente);
             itfUsoRecursoVisualizadorEntornosSimulacion.setItfUsoPersistenciaSimulador(itfUsoRecursoPersistenciaEntornosSimulacion);
             identFicheroEscenario = itfconfig.getValorPropiedadGlobal(VocabularioRosace.NombreFicheroEscenarioSimulacion);
@@ -149,13 +158,16 @@ public class AccionesSemanticasAgenteAplicacionAgteControladorSimuladorRosace ex
                 this.numeroRobotsSimulacion = identsAgtesEquipo.size();
                 itfUsoRecursoVisualizadorEntornosSimulacion.obtenerEscenarioSimulacion(modeloOrganizativo, numeroRobotsSimulacion);
             }
+            
             } catch (Exception e) {
             e.printStackTrace();
         }
        trazas.trazar(this.nombreAgente, "Accion obtenerEscenarioSimulacion completada ....", NivelTraza.debug);
    }
+   
    public void  ValidarEscenarioRecibido (EscenarioSimulacionRobtsVictms escenario){
         try {
+        	itfUsoRecursoVisualizadorEntornoSimulacion.mostrarEscenarioMovimiento();
             if (escenario !=null){
                 victims2Rescue = escenario.getVictims();
                 numeroVictimasDiferentesSimulacion = victims2Rescue.size();
@@ -169,7 +181,7 @@ public class AccionesSemanticasAgenteAplicacionAgteControladorSimuladorRosace ex
                 }
         }
             this.inicializarEstatusRobotsEquipo();
-            this.itfUsoRecursoVisualizadorEntornosSimulacion.mostrarIdentsEquipoRobots(identsAgtesEquipo);
+            //this.itfUsoRecursoVisualizadorEntornosSimulacion.mostrarIdentsEquipoRobots(identsAgtesEquipo);
             
             
         } catch (Exception ex) {
@@ -427,6 +439,7 @@ public void sendSimulatedVictimToRobotTeam(String idVictima) {
         try {
 //            itfUsoRecursoCreacionEntornosSimulacion.MostrarEscenarioActualSimulado();
             itfUsoRecursoVisualizadorEntornosSimulacion.mostrarEscenarioMovimiento(escenarioActual);
+        	itfUsoRecursoVisualizadorEntornoSimulacion.mostrarEscenarioMovimiento();
 
         } catch (Exception e) {
             e.printStackTrace();
