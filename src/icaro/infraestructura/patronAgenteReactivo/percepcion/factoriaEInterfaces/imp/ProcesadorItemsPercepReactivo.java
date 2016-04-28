@@ -22,16 +22,16 @@ import org.apache.log4j.Logger;
 
 public class ProcesadorItemsPercepReactivo {
 
-//	private static final int CAPACIDAD_BUZON_EVIDENCIAS = 15;
-	
+	//	private static final int CAPACIDAD_BUZON_EVIDENCIAS = 15;
+
 
 
 
 	private ItfControlAgteReactivo itfControlReactivo;
 	private Object item;
 	private AgenteReactivoAbstracto agente;
-   //   private InfoControlAgteReactivo infoControlExtraida = null;
-        private String nombreAgente = null;
+	//   private InfoControlAgteReactivo infoControlExtraida = null;
+	private String nombreAgente = null;
 
 	private Logger log = Logger.getLogger(ProcesadorItemsPercepReactivo.class);
 	private ItfUsoRecursoTrazas trazas= NombresPredefinidos.RECURSO_TRAZAS_OBJ;
@@ -39,46 +39,46 @@ public class ProcesadorItemsPercepReactivo {
 	public ProcesadorItemsPercepReactivo(AgenteReactivoAbstracto agente, ItfControlAgteReactivo itfControl) {
 		this.agente = agente;
 
-//		this.evidencias = new LinkedBlockingQueue<Evidencia>(
-//				CAPACIDAD_BUZON_EVIDENCIAS);
+		//		this.evidencias = new LinkedBlockingQueue<Evidencia>(
+		//				CAPACIDAD_BUZON_EVIDENCIAS);
 		this.itfControlReactivo = itfControl;
-                try {
-                    nombreAgente = agente.getIdentAgente();
-                    } catch (RemoteException ex) {
-                    java.util.logging.Logger.getLogger(ProcesadorItemsPercepReactivo.class.getName()).log(Level.SEVERE, null, ex);
-                 }
+		try {
+			nombreAgente = agente.getIdentAgente();
+		} catch (RemoteException ex) {
+			java.util.logging.Logger.getLogger(ProcesadorItemsPercepReactivo.class.getName()).log(Level.SEVERE, null, ex);
+		}
 
 
 
 	}
-        public ProcesadorItemsPercepReactivo() {
+	public ProcesadorItemsPercepReactivo() {
 		this.agente = null;
 		this.itfControlReactivo = null;
-		
+
 
 
 	}
 
-     
+
 
 	// De momento filtra los items que no tengan como destinatario este agente.
 	private boolean filtrarItem() {
-		
+
 
 		if (item instanceof EventoSimple) {
 			EventoSimple evento = (EventoSimple) item;
-//			log.warn("El evento" + evento.toString()
-//					+ " ha sido filtrado por el agente " + nombreAgente );
-//			trazas.aceptaNuevaTraza(new InfoTraza (this.agente.getLocalName(),"Percepcin: El evento" + evento.toString()
-//					+ " ha sido filtrado por el agente " + nombreAgente ,InfoTraza.NivelTraza.debug ));
+			//			log.warn("El evento" + evento.toString()
+			//					+ " ha sido filtrado por el agente " + nombreAgente );
+			//			trazas.aceptaNuevaTraza(new InfoTraza (this.agente.getLocalName(),"Percepcin: El evento" + evento.toString()
+			//					+ " ha sido filtrado por el agente " + nombreAgente ,InfoTraza.NivelTraza.debug ));
 			return true;
 		} else if (item instanceof MensajeSimple) {
 			MensajeSimple mensaje = (MensajeSimple) item;
 			if (!mensaje.getReceptor().equals(nombreAgente)) {
 				log.warn("El mensaje" + mensaje.toString()
-						+ " no tiene como receptor el agente " + nombreAgente+"\n Destinatario del mensaje: "+mensaje.getReceptor());
+				+ " no tiene como receptor el agente " + nombreAgente+"\n Destinatario del mensaje: "+mensaje.getReceptor());
 				trazas.aceptaNuevaTraza(new InfoTraza (nombreAgente,"Percepcion: El mensaje " + mensaje.toString()
-						+ " no tiene como receptor el agente " + nombreAgente+"\n Destinatario del mensaje: "+mensaje.getReceptor(),InfoTraza.NivelTraza.debug ));
+				+ " no tiene como receptor el agente " + nombreAgente+"\n Destinatario del mensaje: "+mensaje.getReceptor(),InfoTraza.NivelTraza.debug ));
 				return false;
 			} else
 				return true;
@@ -100,27 +100,27 @@ public class ProcesadorItemsPercepReactivo {
 			MensajeAgente mensaje = (MensajeAgente) item;
 		} else
 			log.error("Item " + item + " no reconocido");
-			*/
+		 */
 	}
-//Extrae del evento o del mensaje la información que necesita el control para transitar
+	//Extrae del evento o del mensaje la información que necesita el control para transitar
 	private  InfoContEvtMsgAgteReactivo extraerInfoControl() {
-		 		
-             InfoContEvtMsgAgteReactivo   infoControlExtraida = new InfoContEvtMsgAgteReactivo();
-                if (item instanceof EventoSimple) {
 
-		EventoSimple evento = (EventoSimple) item;
-                  infoControlExtraida = (InfoContEvtMsgAgteReactivo) evento.getContenido();
-//                   infoControlExtraida.setInput(evento.getMsg());
-//                   infoControlExtraida.setvaloresParametrosAccion(evento.getMsgElements());
+		InfoContEvtMsgAgteReactivo   infoControlExtraida = new InfoContEvtMsgAgteReactivo();
+		if (item instanceof EventoSimple) {
+
+			EventoSimple evento = (EventoSimple) item;
+			infoControlExtraida = (InfoContEvtMsgAgteReactivo) evento.getContenido();
+			//                   infoControlExtraida.setInput(evento.getMsg());
+			//                   infoControlExtraida.setvaloresParametrosAccion(evento.getMsgElements());
 
 		} else if (item instanceof MensajeSimple) {
- // En el contenido del mensaje se debe poner un objeto del tipo InfoControlAgteReactivo
-                    MensajeSimple mensaje = (MensajeSimple) item;
-                    infoControlExtraida = (InfoContEvtMsgAgteReactivo) mensaje.getContenido();
-		
+			// En el contenido del mensaje se debe poner un objeto del tipo InfoControlAgteReactivo
+			MensajeSimple mensaje = (MensajeSimple) item;
+			infoControlExtraida = (InfoContEvtMsgAgteReactivo) mensaje.getContenido();
+
 		}
 
-                else {
+		else {
 			log.error("Item " + item + " no reconocido");
 			trazas.aceptaNuevaTraza(new InfoTraza (  nombreAgente ,"Percepcion: Item "+ item + " no reconocido",InfoTraza.NivelTraza.debug));
 		}
@@ -129,8 +129,8 @@ public class ProcesadorItemsPercepReactivo {
 
 
 	public void procesarItem(Object item) throws RemoteException {
-            this.item = item;
-            InfoContEvtMsgAgteReactivo infoExtraida = extraerInfoControl();
+		this.item = item;
+		InfoContEvtMsgAgteReactivo infoExtraida = extraerInfoControl();
 		if (infoExtraida != null)
 			itfControlReactivo.procesarInfoControlAgteReactivo(infoExtraida);
 		else{
@@ -141,5 +141,5 @@ public class ProcesadorItemsPercepReactivo {
 
 	}
 
-	
+
 }

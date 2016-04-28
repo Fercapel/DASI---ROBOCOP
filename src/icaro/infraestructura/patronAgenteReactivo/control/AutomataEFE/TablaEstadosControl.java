@@ -25,8 +25,8 @@ public class TablaEstadosControl {
 	 * @uml.property  name="identificadorEstadoInicial"
 	 */
 	private String identificadorEstadoInicial = "";
- //   private String identificadorEstadoFinal = "EstadoFinal";
-    private String identificadorEstadoErrorInterno = "EstadoErrorInterno";
+	//   private String identificadorEstadoFinal = "EstadoFinal";
+	private String identificadorEstadoErrorInterno = "EstadoErrorInterno";
 
 
 	/**
@@ -108,8 +108,8 @@ public class TablaEstadosControl {
 	{
 		Hashtable inp = (Hashtable) inputsDeEstados.get(estado);
 		if ( inp != null )
-                                    return (inp.containsKey(input));
-                    else return false;
+			return (inp.containsKey(input));
+		else return false;
 	}
 
 
@@ -132,10 +132,10 @@ public class TablaEstadosControl {
 		}
 	}
 
-public String  crearEstadoErrorInterno(){
-    putEstado( identificadorEstadoErrorInterno,TIPO_DE_ESTADO_FINAL );
-    return identificadorEstadoErrorInterno;
-}
+	public String  crearEstadoErrorInterno(){
+		putEstado( identificadorEstadoErrorInterno,TIPO_DE_ESTADO_FINAL );
+		return identificadorEstadoErrorInterno;
+	}
 	/**
 	 *  Aade una nueva transicin de estados a la tabla
 	 *

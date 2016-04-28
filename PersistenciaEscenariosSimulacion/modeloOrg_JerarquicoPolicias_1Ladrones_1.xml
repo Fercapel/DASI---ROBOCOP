@@ -1,40 +1,54 @@
 <escenarioSimulacion>
-   <identEscenario>modeloOrg_JerarquicoNumPolis_2NumLadrns_1</identEscenario>
+   <identEscenario>modeloOrg_JerarquicoNumPolis_1NumLadrns_1</identEscenario>
    <modeloOrganizativo>Jerarquico</modeloOrganizativo>
-   <numRobots>2</numRobots>
-   <numVictimas>1</numVictimas>
-   <robots key="JerarquicoPolicia1">
-      <robotStatus1>
-         <idRobot>JerarquicoPolicia1</idRobot>
-         <idRobotRol>indefinido</idRobotRol>
+   <numPolicias>1</numPolicias>
+   <numLadrones>1</numLadrones>
+   <policias key="JerarquicoComisaria">
+      <policiaStatus>
+         <idPolicia>JerarquicoComisaria</idPolicia>
+         <idPoliciaRol>indefinido</idPoliciaRol>
          <availableEnergy>100000</availableEnergy>
-         <robotCoordinateActualP>
+         <policiaCoordinateActualP>
+            <x>17</x>
+            <y>29</y>
+         </policiaCoordinateActualP>
+         <policiaCapabilities class="java.util.ArrayList">
+            <policiaCapability nombre="radar">
+               <descripcion>radar de la comisaria</descripcion>
+            </policiaCapability>
+         </policiaCapabilities>
+      </policiaStatus>
+   </policias>
+   <policias key="JerarquicoPolicia1">
+      <policiaStatus>
+         <idPolicia>JerarquicoPolicia1</idPolicia>
+         <idPoliciaRol>indefinido</idPoliciaRol>
+         <policiaCoordinateActualP>
             <x>182</x>
             <y>35</y>
-         </robotCoordinateActualP>
-         <robotCapabilities class="java.util.ArrayList">
-            <robotCapability nombre="radar">
-               <descripcion>radar del robot</descripcion>
-            </robotCapability>
-         </robotCapabilities>
-      </robotStatus1>
-   </robots>
-   <robots key="JerarquicoPolicia2">
-      <robotStatus1>
-         <idRobot>JerarquicoPolicia2</idRobot>
-         <idRobotRol>indefinido</idRobotRol>
-         <availableEnergy>100000</availableEnergy>
-         <robotCoordinateActualP>
-            <x>500</x>
-            <y>227</y>
-         </robotCoordinateActualP>
-         <robotCapabilities class="java.util.ArrayList">
-            <robotCapability nombre="radar">
-               <descripcion>radar del robot</descripcion>
-            </robotCapability>
-         </robotCapabilities>
-      </robotStatus1>
-   </robots>
+         </policiaCoordinateActualP>
+         <policiaCapabilities class="java.util.ArrayList">
+            <policiaCapability nombre="radar">
+               <descripcion>radar del policia</descripcion>
+            </policiaCapability>
+         </policiaCapabilities>
+      </policiaStatus>
+   </policias>
+   <ladrones key="JerarquicoLadron1">
+      <ladronStatus>
+         <idLadron>JerarquicoLadron1</idLadron>
+         <idLadronRol>indefinido</idLadronRol>
+         <ladronCoordinateActualP>
+            <x>182</x>
+            <y>35</y>
+         </ladronCoordinateActualP>
+         <ladronCapabilities class="java.util.ArrayList">
+            <ladronCapability nombre="radar">
+               <descripcion>radar del ladron</descripcion>
+            </ladronCapability>
+         </ladronCapabilities>
+      </ladronStatus>
+   </ladrones>
    <!-- <robots key="JerarquicoRobotSubordinado2">
       <robotStatus1>
          <idRobot>JerarquicoRobotSubordinado2</idRobot>
@@ -83,7 +97,7 @@
          </robotCapabilities>
       </robotStatus1>
    </robots>-->
-   <robots key="JerarquicoComisaria">
+   <!-- <robots key="JerarquicoComisaria">
       <robotStatus1>
          <idRobot>JerarquicoComisaria</idRobot>
          <idRobotRol>indefinido</idRobotRol>
@@ -112,7 +126,7 @@
          </victimCoordinateP>
       </victim>
    </victimas>
-   <!-- <victimas key="Victima1">
+   <victimas key="Victima1">
       <victim>
          <name>Victima1</name>
          <priority>100</priority>

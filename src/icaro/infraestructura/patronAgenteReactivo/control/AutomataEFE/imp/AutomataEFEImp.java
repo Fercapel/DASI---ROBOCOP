@@ -61,7 +61,7 @@ public class AutomataEFEImp implements ItfUsoAutomata {
 	 * @uml.associationEnd  multiplicity="(1 1)"
 	 */
 	private TablaEstadosControl theTablaEstadosControl;
-	
+
 	/**
 	 * Nombre del agente al que pertenece el control
 	 * @uml.property  name="nombreAgente"
@@ -86,19 +86,19 @@ public class AutomataEFEImp implements ItfUsoAutomata {
 	 * @uml.associationEnd  multiplicity="(1 1)"
 	 */
 	private Logger logger = Logger.getRootLogger();
-	
+
 	/**
 	 * @uml.property  name="trazas"
 	 * @uml.associationEnd  multiplicity="(1 1)"
 	 */
 	protected ItfUsoRecursoTrazas trazas;
-	
+
 	/**
 	 * @uml.property  name="conjuntoInputs"
 	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="java.lang.String"
 	 */
 	private Set<String> conjuntoInputs;
-	
+
 	/**
 	 * @uml.property  name="descripcionAutomata"
 	 */
@@ -118,53 +118,53 @@ public class AutomataEFEImp implements ItfUsoAutomata {
 	 */
 	public AutomataEFEImp(String NombreFicheroDescriptor,
 			EjecutorDeAccionesAbstracto accionesSem, int nivelTraza, String nombreAgente) throws ExcepcionNoSePudoCrearAutomataEFE {
-		
-        try{
-	    	trazas = (ItfUsoRecursoTrazas)ClaseGeneradoraRepositorioInterfaces.instance().obtenerInterfaz(
-	    			NombresPredefinidos.ITF_USO+NombresPredefinidos.RECURSO_TRAZAS);
-	    }catch(Exception e){
-	    	System.out.println("No se pudo usar el recurso de trazas");
-	    }
-        
-        try {
-        XMLParserTablaEstados parser = new XMLParserTablaEstados(NombreFicheroDescriptor);
-		// String ruta =
-		// tid.tecHabla.agentes.componentes.infraestructura.configuracion.Configuracion.obtenerParametro("RUTA_FICHEROS_DEFINICION_AUTOMATAS");
 
-		theTablaEstadosControl = parser.extraeTablaEstados();
-		conjuntoInputs = parser.extraeConjuntoInputs();
-		descripcionAutomata = parser.extraerDescripcionTablaEstados();
-		acciones = accionesSem;
-		this.nombreAgente = nombreAgente;
+		try{
+			trazas = (ItfUsoRecursoTrazas)ClaseGeneradoraRepositorioInterfaces.instance().obtenerInterfaz(
+					NombresPredefinidos.ITF_USO+NombresPredefinidos.RECURSO_TRAZAS);
+		}catch(Exception e){
+			System.out.println("No se pudo usar el recurso de trazas");
+		}
 
-		
-		// colocamos el automata en el estado inicial
-		cambiaEstado(theTablaEstadosControl.dameEstadoInicial());
+		try {
+			XMLParserTablaEstados parser = new XMLParserTablaEstados(NombreFicheroDescriptor);
+			// String ruta =
+			// tid.tecHabla.agentes.componentes.infraestructura.configuracion.Configuracion.obtenerParametro("RUTA_FICHEROS_DEFINICION_AUTOMATAS");
 
-		// actualizamos el DEBUG para las trazas
-		if (nivelTraza == 2)
-			DEBUG = true;
-		else
-			DEBUG = false;
+			theTablaEstadosControl = parser.extraeTablaEstados();
+			conjuntoInputs = parser.extraeConjuntoInputs();
+			descripcionAutomata = parser.extraerDescripcionTablaEstados();
+			acciones = accionesSem;
+			this.nombreAgente = nombreAgente;
 
-		traza = nivelTraza;
-		logger.debug("Usando el automata del fichero: "	+ NombreFicheroDescriptor);
-		trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
-				"Usando el autmata del fichero: "	+ NombreFicheroDescriptor,
-				InfoTraza.NivelTraza.debug));
-		logger.debug(this.toString());
+
+			// colocamos el automata en el estado inicial
+			cambiaEstado(theTablaEstadosControl.dameEstadoInicial());
+
+			// actualizamos el DEBUG para las trazas
+			if (nivelTraza == 2)
+				DEBUG = true;
+			else
+				DEBUG = false;
+
+			traza = nivelTraza;
+			logger.debug("Usando el automata del fichero: "	+ NombreFicheroDescriptor);
+			trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
+					"Usando el autmata del fichero: "	+ NombreFicheroDescriptor,
+					InfoTraza.NivelTraza.debug));
+			logger.debug(this.toString());
+		}
+		catch (ExcepcionNoSePudoCrearAutomataEFE e){
+			e.putParteAfectada("XMLParser Tabla de Estados");
+			if (trazas != null) {
+				trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
+						"no se pudo crear el automata EFE porque se produjo un error en "+ e.getParteAfectada()+
+						"debido a:" + e.getCausa()+" en el contexto " + e.getContextoExcepcion(),
+						InfoTraza.NivelTraza.error));
+			}
+			throw e;
+		}
 	}
- catch (ExcepcionNoSePudoCrearAutomataEFE e){
-     e.putParteAfectada("XMLParser Tabla de Estados");
-     if (trazas != null) {
-     trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
-				"no se pudo crear el automata EFE porque se produjo un error en "+ e.getParteAfectada()+
-                "debido a:" + e.getCausa()+" en el contexto " + e.getContextoExcepcion(),
-				InfoTraza.NivelTraza.error));
-         }
-     throw e;
-    }
-  }
 
 	/**
 	 * Dice si el automata se encuentra en un estado final o no
@@ -175,7 +175,7 @@ public class AutomataEFEImp implements ItfUsoAutomata {
 		return (theTablaEstadosControl.esEstadoFinal(estadoActual));
 	}
 
-        public String getEstadoControlAgenteReactivo() {
+	public String getEstadoControlAgenteReactivo() {
 		return estadoActual;
 	}
 	/**
@@ -196,34 +196,34 @@ public class AutomataEFEImp implements ItfUsoAutomata {
 					input)) {
 				op = theTablaEstadosControl.dameOperacion(estadoActual, input);
 				// ejecutar la accion semantica (posible TO)
-				 try {
-                logger.debug("Ejecutando accion: " + op.accionSemantica);
-				trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
-						"Ejecutando accion: " + op.accionSemantica,
-						InfoTraza.NivelTraza.debug));
-                          String estadoAntesdeTransitar   =   estadoActual ;
-                             cambiaEstado(op.estadoSiguiente);
-                    acciones.ejecutarAccion(op.accionSemantica, parametros, op.modoTransicionBloqueante);
-                             
-				// cambiar al siguiente estado
-				logger.info("Transicion usando input:" + input + "  :"+ estadoActual + " -> " + op.estadoSiguiente);
-				trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
-						"Transicion usando input '" + input + "'. ESTADO ACTUAL: "
-						+ estadoAntesdeTransitar + " -> " + "ESTADO SIGUIENTE: "+op.estadoSiguiente,
-						InfoTraza.NivelTraza.info));
-				
-                }
-                catch (ExcepcionEjecucionAcciones ex) {
-                    java.util.logging.Logger.getLogger(AutomataEFEImp.class.getName()).log(Level.SEVERE, null, ex);
-//                   this.estadoActual = this.theTablaEstadosControl.crearEstadoErrorInterno();
-                    this.estadoActual = "errorInternoIrrecuperable";
+				try {
+					logger.debug("Ejecutando accion: " + op.accionSemantica);
+					trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
+							"Ejecutando accion: " + op.accionSemantica,
+							InfoTraza.NivelTraza.debug));
+					String estadoAntesdeTransitar   =   estadoActual ;
+					cambiaEstado(op.estadoSiguiente);
+					acciones.ejecutarAccion(op.accionSemantica, parametros, op.modoTransicionBloqueante);
 
-                logger.info("Error al procesar el " + input +  "Ejecutando accion: " + op.accionSemantica + "se transita al estado" + estadoActual);
-				trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
-						"Error al procesar el " + input +  "Ejecutando accion: " + op.accionSemantica+ "se transita al estado" + estadoActual,
-						InfoTraza.NivelTraza.error));
-                 
-                }
+					// cambiar al siguiente estado
+					logger.info("Transicion usando input:" + input + "  :"+ estadoActual + " -> " + op.estadoSiguiente);
+					trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
+							"Transicion usando input '" + input + "'. ESTADO ACTUAL: "
+									+ estadoAntesdeTransitar + " -> " + "ESTADO SIGUIENTE: "+op.estadoSiguiente,
+									InfoTraza.NivelTraza.info));
+
+				}
+				catch (ExcepcionEjecucionAcciones ex) {
+					java.util.logging.Logger.getLogger(AutomataEFEImp.class.getName()).log(Level.SEVERE, null, ex);
+					//                   this.estadoActual = this.theTablaEstadosControl.crearEstadoErrorInterno();
+					this.estadoActual = "errorInternoIrrecuperable";
+
+					logger.info("Error al procesar el " + input +  "Ejecutando accion: " + op.accionSemantica + "se transita al estado" + estadoActual);
+					trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
+							"Error al procesar el " + input +  "Ejecutando accion: " + op.accionSemantica+ "se transita al estado" + estadoActual,
+							InfoTraza.NivelTraza.error));
+
+				}
 
 			} else {
 				trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
@@ -231,12 +231,12 @@ public class AutomataEFEImp implements ItfUsoAutomata {
 								+ input
 								+ " no pertenece a los inputs validos para el estado actual: "
 								+ estadoActual,
-						InfoTraza.NivelTraza.info));
+								InfoTraza.NivelTraza.info));
 				logger
-						.info("AVISO: Input ignorado.El input: "
-								+ input
-								+ " no pertenece a los inputs validos para el estado actual: "
-								+ estadoActual);
+				.info("AVISO: Input ignorado.El input: "
+						+ input
+						+ " no pertenece a los inputs validos para el estado actual: "
+						+ estadoActual);
 
 			}
 		} else {
@@ -249,15 +249,15 @@ public class AutomataEFEImp implements ItfUsoAutomata {
 
 	}
 
-        public synchronized void transita(String input)
+	public synchronized void transita(String input)
 	{
 		String siguiente;
 		// comprobar que es un input reconocido por el estado actual
 		if (theTablaEstadosControl.esInputValidoDeEstado(estadoActual, input))
 		{
-                 Operacion  op = theTablaEstadosControl.dameOperacion(estadoActual, input);
-                logger.info("Transicion Directa input:" + input + "  :" + estadoActual + " -> " + op.estadoSiguiente);
-                 cambiaEstado(op.estadoSiguiente);
+			Operacion  op = theTablaEstadosControl.dameOperacion(estadoActual, input);
+			logger.info("Transicion Directa input:" + input + "  :" + estadoActual + " -> " + op.estadoSiguiente);
+			cambiaEstado(op.estadoSiguiente);
 			// cambiar al siguiente estado
 
 		}

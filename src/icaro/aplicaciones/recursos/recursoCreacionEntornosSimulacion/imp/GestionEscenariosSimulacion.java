@@ -20,7 +20,7 @@ import java.util.Set;
 public class GestionEscenariosSimulacion {
        private HashMap tablaEscenariosDefinidos;
 	//arraylist que contiene los paneles visualizados
-    private EscenarioSimulacionRobtsVictms infoEscenario;
+    private EscenarioSimulacionPoliciasLadrones infoEscenario;
 //   private LinkedList<String> listaElementosTrazables  ;
     private HashSet identsEscenarios;
     private String numRobots = "NumRobts_";
@@ -44,13 +44,13 @@ public class GestionEscenariosSimulacion {
      public void  setIdentsEscenariosSimulacion ( HashSet setIdentsEscenarios){
          identsEscenarios = setIdentsEscenarios;
      }
-     public EscenarioSimulacionRobtsVictms crearEscenarioSimulacion(){
-         EscenarioSimulacionRobtsVictms escenarioSim = new EscenarioSimulacionRobtsVictms();
+     public EscenarioSimulacionPoliciasLadrones crearEscenarioSimulacion(){
+         EscenarioSimulacionPoliciasLadrones escenarioSim = new EscenarioSimulacionPoliciasLadrones();
          escenarioSim.setGestorEscenarios(this);
          escenarioSim.setIdentEscenario(getIdentEscenario (orgModeloInicial,0, 0));
          return escenarioSim;
     }
-    public void addEscenario(EscenarioSimulacionRobtsVictms escenario){
+    public void addEscenario(EscenarioSimulacionPoliciasLadrones escenario){
         tablaEscenariosDefinidos.put(escenario.getIdentEscenario(), escenario);
         identsEscenarios.add(escenario.getIdentEscenario());
     }

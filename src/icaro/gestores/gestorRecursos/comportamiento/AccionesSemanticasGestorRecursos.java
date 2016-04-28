@@ -38,8 +38,8 @@ import java.util.Vector;
  */
 
 public class AccionesSemanticasGestorRecursos extends
-		AccionesSemanticasAgenteReactivo {
-//	public static final int intentosCreacion = 3;
+AccionesSemanticasAgenteReactivo {
+	//	public static final int intentosCreacion = 3;
 	/**
 	 * Almac�n de los nombres de los agentes que este gestor debe gestionar
 	 * @uml.property  name="nombresRecursosGestionados"
@@ -54,17 +54,17 @@ public class AccionesSemanticasGestorRecursos extends
 	 */
 	private HebraMonitorizacion hebra;
 
-        private ItfUsoConfiguracion config;
+	private ItfUsoConfiguracion config;
 
 	/**
 	 * Tiempo de monitorizacion
 	 * @uml.property  name="tiempoParaNuevaMonitorizacion"
 	 */
 	private int tiempoParaNuevaMonitorizacion;
-        private int maxNumIntentosCreacionCompGestionados = 3;
-        private String esteNodo;
-        private DescInstanciaGestor descGestorRecursos;
-        private Boolean misInterfacesEstanEnElRegistroRMILocal= false;
+	private int maxNumIntentosCreacionCompGestionados = 3;
+	private String esteNodo;
+	private DescInstanciaGestor descGestorRecursos;
+	private Boolean misInterfacesEstanEnElRegistroRMILocal= false;
 
 	/**
 	 * Constructor por defecto
@@ -77,24 +77,24 @@ public class AccionesSemanticasGestorRecursos extends
 
 	public void configurarGestor() {
 		try {
-			 config = (ItfUsoConfiguracion) itfUsoRepositorio.obtenerInterfaz(
-							NombresPredefinidos.ITF_USO
-									+ NombresPredefinidos.CONFIGURACION);
+			config = (ItfUsoConfiguracion) itfUsoRepositorio.obtenerInterfaz(
+					NombresPredefinidos.ITF_USO
+					+ NombresPredefinidos.CONFIGURACION);
 
-                        tiempoParaNuevaMonitorizacion = Integer.parseInt(config.getValorPropiedadGlobal(NombresPredefinidos.INTERVALO_MONITORIZACION_ATR_PROPERTY));
-			 descGestorRecursos = config.getDescInstanciaGestor(NombresPredefinidos.NOMBRE_GESTOR_RECURSOS);
-			 esteNodo = descGestorRecursos.getNodo().getNombreUso();
+			tiempoParaNuevaMonitorizacion = Integer.parseInt(config.getValorPropiedadGlobal(NombresPredefinidos.INTERVALO_MONITORIZACION_ATR_PROPERTY));
+			descGestorRecursos = config.getDescInstanciaGestor(NombresPredefinidos.NOMBRE_GESTOR_RECURSOS);
+			esteNodo = descGestorRecursos.getNodo().getNombreUso();
 
-                        String maxIntentos =config.getValorPropiedadGlobal("maxIntentosCompGestionados");
-                        if (maxIntentos != null)
-                                                 maxNumIntentosCreacionCompGestionados = Integer.parseInt(maxIntentos);
+			String maxIntentos =config.getValorPropiedadGlobal("maxIntentosCompGestionados");
+			if (maxIntentos != null)
+				maxNumIntentosCreacionCompGestionados = Integer.parseInt(maxIntentos);
 			this.itfUsoPropiadeEsteAgente.aceptaEvento(new EventoRecAgte(
 					"gestor_configurado",
 					NombresPredefinidos.NOMBRE_GESTOR_RECURSOS,
 					NombresPredefinidos.NOMBRE_GESTOR_RECURSOS));
 		} catch (Exception e) {
 			e.printStackTrace();
-			 logger.error("GestorRecursos: Hubo problemas al configurar el gestor de recursos.");
+			logger.error("GestorRecursos: Hubo problemas al configurar el gestor de recursos.");
 			trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
 					"Hubo problemas al configurar el gestor de recursos.",
 					InfoTraza.NivelTraza.error));
@@ -112,7 +112,7 @@ public class AccionesSemanticasGestorRecursos extends
 			trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
 					"Listando los recursos definidos en la configuracion.",
 					InfoTraza.NivelTraza.debug));
-			
+
 			List<DescInstancia> lista = config.getDescInstanciaGestor(NombresPredefinidos.NOMBRE_GESTOR_RECURSOS).getComponentesGestionados();
 
 			Object[] parametros = new Object[] { lista, new Integer(0) };
@@ -145,7 +145,7 @@ public class AccionesSemanticasGestorRecursos extends
 		boolean error = false;
 		boolean encontrado = false;
 		DescInstanciaRecursoAplicacion recurso = null;
-               
+
 		while (iterador.hasNext() && (encontrado == false)) {
 			recurso = iterador.next();
 			if (j == indice.intValue()) {// es el que debemos arrancar
@@ -210,71 +210,71 @@ public class AccionesSemanticasGestorRecursos extends
 	private void crearUnRecurso(DescInstanciaRecursoAplicacion recurso) throws Exception {
 		try {
 
-//			ItfUsoConfiguracion config = (ItfUsoConfiguracion) ClaseGeneradoraRepositorioInterfaces
-//					.instance().obtenerInterfaz(
-//							NombresPredefinidos.ITF_USO
-//									+ NombresPredefinidos.CONFIGURACION);
+			//			ItfUsoConfiguracion config = (ItfUsoConfiguracion) ClaseGeneradoraRepositorioInterfaces
+			//					.instance().obtenerInterfaz(
+			//							NombresPredefinidos.ITF_USO
+			//									+ NombresPredefinidos.CONFIGURACION);
 
 			logger.debug("GestorRecursos: Construyendo recurso " + recurso.getId()+ ".");
 			trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
 					"Construyendo recurso " + recurso+ ".",
 					InfoTraza.NivelTraza.debug));
 			// Recurso de aplicacion: local o remoto?
-			
-			
-//			DescInstanciaGestor descGestorRecursos = config.getDescInstanciaGestor(NombresPredefinidos.NOMBRE_GESTOR_RECURSOS);
-//			String esteNodo = descGestorRecursos.getNodo().getNombreUso();
+
+
+			//			DescInstanciaGestor descGestorRecursos = config.getDescInstanciaGestor(NombresPredefinidos.NOMBRE_GESTOR_RECURSOS);
+			//			String esteNodo = descGestorRecursos.getNodo().getNombreUso();
 
 			String nodoDestino = recurso.getNodo().getNombreUso();
 			int intentos = 0;
 			boolean ok = false;
 
 			if (nodoDestino.equals(esteNodo)) {
-             // Se crea el recurso en el mismo nodo
+				// Se crea el recurso en el mismo nodo
 				FactoriaRecursoSimple.instance().crearRecursoSimple(recurso);
-            // Si la organizacion esta desplegada en varios nodos entonces hay que registrarlo en el RMI local
-            
-                                if (! this.config.despliegueOrgEnUnSoloNodo())
-                                        addEntityIntfs2Local_RMIregistry(recurso.getId());
+				// Si la organizacion esta desplegada en varios nodos entonces hay que registrarlo en el RMI local
+
+				if (! this.config.despliegueOrgEnUnSoloNodo())
+					addEntityIntfs2Local_RMIregistry(recurso.getId());
 
 
 			} else {
-            // Crear el recuros en n nodo remoto
-                             crearUnRecursoEnNodoRemotoConRMI(recurso);
-//				while (!ok) {
-//					++intentos;
-//					try {
-////						((FactoriaRecursoSimple) ClaseGeneradoraRepositorioInterfaces
-////								.instance()
-////								.obtenerInterfaz(
-////										NombresPredefinidos.FACTORIA_RECURSO_SIMPLE
-////												+ nodoDestino))
-////								.crearRecursoSimple(recurso);
-//                                            crearUnRecursoEnNodoRemotoConRMI(recurso);
-//						ok = true;
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//						trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
-//								"Error al crear el recurso "
-//										+ recurso.getId()
-//										+ " en un nodo remoto. Se volvera a intentar en "
-//										+ intentos
-//										+ " segundos...\n nodo origen: "
-//										+ esteNodo + "\t nodo destino: "
-//										+ nodoDestino,
-//								InfoTraza.NivelTraza.error));
-//						logger
-//								.error("Error al crear el recurso "
-//										+ recurso.getId()
-//										+ " en un nodo remoto. Se volver� a intentar en "
-//										+ intentos
-//										+ " segundos...\n nodo origen: "
-//										+ esteNodo + "\t nodo destino: "
-//										+ nodoDestino);
-//						Thread.sleep(1000 * intentos);
-//						ok = false;
-//					}
-//				}
+				// Crear el recuros en n nodo remoto
+				crearUnRecursoEnNodoRemotoConRMI(recurso);
+				//				while (!ok) {
+				//					++intentos;
+				//					try {
+				////						((FactoriaRecursoSimple) ClaseGeneradoraRepositorioInterfaces
+				////								.instance()
+				////								.obtenerInterfaz(
+				////										NombresPredefinidos.FACTORIA_RECURSO_SIMPLE
+				////												+ nodoDestino))
+				////								.crearRecursoSimple(recurso);
+				//                                            crearUnRecursoEnNodoRemotoConRMI(recurso);
+				//						ok = true;
+				//					} catch (Exception e) {
+				//						e.printStackTrace();
+				//						trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
+				//								"Error al crear el recurso "
+				//										+ recurso.getId()
+				//										+ " en un nodo remoto. Se volvera a intentar en "
+				//										+ intentos
+				//										+ " segundos...\n nodo origen: "
+				//										+ esteNodo + "\t nodo destino: "
+				//										+ nodoDestino,
+				//								InfoTraza.NivelTraza.error));
+				//						logger
+				//								.error("Error al crear el recurso "
+				//										+ recurso.getId()
+				//										+ " en un nodo remoto. Se volver� a intentar en "
+				//										+ intentos
+				//										+ " segundos...\n nodo origen: "
+				//										+ esteNodo + "\t nodo destino: "
+				//										+ nodoDestino);
+				//						Thread.sleep(1000 * intentos);
+				//						ok = false;
+				//					}
+				//				}
 			}
 			logger.debug("GestorRecursos: Recurso " + recurso.getId() + " creado.");
 			trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
@@ -290,79 +290,79 @@ public class AccionesSemanticasGestorRecursos extends
 		}
 	}
 
- private void crearUnRecursoEnNodoRemotoConRMI(DescInstanciaRecursoAplicacion recurso) throws Exception {
-	// Obtener el RMI regitry del nodo y la interfaz del Gestor de nodo
+	private void crearUnRecursoEnNodoRemotoConRMI(DescInstanciaRecursoAplicacion recurso) throws Exception {
+		// Obtener el RMI regitry del nodo y la interfaz del Gestor de nodo
 
-                    String identNodoRecurso = recurso.getNodo().getNombreUso();
-                    String identRecurso = recurso.getId();
-                    if (!misInterfacesEstanEnElRegistroRMILocal){ //Las añado
-                        if (!AdaptadorRegRMI.registroRMILocalCreado) AdaptadorRegRMI.inicializar();
-                            if (!  AdaptadorRegRMI.addElement2LocalRegRMI(NombresPredefinidos.ITF_USO+nombreAgente, this.itfUsoPropiadeEsteAgente))
-                            { // No se ha podido añadir la interfaz de uso al registro local
-                                trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
-					"Error al añadir mi interfaz al registro RMI local. " + nombreAgente+ "No se ha podido añadir  la itf de uso del Gestor de nodo en el registro RMI local " + identNodoRecurso,
-					InfoTraza.NivelTraza.error));
-                        }
-                    }
-          try {
-            int intentos = 0;
-            boolean ok = false;
-//            DescInstanciaGestor gestorAgentes = config.getDescInstanciaGestor(identAgente);
-//            String nodoDestino = gestorAgentes.getNodo().getNombreUso();
-            while (!ok & (intentos <= maxNumIntentosCreacionCompGestionados)) {
-                ++intentos;
-                try {
-                    // Se obtiene la interfaz remota del gestor de Nodo
-                    // Se ordena al Gestor de Nodo que cree al Gestor. Se debe esperar la confirmacion
-//                  String[] lista = nodeRegistry.list();
-//                  Object obj = nodeRegistry.lookup(NombresPredefinidos.NOMBRE_GESTOR_NODO);
-//                    ItfUsoAgenteReactivo itfUsoGestorNodo = (ItfUsoAgenteReactivo)nodeRegistry.lookup(NombresPredefinidos.NOMBRE_GESTOR_NODO);
-//
-//                    if ( !AdaptadorRegRMI.registroRMILocalCreado)
-//                                AdaptadorRegRMI.getRegistroRMInodoLocal();
-//                     if (AdaptadorRegRMI.registroRMILocal != null)
-//                      if ( ! AdaptadorRegRMI.addElement2LocalRegRMI(NombresPredefinidos.ITF_USO+nombreAgente, this.itfUsoPropiadeEsteAgente))
-
-                        
-// Buscamos el gestor de nodo del recurso que vamos a crear
-                      ItfUsoAgenteReactivo itfUsoGestorNodo = (ItfUsoAgenteReactivo) AdaptadorRegRMI.getItfAgteReactRemoto(identNodoRecurso,NombresPredefinidos.NOMBRE_GESTOR_NODO);
-//                    ItfUsoAgenteReactivo itfUsoGestorNodo = (ItfUsoAgenteReactivo) AdaptadorRegRMI.getItfAgenteRemoto(NombresPredefinidos.NOMBRE_GESTOR_NODO, NombresPredefinidos.ITF_USO);
-                      if (itfUsoGestorNodo != null) {
-    // Creamos el mensaje para ordenarle al GN que cree el recurso en su nodo.
-    //  Deberíamos esperar una confirmación de la creacion.
-                // Registro la interfaz de uso  del gestor en el registro RMI de la organizacion para que pueda ser localizado y recibir informacion
-                      
-                        itfUsoGestorNodo.aceptaMensaje(new MensajeSimple(new InfoContEvtMsgAgteReactivo("peticion_crearRecurso",(Object)recurso.getId() )
-                                ,this.nombreAgente,NombresPredefinidos.NOMBRE_GESTOR_NODO));
-                         ok = true;
-                        }
-                    else
-                        { // La interfaz del GN es null
-                        trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
-					"Error al crear el recurso. " + identRecurso+ "No se ha podido obtener la itf de uso del Gestor de nodo en el nodo remoto " + identNodoRecurso,
-					InfoTraza.NivelTraza.error));
-                        }           
-                } catch (Exception e) {
-                    trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente, "Error al crear el recurso:  " + identRecurso + " en un nodo remoto. Se volveraa intentar en " + intentos + " segundos...\n No se pudo acceder al Gestor de Nodo en el nodo: "
-                            + identNodoRecurso , InfoTraza.NivelTraza.error));
-                    logger.error("Error al crear el recurso " + identRecurso + " en un nodo remoto. Se volvera a intentar en " + intentos + " segundos...\n No se pudo acceder al Gestor de Nodo en el nodo: " + identNodoRecurso );
+		String identNodoRecurso = recurso.getNodo().getNombreUso();
+		String identRecurso = recurso.getId();
+		if (!misInterfacesEstanEnElRegistroRMILocal){ //Las añado
+			if (!AdaptadorRegRMI.registroRMILocalCreado) AdaptadorRegRMI.inicializar();
+			if (!  AdaptadorRegRMI.addElement2LocalRegRMI(NombresPredefinidos.ITF_USO+nombreAgente, this.itfUsoPropiadeEsteAgente))
+			{ // No se ha podido añadir la interfaz de uso al registro local
+				trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
+						"Error al añadir mi interfaz al registro RMI local. " + nombreAgente+ "No se ha podido añadir  la itf de uso del Gestor de nodo en el registro RMI local " + identNodoRecurso,
+						InfoTraza.NivelTraza.error));
+			}
+		}
+		try {
+			int intentos = 0;
+			boolean ok = false;
+			//            DescInstanciaGestor gestorAgentes = config.getDescInstanciaGestor(identAgente);
+			//            String nodoDestino = gestorAgentes.getNodo().getNombreUso();
+			while (!ok & (intentos <= maxNumIntentosCreacionCompGestionados)) {
+				++intentos;
+				try {
+					// Se obtiene la interfaz remota del gestor de Nodo
+					// Se ordena al Gestor de Nodo que cree al Gestor. Se debe esperar la confirmacion
+					//                  String[] lista = nodeRegistry.list();
+					//                  Object obj = nodeRegistry.lookup(NombresPredefinidos.NOMBRE_GESTOR_NODO);
+					//                    ItfUsoAgenteReactivo itfUsoGestorNodo = (ItfUsoAgenteReactivo)nodeRegistry.lookup(NombresPredefinidos.NOMBRE_GESTOR_NODO);
+					//
+					//                    if ( !AdaptadorRegRMI.registroRMILocalCreado)
+					//                                AdaptadorRegRMI.getRegistroRMInodoLocal();
+					//                     if (AdaptadorRegRMI.registroRMILocal != null)
+					//                      if ( ! AdaptadorRegRMI.addElement2LocalRegRMI(NombresPredefinidos.ITF_USO+nombreAgente, this.itfUsoPropiadeEsteAgente))
 
 
-                }
-                
-                    Thread.sleep(500 * intentos);
-//                    ok = false;
-                }
-          
-            if (!ok) {
-                trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente, "No se pudo crear el recurso " + identRecurso + " en un nodo remoto. Se supero el numero de intentos definido " + intentos, InfoTraza.NivelTraza.error));
-                logger.error("Error al crear el recurso " + NombresPredefinidos.NOMBRE_GESTOR_RECURSOS + " en un nodo remoto. Se supero el numero de intentos definido " + intentos );
-                this.generarInformeErrorIrrecuperable();
+					// Buscamos el gestor de nodo del recurso que vamos a crear
+					ItfUsoAgenteReactivo itfUsoGestorNodo = (ItfUsoAgenteReactivo) AdaptadorRegRMI.getItfAgteReactRemoto(identNodoRecurso,NombresPredefinidos.NOMBRE_GESTOR_NODO);
+					//                    ItfUsoAgenteReactivo itfUsoGestorNodo = (ItfUsoAgenteReactivo) AdaptadorRegRMI.getItfAgenteRemoto(NombresPredefinidos.NOMBRE_GESTOR_NODO, NombresPredefinidos.ITF_USO);
+					if (itfUsoGestorNodo != null) {
+						// Creamos el mensaje para ordenarle al GN que cree el recurso en su nodo.
+						//  Deberíamos esperar una confirmación de la creacion.
+						// Registro la interfaz de uso  del gestor en el registro RMI de la organizacion para que pueda ser localizado y recibir informacion
 
-            }
-            logger.debug("GestorRecursos : Recurso :" + identRecurso + "creado.");
-            trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente, "Recurso :" + identRecurso + "creado.", InfoTraza.NivelTraza.debug));
-        } catch (Exception e) {
+						itfUsoGestorNodo.aceptaMensaje(new MensajeSimple(new InfoContEvtMsgAgteReactivo("peticion_crearRecurso",(Object)recurso.getId() )
+								,this.nombreAgente,NombresPredefinidos.NOMBRE_GESTOR_NODO));
+						ok = true;
+					}
+					else
+					{ // La interfaz del GN es null
+						trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
+								"Error al crear el recurso. " + identRecurso+ "No se ha podido obtener la itf de uso del Gestor de nodo en el nodo remoto " + identNodoRecurso,
+								InfoTraza.NivelTraza.error));
+					}           
+				} catch (Exception e) {
+					trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente, "Error al crear el recurso:  " + identRecurso + " en un nodo remoto. Se volveraa intentar en " + intentos + " segundos...\n No se pudo acceder al Gestor de Nodo en el nodo: "
+							+ identNodoRecurso , InfoTraza.NivelTraza.error));
+					logger.error("Error al crear el recurso " + identRecurso + " en un nodo remoto. Se volvera a intentar en " + intentos + " segundos...\n No se pudo acceder al Gestor de Nodo en el nodo: " + identNodoRecurso );
+
+
+				}
+
+				Thread.sleep(500 * intentos);
+				//                    ok = false;
+			}
+
+			if (!ok) {
+				trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente, "No se pudo crear el recurso " + identRecurso + " en un nodo remoto. Se supero el numero de intentos definido " + intentos, InfoTraza.NivelTraza.error));
+				logger.error("Error al crear el recurso " + NombresPredefinidos.NOMBRE_GESTOR_RECURSOS + " en un nodo remoto. Se supero el numero de intentos definido " + intentos );
+				this.generarInformeErrorIrrecuperable();
+
+			}
+			logger.debug("GestorRecursos : Recurso :" + identRecurso + "creado.");
+			trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente, "Recurso :" + identRecurso + "creado.", InfoTraza.NivelTraza.debug));
+		} catch (Exception e) {
 			logger.error("GestorRecursos: Error al crear el recurso " + recurso.getId()+ "en el nodo remoto " + identNodoRecurso,e);
 			trazas.aceptaNuevaTraza(new InfoTraza(identRecurso,
 					"Error al crear el recurso " + identRecurso+ "en el nodo remoto " + identNodoRecurso,
@@ -376,11 +376,11 @@ public class AccionesSemanticasGestorRecursos extends
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
-        }
+		}
 
 
-        
-    }
+
+	}
 
 	/**
 	 * Funcion que genera el evento para comenzar los reintentos de creacion de
@@ -419,7 +419,7 @@ public class AccionesSemanticasGestorRecursos extends
 		boolean fin_reintentos = false;
 		boolean error = false;
 		String idRecurso = recurso.getId();
-		
+
 		if (reintento.equals(0)) {
 			fin_reintentos = true;
 		}
@@ -435,7 +435,7 @@ public class AccionesSemanticasGestorRecursos extends
 				trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
 						"Creando recurso " + idRecurso+ ".",
 						InfoTraza.NivelTraza.debug));
-				
+
 				// crearlos uno a uno dependiendo de su tipo
 				crearUnRecurso(recurso);
 
@@ -458,8 +458,8 @@ public class AccionesSemanticasGestorRecursos extends
 		try {
 			Object[] parametros;
 			if (fin_reintentos) { // ya hay que decidir que se va a hacer una
-									// vez que se sabe que no se puede crear el
-									// recurso
+				// vez que se sabe que no se puede crear el
+				// recurso
 				logger.debug("GestorRecursos: Agotados los intentos de crear el recurso "+ idRecurso + ". Continuando con la creaci�n.");
 				trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
 						"Agotados los intentos de crear el recurso "+ idRecurso + ". Continuando con la creaci�n.",
@@ -517,57 +517,57 @@ public class AccionesSemanticasGestorRecursos extends
 					InfoTraza.NivelTraza.debug));
 			if (itfGesAg == null){// No esta registrada en el repositirio de interfaces del nodo local
 
-//                           String identHostRecurso= config.getDescInstanciaRecursoAplicacion(nombreRec).getNodo().getNombreUso();
-//                            itfGesAg =  AdaptadorRegRMI.getItfGestionEntidadRemota(identHostRecurso, nombreRec);
-                               itfGesAg = (InterfazGestion) AdaptadorRegRMI.getItfRecursoRemoto(nombreRec, NombresPredefinidos.ITF_GESTION );
-                            if (itfGesAg == null)// la intf de gestion es null El recruso no ha sido registrado
-                            {
-                             logger.debug("GestorRecursos: No se puede dar la orden de arranque al recurso "+ nombreRec + ". Porque su interfaz es null");
-                             trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
-					" No se puede dar la orden de arranque al recurso "+ nombreRec + ". Porque su interfaz es null",
-					InfoTraza.NivelTraza.debug));
-                                        errorEnArranque = true;
-                            }
-                            else {
-                             // Registro la interfaz en el repositorio local y doy la orden de arrancar
-                                this.itfUsoRepositorio.registrarInterfaz(NombresPredefinidos.ITF_GESTION + nombreRec, itfGesAg);
-                               Remote itfUsoRec = AdaptadorRegRMI.getItfRecursoRemoto(nombreRec,  NombresPredefinidos.ITF_USO);
-                              this.itfUsoRepositorio.registrarInterfaz(NombresPredefinidos.ITF_USO + nombreRec, itfUsoRec);
+				//                           String identHostRecurso= config.getDescInstanciaRecursoAplicacion(nombreRec).getNodo().getNombreUso();
+				//                            itfGesAg =  AdaptadorRegRMI.getItfGestionEntidadRemota(identHostRecurso, nombreRec);
+				itfGesAg = (InterfazGestion) AdaptadorRegRMI.getItfRecursoRemoto(nombreRec, NombresPredefinidos.ITF_GESTION );
+				if (itfGesAg == null)// la intf de gestion es null El recruso no ha sido registrado
+				{
+					logger.debug("GestorRecursos: No se puede dar la orden de arranque al recurso "+ nombreRec + ". Porque su interfaz es null");
+					trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
+							" No se puede dar la orden de arranque al recurso "+ nombreRec + ". Porque su interfaz es null",
+							InfoTraza.NivelTraza.debug));
+					errorEnArranque = true;
+				}
+				else {
+					// Registro la interfaz en el repositorio local y doy la orden de arrancar
+					this.itfUsoRepositorio.registrarInterfaz(NombresPredefinidos.ITF_GESTION + nombreRec, itfGesAg);
+					Remote itfUsoRec = AdaptadorRegRMI.getItfRecursoRemoto(nombreRec,  NombresPredefinidos.ITF_USO);
+					this.itfUsoRepositorio.registrarInterfaz(NombresPredefinidos.ITF_USO + nombreRec, itfUsoRec);
 
-                                logger.debug("GestorRecursos: Registro la interfaz remota del recurso: "+ nombreRec + ". En el repositorio de interfaces");
-                                trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
-					" Registro la interfaz remota del recurso: "+ nombreRec + ".  En el repositorio de interfaces",
-					InfoTraza.NivelTraza.debug));
-                                        errorEnArranque = false;
+					logger.debug("GestorRecursos: Registro la interfaz remota del recurso: "+ nombreRec + ". En el repositorio de interfaces");
+					trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
+							" Registro la interfaz remota del recurso: "+ nombreRec + ".  En el repositorio de interfaces",
+							InfoTraza.NivelTraza.debug));
+					errorEnArranque = false;
 
-                                    }
-                            }
-                        if (itfGesAg!= null){
-                             itfGesAg.arranca();
-                             logger.debug("GestorRecursos: Orden de arranque ha sido dada al recurso "+ nombreRec + ".");
-                             trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
-					"Orden de arranque ha sido dada al recurso "+ nombreRec + ".",
-					InfoTraza.NivelTraza.debug));
-                        }
-//                        else {
-//                     // La interfaz del recurso no esta en el repositorio local. Una posibilidad es buscar su itenrfaz remota
-//                     // registrarla en el repositorio de interfaces local al GR  y darle la orden de arrancar
-////                       String nodoRecurso =     this.config.getDescInstanciaRecursoAplicacion(nombre).getNodo().getNombreUso();
-//                            itfGesAg =  AdaptadorRegRMI.getItfGestionAgteReactRemoto(nombreAgente);
-//                            if (itfGesAg != null ){
-//                                // Registro la interfaz en el repositorio local y doy la orden de arrancar
-//                                this.itfUsoRepositorio.registrarInterfaz(NombresPredefinidos.ITF_GESTION + nombre, itfGesAg);
-//                                this.itfUsoRepositorio.registrarInterfaz(NombresPredefinidos.ITF_USO + nombre, AdaptadorRegRMI.getItfUsoAgteReactRemoto(nombreAgente));
-//                                
-//                               
-//                            }
-//
-//                            logger.debug("GestorRecursos: No se puede dar la orden de arranque al recurso "+ nombre + ". Porque su interfaz es null");
-//                             trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
-//					" No se puede dar la orden de arranque al recurso "+ nombre + ". Porque su interfaz es null",
-//					InfoTraza.NivelTraza.debug));
-//                                        errorEnArranque = true;
-//                        }
+				}
+			}
+			if (itfGesAg!= null){
+				itfGesAg.arranca();
+				logger.debug("GestorRecursos: Orden de arranque ha sido dada al recurso "+ nombreRec + ".");
+				trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
+						"Orden de arranque ha sido dada al recurso "+ nombreRec + ".",
+						InfoTraza.NivelTraza.debug));
+			}
+			//                        else {
+			//                     // La interfaz del recurso no esta en el repositorio local. Una posibilidad es buscar su itenrfaz remota
+			//                     // registrarla en el repositorio de interfaces local al GR  y darle la orden de arrancar
+			////                       String nodoRecurso =     this.config.getDescInstanciaRecursoAplicacion(nombre).getNodo().getNombreUso();
+			//                            itfGesAg =  AdaptadorRegRMI.getItfGestionAgteReactRemoto(nombreAgente);
+			//                            if (itfGesAg != null ){
+			//                                // Registro la interfaz en el repositorio local y doy la orden de arrancar
+			//                                this.itfUsoRepositorio.registrarInterfaz(NombresPredefinidos.ITF_GESTION + nombre, itfGesAg);
+			//                                this.itfUsoRepositorio.registrarInterfaz(NombresPredefinidos.ITF_USO + nombre, AdaptadorRegRMI.getItfUsoAgteReactRemoto(nombreAgente));
+			//                                
+			//                               
+			//                            }
+			//
+			//                            logger.debug("GestorRecursos: No se puede dar la orden de arranque al recurso "+ nombre + ". Porque su interfaz es null");
+			//                             trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
+			//					" No se puede dar la orden de arranque al recurso "+ nombre + ". Porque su interfaz es null",
+			//					InfoTraza.NivelTraza.debug));
+			//                                        errorEnArranque = true;
+			//                        }
 		} catch (Exception ex) {
 			logger.error("GestorRecursos: Hubo un problema al acceder al interfaz remoto mientras se arrancaba el recurso "	+ nombreRec + " en el gestor de recursos.");
 			trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
@@ -577,7 +577,7 @@ public class AccionesSemanticasGestorRecursos extends
 			errorEnArranque = true;
 		}
 		if (errorEnArranque) { // ha ocurrido alg�n problema en el arranque del
-								// recurso
+			// recurso
 			try {
 				this.itfUsoPropiadeEsteAgente.aceptaEvento(new EventoRecAgte(
 						"error_en_arranque_recurso",
@@ -590,15 +590,15 @@ public class AccionesSemanticasGestorRecursos extends
 			trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
 					"Se produjo un error en el arranque del recurso "+ nombreRec + ".",
 					InfoTraza.NivelTraza.error));
-			
+
 		} else {// el recurso ha sido arrancado
 			if (indice.intValue() == (this.nombresRecursosGestionados.size() - 1)) { // ya
-																						// no
-																						// hay
-																						// m�s
-																						// recursos
-																						// que
-																						// arrancar
+				// no
+				// hay
+				// m�s
+				// recursos
+				// que
+				// arrancar
 				logger.debug("GestorRecursos: Terminado proceso de arranque automatico de recursos.");
 				trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
 						"Terminado proceso de arranque autom�tico de recursos.",
@@ -703,7 +703,7 @@ public class AccionesSemanticasGestorRecursos extends
 	/**
 	 * Esta acci�n no hace nada.
 	 */
-    @Override
+	@Override
 	public void vacio() {
 	}
 
@@ -722,11 +722,11 @@ public class AccionesSemanticasGestorRecursos extends
 					"peticion_terminar_todo",
 					NombresPredefinidos.NOMBRE_GESTOR_RECURSOS,
 					this.itfUsoGestorAReportar.getIdentAgente()));
-//                        this.itfUsoGestorAReportar.getIdentAgente();
-//			this.itfUsoPropiadeEsteAgente.aceptaEvento(new EventoRecAgte("informe_generado",
-//					NombresPredefinidos.NOMBRE_GESTOR_RECURSOS,
-//					NombresPredefinidos.NOMBRE_GESTOR_RECURSOS));
-                        this.informaraMiAutomata("informe_generado", null);
+			//                        this.itfUsoGestorAReportar.getIdentAgente();
+			//			this.itfUsoPropiadeEsteAgente.aceptaEvento(new EventoRecAgte("informe_generado",
+			//					NombresPredefinidos.NOMBRE_GESTOR_RECURSOS,
+			//					NombresPredefinidos.NOMBRE_GESTOR_RECURSOS));
+			this.informaraMiAutomata("informe_generado", null);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -850,12 +850,12 @@ public class AccionesSemanticasGestorRecursos extends
 						"Terminando el recurso " + nombre	+ ".",
 						InfoTraza.NivelTraza.debug));
 				if (itfGesRec != null ){
-                                itfGesRec.termina();
-				logger.debug("GestorRecursos: Orden de terminacion ha sido dada al recurso "+ nombre + ".");
-				trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
-						"Orden de terminacion ha sido dada al recurso "+ nombre + ".",
-						InfoTraza.NivelTraza.debug));
-                                }
+					itfGesRec.termina();
+					logger.debug("GestorRecursos: Orden de terminacion ha sido dada al recurso "+ nombre + ".");
+					trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
+							"Orden de terminacion ha sido dada al recurso "+ nombre + ".",
+							InfoTraza.NivelTraza.debug));
+				}
 			} catch (Exception ex) {
 				logger.error("GestorRecursos: Hubo un problema al acceder a un interfaz remoto mientras se daba orden de terminaci�n al recurso "+ nombre + ".");
 				trazas.aceptaNuevaTraza(new InfoTraza("GestorRecursos",
@@ -911,9 +911,9 @@ public class AccionesSemanticasGestorRecursos extends
 				"Terminando gestor de recursos.",
 				InfoTraza.NivelTraza.debug));
 		try {
-                    if (this.hebra !=null)
-			this.hebra.finalizar(); // CUIDADO, SI FALLASE LA CREACION DE LOS
-									// RECURSOS ESTA HEBRA
+			if (this.hebra !=null)
+				this.hebra.finalizar(); // CUIDADO, SI FALLASE LA CREACION DE LOS
+			// RECURSOS ESTA HEBRA
 		} // NO ESTA INICIALIZADA
 		catch (Exception e) {
 			e.printStackTrace();
@@ -926,7 +926,7 @@ public class AccionesSemanticasGestorRecursos extends
 			((InterfazGestion) this.itfUsoRepositorio
 					.obtenerInterfaz(NombresPredefinidos.ITF_GESTION
 							+ NombresPredefinidos.NOMBRE_GESTOR_RECURSOS))
-					.termina();
+			.termina();
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -945,57 +945,57 @@ public class AccionesSemanticasGestorRecursos extends
 
 	public void clasificaError() {
 	}
-        public Boolean addEntityIntfs2Local_RMIregistry (String identEntity){
-        Boolean interfacesRegistradas = false;
-         try {
-            Remote itfEntity = (Remote)itfUsoRepositorio.obtenerInterfaz(NombresPredefinidos.ITF_USO+identEntity);
-                if (itfEntity != null)
-                        if (  AdaptadorRegRMI.addElement2LocalRegRMI(NombresPredefinidos.ITF_USO+identEntity, itfEntity)){
-                        trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
-					"Se añaden las Itfs de uso y de gestion de la entidad :" +identEntity + " -- al RMI registry local",
-					InfoTraza.NivelTraza.debug));
-                            } else {
-                                         trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
-					"No he podido añadir la entidad :" +identEntity + " -- al RMI registry local.",
-					InfoTraza.NivelTraza.error));
-                                         informaraMiAutomata("error_en_registroRemoto_recurso", null);
-                                         return interfacesRegistradas;
-                                } else {
-                                    trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
-					"No he podido añadir la entidad :" +identEntity + " -- al RMI registry. La entidad no ha sido registrada en el registro local",
-					InfoTraza.NivelTraza.error));
-                                        informaraMiAutomata("error_en_registroRemoto_recurso", null);
-                                        return interfacesRegistradas;
-                                }
-         itfEntity = (Remote)itfUsoRepositorio.obtenerInterfaz(NombresPredefinidos.ITF_GESTION+identEntity);
-             if (itfEntity != null)
-                        if (  AdaptadorRegRMI.addElement2LocalRegRMI(NombresPredefinidos.ITF_GESTION+identEntity, itfEntity)){
-                        trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
-					"Se añaden las Itfs de uso y de gestion de la entidad :" +identEntity + " -- al RMI registry local",
-					InfoTraza.NivelTraza.debug));
-                                        interfacesRegistradas = true;
-                            } else {
-                                         trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
-					"No he podido añadir la entidad :" +identEntity + " -- al RMI registry local.",
-					InfoTraza.NivelTraza.error));
-                                         informaraMiAutomata("error_en_registroRemoto_recurso", null);
-                                         return false;
-                                } else {
-                                    trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
-					"No he podido añadir la entidad :" +identEntity + " -- al RMI registry. La entidad no ha sido registrada en el registro local",
-					InfoTraza.NivelTraza.error));
-                                        informaraMiAutomata("error_en_registroRemoto_recurso", null);
-                                        return false;
-                                }
+	public Boolean addEntityIntfs2Local_RMIregistry (String identEntity){
+		Boolean interfacesRegistradas = false;
+		try {
+			Remote itfEntity = (Remote)itfUsoRepositorio.obtenerInterfaz(NombresPredefinidos.ITF_USO+identEntity);
+			if (itfEntity != null)
+				if (  AdaptadorRegRMI.addElement2LocalRegRMI(NombresPredefinidos.ITF_USO+identEntity, itfEntity)){
+					trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
+							"Se añaden las Itfs de uso y de gestion de la entidad :" +identEntity + " -- al RMI registry local",
+							InfoTraza.NivelTraza.debug));
+				} else {
+					trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
+							"No he podido añadir la entidad :" +identEntity + " -- al RMI registry local.",
+							InfoTraza.NivelTraza.error));
+					informaraMiAutomata("error_en_registroRemoto_recurso", null);
+					return interfacesRegistradas;
+				} else {
+					trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
+							"No he podido añadir la entidad :" +identEntity + " -- al RMI registry. La entidad no ha sido registrada en el registro local",
+							InfoTraza.NivelTraza.error));
+					informaraMiAutomata("error_en_registroRemoto_recurso", null);
+					return interfacesRegistradas;
+				}
+			itfEntity = (Remote)itfUsoRepositorio.obtenerInterfaz(NombresPredefinidos.ITF_GESTION+identEntity);
+			if (itfEntity != null)
+				if (  AdaptadorRegRMI.addElement2LocalRegRMI(NombresPredefinidos.ITF_GESTION+identEntity, itfEntity)){
+					trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
+							"Se añaden las Itfs de uso y de gestion de la entidad :" +identEntity + " -- al RMI registry local",
+							InfoTraza.NivelTraza.debug));
+					interfacesRegistradas = true;
+				} else {
+					trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
+							"No he podido añadir la entidad :" +identEntity + " -- al RMI registry local.",
+							InfoTraza.NivelTraza.error));
+					informaraMiAutomata("error_en_registroRemoto_recurso", null);
+					return false;
+				} else {
+					trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
+							"No he podido añadir la entidad :" +identEntity + " -- al RMI registry. La entidad no ha sido registrada en el registro local",
+							InfoTraza.NivelTraza.error));
+					informaraMiAutomata("error_en_registroRemoto_recurso", null);
+					return false;
+				}
 
 		} catch (Exception ex) {
 			trazas.aceptaNuevaTraza(new InfoTraza(nombreAgente,
 					"Error al registrar  la entidad " + identEntity+ ".",
 					InfoTraza.NivelTraza.error));
 			logger.error("GestorRecursos: Error al crear el recurso " + identEntity+ ". En el registro RMI local", ex);
-                        informaraMiAutomata("error_en_registroRemoto_recurso", null);
-//			throw ex;
+			informaraMiAutomata("error_en_registroRemoto_recurso", null);
+			//			throw ex;
 		}
-            return interfacesRegistradas;
-}
+		return interfacesRegistradas;
+	}
 }
