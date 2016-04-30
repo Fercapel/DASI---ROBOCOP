@@ -41,12 +41,12 @@ public class GeneraryEncolarObjetivoActualizarFocoNC1 extends TareaSincrona {
 private  enum EstadoMovimientoRobot {Indefinido,RobotParado, RobotEnMovimiento, RobotBloqueado,RobotavanceImposible,enDestino,  error}
 private ItfUsoMovimientoCtrl itfcompMov;
 	private Victim victima;
-	private int velocidadCruceroPolicia= 1;
+	private int velocidadCruceroPordefecto= 1;
     @Override
     public void ejecutar(Object... params) {
         
         //    ItfUsoRecursoEstadistica itfUsoRecursoEstadistica=null;
-       // int velocidadCruceroPolicia = 1;// metros por segundo
+       // int velocidadCruceroPordefecto = 1;// metros por segundo
         //Para recoger estadisticas del instante de envio de victimas desde el centro de control
 
         try {
@@ -86,7 +86,7 @@ private ItfUsoMovimientoCtrl itfcompMov;
 				
 				public void run(){
 					
-					itfcompMov.moverAdestino(victima.getName(), victima.getCoordinateVictim(), velocidadCruceroPolicia); 
+					itfcompMov.moverAdestino(victima.getName(), victima.getCoordinateVictim(), velocidadCruceroPordefecto); 
 				}
 			};
             AyudarVictima objetivoAsignado = new AyudarVictima(refVictima);
@@ -111,7 +111,7 @@ private ItfUsoMovimientoCtrl itfcompMov;
                 misObjs.addObjetivo(objetivoAsignado);
                 focoActual.setFoco(objetivoAsignado);
                 infoComMov.setidentDestino(objetivoAsignado.getobjectReferenceId());
-//                itfcompMov.moverAdestino(objetivoAsignado.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPolicia);
+//                itfcompMov.moverAdestino(objetivoAsignado.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPordefecto);
                 t.run();
                 estadoMovRobot = EstadoMovimientoRobot.RobotEnMovimiento.name();
 //                infoComMov.setidentEstadoRobot(estadoMovRobot);
@@ -150,7 +150,7 @@ private ItfUsoMovimientoCtrl itfcompMov;
                      else {
                     trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Robot parado. Se espera el tratamiento de la llegada a destino : "+ objetivoAsignado.toString()+ "Se ejecuta la tarea : " + identTarea + " Objetivo en curso:  " + objetivoActual + "\n");
                     infoComMov.setidentDestino(objetivoAsignado.getobjectReferenceId());
-                    itfcompMov.moverAdestino(objetivoAsignado.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPolicia);
+                    itfcompMov.moverAdestino(objetivoAsignado.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPordefecto);
                     }// verificar si esta parado en destino Se espera a que llegue y se trate la notificacion de llegada 
                 }
             }

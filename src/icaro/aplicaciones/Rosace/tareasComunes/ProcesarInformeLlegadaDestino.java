@@ -24,7 +24,7 @@ import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.
  * @author Francisco J Garijo
  */
 public class ProcesarInformeLlegadaDestino extends TareaSincrona{
-  int velocidadCruceroPolicia = 1;// metros por segundo 
+  int velocidadCruceroPordefecto = 1;// metros por segundo 
   private ItfUsoMovimientoCtrl itfcompMov;
   private Victim victimaRescatar;
   @Override
@@ -49,7 +49,7 @@ public class ProcesarInformeLlegadaDestino extends TareaSincrona{
               Objetivo objetivoConseguido = misObjs.getobjetivoMasPrioritario();
               Thread accesoCompMovimiento = new Thread(){
 				public void run(){
-					itfcompMov.moverAdestino(victimaRescatar.getName(), victimaRescatar.getCoordinateVictim(), velocidadCruceroPolicia);
+					itfcompMov.moverAdestino(victimaRescatar.getName(), victimaRescatar.getCoordinateVictim(), velocidadCruceroPordefecto);
 				}
 			};
               if (victimaRescatadaId.equals(objetivoConseguido.getobjectReferenceId())){
@@ -66,7 +66,7 @@ public class ProcesarInformeLlegadaDestino extends TareaSincrona{
                       String idVictimaRescatar=nuevoObjetivo.getobjectReferenceId();
                       victimaRescatar = victims.getVictimToRescue(idVictimaRescatar);
                      infoCompMov.setidentDestino(idVictimaRescatar);
-//                     infoCompMov.itfAccesoComponente.moverAdestino(nuevoObjetivo.getobjectReferenceId(), victimaRescatada.getCoordinateVictim(), velocidadCruceroPolicia);
+//                     infoCompMov.itfAccesoComponente.moverAdestino(nuevoObjetivo.getobjectReferenceId(), victimaRescatada.getCoordinateVictim(), velocidadCruceroPordefecto);
                   accesoCompMovimiento.start();
                   }
                   String estadoComponente=EstadoMovimientoRobot.RobotEnMovimiento.name();

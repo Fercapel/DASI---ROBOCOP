@@ -26,7 +26,7 @@ public class EncolarObjetivoActualizarFocoIGN extends TareaSincrona {
     public void ejecutar(Object... params) {
 
         //    ItfUsoRecursoEstadistica itfUsoRecursoEstadistica=null;
-        int velocidadCruceroPolicia = 1;// metros por segundo
+        int velocidadCruceroPordefecto = 1;// metros por segundo
         //Para recoger estadisticas del instante de envio de victimas desde el centro de control
 
         try {
@@ -80,7 +80,7 @@ public class EncolarObjetivoActualizarFocoIGN extends TareaSincrona {
 //                    nuevoObj.setSolved();
 //                    this.getEnvioHechos().actualizarHechoWithoutFireRules(nuevoObj);
 //                } else {             
-                itfcompMov.moverAdestino(nuevoObj.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPolicia);
+                itfcompMov.moverAdestino(nuevoObj.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPordefecto);
             // se pondra la verlocidad por defecto 
             trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Objetivo1 : "+ obj1.toString()+ "Se ejecuta la tarea : " + identTarea + " Se actualiza el  foco al objetivo:  " + nuevoObj + "\n");
             trazas.aceptaNuevaTrazaEjecReglas(identAgente,"Posicion Robot : "+itfcompMov.getCoordenadasActuales()+ "Se da orden al comp Movimiento  para salvar a la victima :  " + victima + "\n");

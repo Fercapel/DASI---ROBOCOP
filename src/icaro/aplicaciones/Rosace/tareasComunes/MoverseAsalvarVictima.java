@@ -23,7 +23,7 @@ import org.apache.log4j.Logger;
 public class MoverseAsalvarVictima extends TareaSincrona {
     // private Victim victim;
     private Logger log = Logger.getLogger(this.getClass().getSimpleName());
-    int velocidadCruceroPolicia = 20;// metros por segundo
+    int velocidadCruceroPordefecto = 5;// metros por segundo
     private ItfUsoMovimientoCtrl itfcompMov;
 	private Victim victima;
 
@@ -55,7 +55,7 @@ public class MoverseAsalvarVictima extends TareaSincrona {
 				
 				public void run(){
 					
-					itfcompMov.moverAdestino(victima.getName(), victima.getCoordinateVictim(), velocidadCruceroPolicia); 
+					itfcompMov.moverAdestino(victima.getName(), victima.getCoordinateVictim(), velocidadCruceroPordefecto); 
 				}
 			};
             if (nuevoObj.getPriority()>0 ){
@@ -69,7 +69,7 @@ public class MoverseAsalvarVictima extends TareaSincrona {
                 
                 victima = victimasArescatar.getVictimToRescue(nuevoObj.getobjectReferenceId());
                  itfcompMov = (ItfUsoMovimientoCtrl) infoComMov.getitfAccesoComponente();
-//                itfcompMov.moverAdestino(nuevoObj.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPolicia); // se pondra la verlocidad por defecto 
+//                itfcompMov.moverAdestino(nuevoObj.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPordefecto); // se pondra la verlocidad por defecto 
                 t.run();
                  infoComMov.setitfAccesoComponente(itfcompMov);
                     nuevoObj.setSolving();

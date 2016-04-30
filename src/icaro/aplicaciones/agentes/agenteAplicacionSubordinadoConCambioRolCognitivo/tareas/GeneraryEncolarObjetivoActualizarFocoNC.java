@@ -28,7 +28,7 @@ public class GeneraryEncolarObjetivoActualizarFocoNC extends TareaSincrona{
 		
     @Override
    public void ejecutar(Object... params) {
-    int	velocidadCruceroPolicia = 1;
+    int	velocidadCruceroPordefecto = 1;
 //       ItfUsoRecursoEstadistica itfUsoRecursoEstadistica=null;    //Para recoger estadisticas del instante de envio de victimas desde el centro de contro    	
 	   try {
              MisObjetivos misObjs = (MisObjetivos) params[0];
@@ -81,7 +81,7 @@ public class GeneraryEncolarObjetivoActualizarFocoNC extends TareaSincrona{
 //                ItfUsoMovimientoCtrl itfcompMov = (ItfUsoMovimientoCtrl) infoComMov.getitfAccesoComponente();
 //                // caso 1 el objetivo mas prioritario es el objetivo asignado
 //                if ( objActual.getobjectReferenceId().equals(nuevoObj.getobjectReferenceId())){
-//                    itfcompMov.moverAdestino(victima.getName(), victima.getCoordinateVictim(), velocidadCruceroPolicia);
+//                    itfcompMov.moverAdestino(victima.getName(), victima.getCoordinateVictim(), velocidadCruceroPordefecto);
 //                }
 //                else{
 //                   // caso 2 hay otro objetivo victima  en curso de ayuda. Se encola el objetivo
@@ -90,7 +90,7 @@ public class GeneraryEncolarObjetivoActualizarFocoNC extends TareaSincrona{
 //                if (itfcompMov.paradoEnDestino(objActual.getobjectReferenceId())){
 //                    // no se hace nada y esperamos a tratar el informe de llegada a destino
 //                }
-//            itfcompMov.moverAdestino(objActual.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPolicia); // se pondra la verlocidad por defecto 
+//            itfcompMov.moverAdestino(objActual.getobjectReferenceId(), victima.getCoordinateVictim(), velocidadCruceroPordefecto); // se pondra la verlocidad por defecto 
             trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se ejecuta la tarea : " + identTarea + " Se genera el  objetivo:  "+ nuevoObj+
                     " Se actualiza el  foco al objetivo:  " + focoActual + "\n");
             trazas.aceptaNuevaTrazaEjecReglas(identAgente, "Se da orden al comp Movimiento  para salvar a la victima :  " + victima + "\n");

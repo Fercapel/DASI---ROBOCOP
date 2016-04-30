@@ -1,6 +1,6 @@
 package icaro.aplicaciones.recursos.recursoCreacionEntornosSimulacion;
 
-import icaro.aplicaciones.recursos.recursoCreacionEntornosSimulacion.imp.EscenarioSimulacionPoliciasLadrones;
+import icaro.aplicaciones.recursos.recursoCreacionEntornosSimulacion.imp.EscenarioSimulacionRobtsVictms;
 import icaro.infraestructura.patronRecursoSimple.ItfUsoRecursoSimple;
 
 //Other imports used by this Resource
@@ -13,6 +13,6 @@ public interface ItfUsoRecursoCreacionEntornosSimulacion extends ItfUsoRecursoSi
     public void abrirEditor()throws Exception;
     public void cerrarEditor()throws Exception;
     public void MostrarEscenarioActualSimulado(String identEscenario) throws Exception;
-    public EscenarioSimulacionPoliciasLadrones getEscenarioPoliciasLadrones (String identEscenario)throws Exception;
+    public EscenarioSimulacionRobtsVictms getEscenarioRobotsVictims (String identEscenario)throws Exception;
        
 }

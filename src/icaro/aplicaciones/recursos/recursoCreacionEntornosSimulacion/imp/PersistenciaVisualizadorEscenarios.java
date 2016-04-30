@@ -19,7 +19,7 @@ public class PersistenciaVisualizadorEscenarios {
     public PersistenciaVisualizadorEscenarios(){
         
     }
-    public void guardarInfoEscenarioSimulacion(String rutaFicheroInfoPersistencia,EscenarioSimulacionPoliciasLadrones escenario){
+    public void guardarInfoEscenarioSimulacion(String rutaFicheroInfoPersistencia,EscenarioSimulacionRobtsVictms escenario){
          Serializer serializer = new Persister();
          String identFichero = escenario.getIdentEscenario();
          try {
@@ -58,7 +58,7 @@ public class PersistenciaVisualizadorEscenarios {
         }  
          return false;
      }
-     public EscenarioSimulacionPoliciasLadrones obtenerInfoEscenarioSimulacion(String rutaFicheroInfoPersistencia){
+     public EscenarioSimulacionRobtsVictms obtenerInfoEscenarioSimulacion(String rutaFicheroInfoPersistencia){
          try {
               File ficheroEscenario = new File(rutaFicheroInfoPersistencia);
                 if(!ficheroEscenario.exists()){
@@ -68,7 +68,7 @@ public class PersistenciaVisualizadorEscenarios {
              
                 }else {
                    Serializer serializer = new Persister();
-                return   serializer.read(EscenarioSimulacionPoliciasLadrones.class,ficheroEscenario, false);
+                return   serializer.read(EscenarioSimulacionRobtsVictms.class,ficheroEscenario, false);
                     
                 }   
                 }catch (Exception e) { // catches ANY exception
