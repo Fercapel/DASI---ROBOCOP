@@ -5,9 +5,8 @@ import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.*;
 import icaro.infraestructura.patronAgenteCognitivo.procesadorObjetivos.gestorTareas.ItfGestorTareas;
 import icaro.aplicaciones.Rosace.informacion.*;
 import icaro.aplicaciones.Rosace.tareasComunes.*;
-import icaro.aplicaciones.agentes.agentePolicia.objetivos.*;
-import icaro.aplicaciones.agentes.agentePolicia.tareas.*;
-import icaro.aplicaciones.Robocop.*;
+import icaro.aplicaciones.agentes.agenteComisaria.objetivos.*;
+import icaro.aplicaciones.agentes.agenteComisaria.tareas.*;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 
 import java.util.ArrayList;
@@ -23,8 +22,8 @@ rule "Acciones Iniciales Prueba Cambio Rol "
  when
 	not ( exists(Focus()))
  then
-	TareaSincrona tarea = gestorTareas.crearTareaSincrona(InicializarPolicia.class);
-	tarea.ejecutar( );   
+	TareaSincrona tarea2 = gestorTareas.crearTareaSincrona(InicializarComisaria.class);
+	tarea2.ejecutar( );   
 	System.out.println( "\n"+agentId +"EJECUTO LA REGLA Acciones Iniciales\n\n" ); 
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," :REGLA " + drools.getRule().getName());
 end
@@ -34,14 +33,14 @@ rule "Acciones Iniciales Objetivo "
 	focoActual : Focus(foco == null)
 	not ( exists(Objetivo()))
  then
-	Objetivo ob = new RecibirSaludos();
-    insert(ob);
+	Objetivo ob2 = new SaludarPolicia();
+    insert(ob2);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
 
 rule "Regla de focalizacion de observar entorno"
  when
-    obj:RecibirSaludos(state==Objetivo.PENDING)
+    obj:SaludarPolicia(state==Objetivo.PENDING)
     f:Focus(foco == null)
  then
     f.setFoco(obj);
@@ -51,15 +50,13 @@ end
 
 rule "Regla de resolucion de observar entorno"
  when
-    obj:RecibirSaludos(state==Objetivo.PENDING)
+    obj:SaludarPolicia(state==Objetivo.PENDING)
     f:Focus(foco==obj)
-    mensaje:Mensaje(/*emisor == "Comisaria", mensajeAcept == "Hola Policia1, soy la Comisaria"*/)
-    //not( exists ( MensajeACK(mensajeACK == mensaje  )))
  then
     obj.setState(Objetivo.SOLVING);
     update(obj);
-    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarMensajeConfirmacion.class);
- 	tarea.ejecutar(new Mensaje("Comisaria", "-------- ACK --------"));
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarMensajeAPolicia.class);
+ 	tarea.ejecutar("Hola Policia1, soy la Comisaria");  
  	obj.setState(Objetivo.SOLVED);
     update(obj);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
@@ -68,7 +65,7 @@ end
 
 rule "Regla de finalizacion de observar entorno"
  when
-    obj:RecibirSaludos(state==Objetivo.SOLVED)
+    obj:SaludarPolicia(state==Objetivo.SOLVED)
     f:Focus(foco==obj)
  then
  	f.setFoco(null);
