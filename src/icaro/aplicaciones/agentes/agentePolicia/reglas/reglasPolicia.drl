@@ -53,13 +53,13 @@ rule "Regla de resolucion de observar entorno"
  when
     obj:RecibirSaludos(state==Objetivo.PENDING)
     f:Focus(foco==obj)
-    mensaje:Mensaje(/*emisor == "Comisaria", mensajeAcept == "Hola Policia1, soy la Comisaria"*/)
-    //not( exists ( MensajeACK(mensajeACK == mensaje  )))
+    mensajeObj:Mensaje(identAgente == "Comisaria" , mensaje == "Hola Policia1, soy la Comisaria")
+    not( exists ( MensajeACK(msgAConfirmar == mensajeObj  )))
  then
     obj.setState(Objetivo.SOLVING);
     update(obj);
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarMensajeConfirmacion.class);
- 	tarea.ejecutar(new Mensaje("Comisaria", "-------- ACK --------"));
+ 	tarea.ejecutar(mensajeObj);
  	obj.setState(Objetivo.SOLVED);
     update(obj);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());

@@ -19,7 +19,7 @@ public class MandarMensajeAPolicia extends TareaSincrona{
 		
 		// TODO Auto-generated method stub
 		nombreAgenteEmisor = this.getAgente().getIdentAgente(); // Se obtiene el id del agente emisor
-		nombreAgenteReceptor = "Policia1";
+		nombreAgenteReceptor = (String)params[1];
 		
 		// Se crea el objeto mensaje
 		Mensaje msg = new Mensaje(nombreAgenteEmisor, msg_texto);

@@ -56,7 +56,7 @@ rule "Regla de resolucion de observar entorno"
     obj.setState(Objetivo.SOLVING);
     update(obj);
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarMensajeAPolicia.class);
- 	tarea.ejecutar("Hola Policia1, soy la Comisaria");  
+ 	tarea.ejecutar("Hola Policia1, soy la Comisaria", "Policia1");  
  	obj.setState(Objetivo.SOLVED);
     update(obj);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());

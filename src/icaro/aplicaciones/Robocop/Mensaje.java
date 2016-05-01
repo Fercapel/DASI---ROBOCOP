@@ -12,6 +12,11 @@ public class Mensaje implements Serializable {
 
 	}
 
+	public Mensaje(String identAgenteEmisor) {
+		identAgente = identAgenteEmisor;
+		mensaje = "";
+	}
+	
 	public Mensaje(String identAgenteEmisor, String var_mensaje) {
 		identAgente = identAgenteEmisor;
 		mensaje = var_mensaje;
