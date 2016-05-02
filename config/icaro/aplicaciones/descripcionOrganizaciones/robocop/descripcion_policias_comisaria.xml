@@ -119,6 +119,8 @@
 						tipoComponente="AgenteAplicacion" />
 					<icaro:componenteGestionado refId="Ladron1"
 						tipoComponente="AgenteAplicacion" />
+					<icaro:componenteGestionado refId="Ladron2"
+						tipoComponente="AgenteAplicacion" />
 				</icaro:componentesGestionados>
 			</icaro:InstanciaGestor>
 			<icaro:InstanciaGestor id="GestorRecursos"
@@ -146,6 +148,8 @@
 			<icaro:Instancia id="Policia1" refDescripcion="AgenteAplicacionPolicia">
 			</icaro:Instancia>
 			<icaro:Instancia id="Ladron1" refDescripcion="AgenteAplicacionLadron">
+			</icaro:Instancia>
+			<icaro:Instancia id="Ladron2" refDescripcion="AgenteAplicacionLadron">
 			</icaro:Instancia>
 		</icaro:AgentesAplicacion>
 		<!--****************************************************************************************************** 

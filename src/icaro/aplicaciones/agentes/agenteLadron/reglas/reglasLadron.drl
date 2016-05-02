@@ -7,6 +7,7 @@ import icaro.aplicaciones.Rosace.informacion.*;
 import icaro.aplicaciones.Rosace.tareasComunes.*;
 import icaro.aplicaciones.agentes.agenteLadron.objetivos.*;
 import icaro.aplicaciones.agentes.agenteLadron.tareas.*;
+import icaro.aplicaciones.Robocop.informacion.*;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 
 import java.util.ArrayList;
@@ -98,7 +99,7 @@ rule "Regla de focalizacion de Listar Amigos tras Saludar"
 		retract(obj1);
 end
 
-rule "Regla de resolucion de Listar Amigos"
+rule "Regla de preguntar de Listar Amigos"
  when
     obj:ListarAmigos(state==Objetivo.PENDING)
     f:Focus(foco==obj)
@@ -113,16 +114,16 @@ rule "Regla de resolucion de Listar Amigos"
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
 end
 
-rule "Regla de resolucion de Listar Amigos"
+rule "Regla de responder de Listar Amigos"    //focoActual : Focus(objFocalizado : foco != obj )
  when
     obj:ListarAmigos(state==Objetivo.SOLVING) 					// Estado en el que queda el objetivo al enviar la peticion de identificacion
     f:Focus(foco==obj)
-    peticion:PeticionIdentificacion(identAgente != agentId)		// Si me llega una peticion de identificacion de otro agente
+    exists (PeticionIdentificacion(destinatId:identAgente != agentId))		// Si me llega una peticion de identificacion de otro agente
  then
     //obj.setState(Objetivo.SOLVING);
     //update(obj);
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(Responder.class);
- 	tarea.ejecutar("Ladron", "Policia1");
+ 	tarea.ejecutar("Ladron", destinatId);
  	obj.setState(Objetivo.REFINED);
     update(obj);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());

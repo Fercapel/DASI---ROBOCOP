@@ -3,7 +3,7 @@ package icaro.aplicaciones.agentes.agenteLadron.tareas;
 import icaro.aplicaciones.Robocop.informacion.RespuestaIdentificacion;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 
-public class Responder extends TareaSincrona{
+public class CrearEquipo extends TareaSincrona{
 	
 	private String nombreAgenteEmisor;
 	private String nombreAgenteReceptor;
