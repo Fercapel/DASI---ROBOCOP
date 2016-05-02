@@ -3,8 +3,9 @@ import icaro.infraestructura.recursosOrganizacion.recursoTrazas.ItfUsoRecursoTra
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.*;
 import icaro.infraestructura.patronAgenteCognitivo.procesadorObjetivos.gestorTareas.ItfGestorTareas;
-import icaro.aplicaciones.Rosace.informacion.*;
-import icaro.aplicaciones.Rosace.tareasComunes.*;
+//import icaro.aplicaciones.Rosace.informacion.*;
+//import icaro.aplicaciones.Rosace.tareasComunes.*;
+import icaro.aplicaciones.Robocop.*;
 import icaro.aplicaciones.agentes.agenteComisaria.objetivos.*;
 import icaro.aplicaciones.agentes.agenteComisaria.tareas.*;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
@@ -33,11 +34,52 @@ rule "Acciones Iniciales Objetivo "
 	focoActual : Focus(foco == null)
 	not ( exists(Objetivo()))
  then
-	Objetivo ob2 = new SaludarPolicia();
+	Objetivo ob2 = new DefinirMiEquipo();
     insert(ob2);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
 
+rule "Regla de focalizacion de observar entorno"
+ when
+    obj:DefinirMiEquipo(state==Objetivo.PENDING)
+    f:Focus(foco == null)
+ then
+    f.setFoco(obj);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    update(f);
+end
+
+rule "Regla de resolucion de observar entorno"
+ when
+    obj:DefinirMiEquipo(state==Objetivo.PENDING)
+    // miEquipo: InfoEquipo(inicioContactoConEquipo == false)
+    f:Focus(foco==obj)
+ then
+    obj.setState(Objetivo.SOLVING);
+    update(obj);
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(FormarEquipo.class);
+ 	tarea.ejecutar();  
+ 	
+ 	obj.setState(Objetivo.SOLVED);
+    update(obj);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
+end
+
+rule "Regla de finalizacion de observar entorno"
+ when
+    obj:DefinirMiEquipo(state==Objetivo.SOLVED)
+    f:Focus(foco==obj)
+ then
+ 	f.setFoco(null);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"Nuevo Foco : " + f.getFoco());
+    retract(obj);
+    update(f);
+end
+
+
+/*
 rule "Regla de focalizacion de observar entorno"
  when
     obj:SaludarPolicia(state==Objetivo.PENDING)
@@ -75,3 +117,4 @@ rule "Regla de finalizacion de observar entorno"
     update(f);
 end
 
+*/

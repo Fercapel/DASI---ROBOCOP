@@ -1,7 +1,7 @@
 package icaro.aplicaciones.agentes.agentePolicia.tareas;
 
-import icaro.aplicaciones.Robocop.Mensaje;
 import icaro.aplicaciones.Robocop.MensajeACK;
+import icaro.infraestructura.entidadesBasicas.comunicacion.MensajeSimple;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 
 /*
@@ -12,15 +12,15 @@ public class MandarMensajeConfirmacion extends TareaSincrona {
 
 	private String nombreAgenteEmisor; // El que emite la confirmacion
 	private String nombreAgenteReceptor; // El que recibe la confirmacion
-	private Mensaje msgAConfirmar;
+	private MensajeSimple msgAConfirmar;
 
 	@Override
 	public void ejecutar(Object... params) {
 		// TODO Auto-generated method stub
 		nombreAgenteEmisor = this.getAgente().getIdentAgente();
-		msgAConfirmar = (Mensaje) params[0]; // Se mete el mensaje por el
+		msgAConfirmar = (MensajeSimple) params[0]; // Se mete el mensaje por el
 												// parametro de la funcion
-		nombreAgenteReceptor = msgAConfirmar.getIdentAgente(); // Se obtiene el
+		nombreAgenteReceptor = (String) msgAConfirmar.getReceptor(); // Se obtiene el
 																// receptor a
 																// partir del
 																// mensaje

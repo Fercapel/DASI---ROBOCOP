@@ -1,10 +1,13 @@
 package icaro.aplicaciones.agentes.agenteComisaria.tareas;
 
+import java.util.ArrayList;
+
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Focus;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 
 public class InicializarComisaria extends TareaSincrona {
 
+	
 	@Override
 	public void ejecutar(Object... params) {
 		try {
@@ -16,6 +19,7 @@ public class InicializarComisaria extends TareaSincrona {
 			this.getEnvioHechos().insertarHechoWithoutFireRules(new Focus());
 			//this.getEnvioHechos().insertarHechoWithoutFireRules(new MisObjetivos());
 			//this.getEnvioHechos().insertarHechoWithoutFireRules(new VictimsToRescue());
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();

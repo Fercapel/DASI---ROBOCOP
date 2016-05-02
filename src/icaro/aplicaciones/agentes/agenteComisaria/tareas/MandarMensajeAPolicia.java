@@ -22,7 +22,7 @@ public class MandarMensajeAPolicia extends TareaSincrona{
 		nombreAgenteReceptor = (String)params[1];
 		
 		// Se crea el objeto mensaje
-		Mensaje msg = new Mensaje(nombreAgenteEmisor, msg_texto);
+		Mensaje msg = new Mensaje(nombreAgenteEmisor, msg_texto /*, nombreAgenteReceptor*/);
 		
 		//msg.setMensaje(msg_texto);
 		

@@ -9,6 +9,7 @@ import icaro.aplicaciones.agentes.agentePolicia.objetivos.*;
 import icaro.aplicaciones.agentes.agentePolicia.tareas.*;
 import icaro.aplicaciones.Robocop.*;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
+import icaro.infraestructura.entidadesBasicas.comunicacion.*;
 
 import java.util.ArrayList;
 import java.lang.String;
@@ -53,13 +54,19 @@ rule "Regla de resolucion de observar entorno"
  when
     obj:RecibirSaludos(state==Objetivo.PENDING)
     f:Focus(foco==obj)
-    mensajeObj:Mensaje(identAgente == "Comisaria" , mensaje == "Hola Policia1, soy la Comisaria")
-    not( exists ( MensajeACK(msgAConfirmar == mensajeObj  )))
+    // mensajeObj:Mensaje(identAgente == "Comisaria" , mensaje == "Hola Policia, soy la Comisaria")
+    // mensajeObj:MensajeSimple()
+    //not( exists ( MensajeACK(msgAConfirmar == mensajeObj  )))
+    exists(MensajeSimple())
  then
     obj.setState(Objetivo.SOLVING);
     update(obj);
-    TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarMensajeConfirmacion.class);
- 	tarea.ejecutar(mensajeObj);
+    //TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarMensajeConfirmacion.class);
+ 	//tarea.ejecutar(mensajeObj);
+ 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(DecirHola.class);
+ 	tarea.ejecutar("Probando------------------");
+ 	
  	obj.setState(Objetivo.SOLVED);
     update(obj);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
