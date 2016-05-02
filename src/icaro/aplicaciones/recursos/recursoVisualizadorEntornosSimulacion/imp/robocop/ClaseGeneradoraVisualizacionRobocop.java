@@ -14,6 +14,7 @@ public class ClaseGeneradoraVisualizacionRobocop extends ImplRecursoSimple imple
 	private static final long serialVersionUID = 1L;
 	
 	private ControladorVisualizacionRobocop controladorIUSimulador;
+	private VisorMovimientoRobocop visorMovimiento;
 	
 	public ClaseGeneradoraVisualizacionRobocop(String idRecurso) throws RemoteException {
 		super(idRecurso);
@@ -36,7 +37,22 @@ public class ClaseGeneradoraVisualizacionRobocop extends ImplRecursoSimple imple
 	@Override
 	public void mostrarEscenarioMovimiento() throws Exception {
 		controladorIUSimulador.peticionMostrarEscenarioMovimiento();
+		visorMovimiento = controladorIUSimulador.getVisorMovimientoRobocop();
+	}
+
+	@Override
+	public void inicializarDestinoRobot(String identRobot, int xActual, int yActual, String identDestino, int xDestino,
+			int yDestino) {
+		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public synchronized void mostrarPosicionRobot(String identRobot, int xActual, int yActual) {
+		if(visorMovimiento == null){
+			controladorIUSimulador.peticionMostrarEscenarioMovimiento();
+		}
+		visorMovimiento.cambiarPosicionRobot(identRobot, xActual, yActual);
 	}
 
 }

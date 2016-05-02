@@ -104,7 +104,7 @@ public class VocabularioRosace extends NombresPredefinidos{
     static public  final String IdentAgteControladorSimulador = "AgenteControladorSimuladorRosaceReactivo1"; 
     //static public  final String IdentRecursoVisualizadorEstadisticas = "RecursoVisualizadorEstadisticas1";
     static public  final String IdentRecursoCreacionEntornosSimulacion = "RecursoCreacionEntornosSimulacion1";
-    static public  final String IdentRecursoVisualizadorEntornosSimulacion = "RecursoVisualizadorEntornosSimulacionRobocop";
+    static public  final String IdentRecursoVisualizadorEntornosSimulacion = "RecursoVisualizadorEntornoSimulacionRobocop";
     //static public  final String IdentRecursoVisualizadorEntornosSimulacion = "RecursoVisualizadorEntornosSimulacion1";
     static public  final String IdentPersistenciaEntornosSimulacion = "RecursoPersistenciaEntornosSimulacion1";
     static public  final String IdentDirectorioPersistenciaSimulacion = "PersistenciaResultadosSimulacion";

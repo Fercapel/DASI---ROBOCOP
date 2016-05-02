@@ -5,6 +5,7 @@
 package icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp;
 
 import icaro.aplicaciones.Rosace.informacion.*;
+import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.robocop.ClaseGeneradoraVisualizacionRobocop;
 import icaro.infraestructura.entidadesBasicas.comunicacion.ComunicacionAgentes;
 import icaro.infraestructura.entidadesBasicas.comunicacion.InfoContEvtMsgAgteReactivo;
 import icaro.infraestructura.entidadesBasicas.interfaces.InterfazUsoAgente;
@@ -23,7 +24,7 @@ import java.util.logging.Logger;
 public class NotificadorInfoUsuarioSimulador extends ComunicacionAgentes{
   
     protected ItfUsoRepositorioInterfaces itfUsoRepositorioInterfaces;
-    protected ClaseGeneradoraRecursoVisualizadorEntornosSimulacion generadoraVisualizador;
+    protected ClaseGeneradoraVisualizacionRobocop generadoraVisualizador;
   //  protected InterfazUsoAgente itfUsoAgenteaReportar;
     protected String identificadorAgenteaReportar;
     protected String identRecurso;

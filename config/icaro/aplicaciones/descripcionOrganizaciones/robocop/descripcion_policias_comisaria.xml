@@ -99,7 +99,7 @@
 			</icaro:InstanciaGestor>
 			<icaro:InstanciaGestor id="GestorRecursos" refDescripcion="GestorRecursos">
 				<icaro:componentesGestionados>
-                	<icaro:componenteGestionado refId="RecursoVisualizadorEntornosSimulacionRobocop" tipoComponente="RecursoAplicacion"/>	    
+                	<icaro:componenteGestionado refId="RecursoVisualizadorEntornoSimulacionRobocop" tipoComponente="RecursoAplicacion"/>	    
 					<icaro:componenteGestionado refId="RecursoPersistenciaEntornosSimulacion1" tipoComponente="RecursoAplicacion"/> 
 					<icaro:componenteGestionado refId="RecursoCreacionEntornosSimulacion1" tipoComponente="RecursoAplicacion"/> 
                 </icaro:componentesGestionados>
@@ -127,7 +127,7 @@
 		********************************************************************************************************-->        
         <icaro:RecursosAplicacion>
 			<icaro:Instancia 
-				id="RecursoVisualizadorEntornosSimulacionRobocop" 
+				id="RecursoVisualizadorEntornoSimulacionRobocop" 
 				refDescripcion="RecursoVisualizadorEntornoSimulacion" 
 				xsi:type="icaro:Instancia"/>
             <icaro:Instancia 

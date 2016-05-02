@@ -17,4 +17,8 @@ public class ControladorVisualizacionRobocop {
             Exceptions.printStackTrace(ex);
         }
 	}
+	
+	public VisorMovimientoRobocop getVisorMovimientoRobocop(){
+		return visorMovimientoEscen;
+	}
 }
