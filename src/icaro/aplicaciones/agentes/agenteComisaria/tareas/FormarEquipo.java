@@ -17,7 +17,7 @@ public class FormarEquipo extends TareaSincrona{
 		agentesEquipo = new ArrayList<String>();
 		
 		
-		agentesEquipo.add("Comisaria");
+		//agentesEquipo.add("Comisaria");
 		agentesEquipo.add("Policia1");
 		agentesEquipo.add("Policia2");
 		
@@ -25,7 +25,7 @@ public class FormarEquipo extends TareaSincrona{
 		InfoEquipo equipoInfo = new InfoEquipo("Comisaria", "MiEquipo", agentesEquipo);
 		
 		
-		this.getComunicator().informaraGrupoAgentes("Formando Equipo", equipoInfo.getTeamRobotIds());
+		this.getComunicator().informaraGrupoAgentes(equipoInfo, equipoInfo.getTeamRobotIds());
         equipoInfo.setInicioContactoConEquipo(true);
         
         trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Numero de agentes de los que espero respuesta:" + agentesEquipo.size(), InfoTraza.NivelTraza.info));     

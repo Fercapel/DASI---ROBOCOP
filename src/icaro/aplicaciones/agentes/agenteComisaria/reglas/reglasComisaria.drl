@@ -54,13 +54,14 @@ rule "Regla de resolucion de observar entorno"
     obj:DefinirMiEquipo(state==Objetivo.PENDING)
     // miEquipo: InfoEquipo(inicioContactoConEquipo == false)
     f:Focus(foco==obj)
+    not( exists ( InfoEquipo(inicioContactoConEquipo == false)  ))
  then
     obj.setState(Objetivo.SOLVING);
     update(obj);
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(FormarEquipo.class);
  	tarea.ejecutar();  
  	
- 	obj.setState(Objetivo.SOLVED);
+ 	obj.setState(Objetivo.REFINED);
     update(obj);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());

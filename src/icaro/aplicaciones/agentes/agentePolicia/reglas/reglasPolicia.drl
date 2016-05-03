@@ -3,8 +3,8 @@ import icaro.infraestructura.recursosOrganizacion.recursoTrazas.ItfUsoRecursoTra
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.*;
 import icaro.infraestructura.patronAgenteCognitivo.procesadorObjetivos.gestorTareas.ItfGestorTareas;
-import icaro.aplicaciones.Rosace.informacion.*;
-import icaro.aplicaciones.Rosace.tareasComunes.*;
+//import icaro.aplicaciones.Rosace.informacion.*;
+//import icaro.aplicaciones.Rosace.tareasComunes.*;
 import icaro.aplicaciones.agentes.agentePolicia.objetivos.*;
 import icaro.aplicaciones.agentes.agentePolicia.tareas.*;
 import icaro.aplicaciones.Robocop.*;
@@ -57,7 +57,8 @@ rule "Regla de resolucion de observar entorno"
     // mensajeObj:Mensaje(identAgente == "Comisaria" , mensaje == "Hola Policia, soy la Comisaria")
     // mensajeObj:MensajeSimple()
     //not( exists ( MensajeACK(msgAConfirmar == mensajeObj  )))
-    exists(MensajeSimple())
+    // exists(MensajeSimple())
+    exists(InfoEquipo())
  then
     obj.setState(Objetivo.SOLVING);
     update(obj);
@@ -67,7 +68,7 @@ rule "Regla de resolucion de observar entorno"
  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(DecirHola.class);
  	tarea.ejecutar("Probando------------------");
  	
- 	obj.setState(Objetivo.SOLVED);
+ 	obj.setState(Objetivo.REFINED);
     update(obj);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
