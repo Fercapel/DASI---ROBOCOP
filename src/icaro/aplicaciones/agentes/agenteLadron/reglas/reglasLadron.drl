@@ -106,15 +106,15 @@ rule "Regla de preguntar de Listar Amigos"
  then
     obj.setState(Objetivo.SOLVING);
     update(obj);
-    TareaSincrona tarea = gestorTareas.crearTareaSincrona(Contactar.class);
- 	tarea.ejecutar("Quien eres? Yo soy ");
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(CrearEquipo.class);
+ 	tarea.ejecutar();//"Quien eres? Yo soy ");
  	//obj.setState(Objetivo.REFINED);
     //update(obj);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
 end
 
-rule "Regla de responder de Listar Amigos"    //focoActual : Focus(objFocalizado : foco != obj )
+/*rule "Regla de responder de Listar Amigos"    //focoActual : Focus(objFocalizado : foco != obj )
  when
     obj:ListarAmigos(state==Objetivo.SOLVING) 					// Estado en el que queda el objetivo al enviar la peticion de identificacion
     f:Focus(foco==obj)
@@ -129,3 +129,4 @@ rule "Regla de responder de Listar Amigos"    //focoActual : Focus(objFocalizado
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
 end
+*/

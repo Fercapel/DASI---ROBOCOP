@@ -5,14 +5,25 @@ import java.util.ArrayList;
 
 public class Equipo implements Serializable{
 
+	public String idEquipo;
 	public ArrayList<String> equipo;
 
-	public Equipo() {
+	public Equipo(String idEquipo) {
+		this.idEquipo = idEquipo;
 		this.equipo = new ArrayList<String>();
 	}
 
-	public Equipo(ArrayList<String> equipo) {
+	public Equipo(String idEquipo, ArrayList<String> equipo) {
+		this.idEquipo = idEquipo;
 		this.equipo = equipo;
+	}
+	
+	public void setIdEquipo(String idEquipo) {
+		this.idEquipo = idEquipo;
+	}
+	
+	public String getIdEquipo(){
+		return this.idEquipo;
 	}
 
 	public void setEquipo(ArrayList<String> equipo) {
@@ -34,7 +45,7 @@ public class Equipo implements Serializable{
 
 	@Override
 	public String toString() {
-		String text = "Equipo: ";
+		String text = "Equipo " + this.idEquipo + ": ";
 		for(int i = 0; i < this.equipo.size(); i++){
 			text = text + this.equipo.get(i) + ", ";
 		}
