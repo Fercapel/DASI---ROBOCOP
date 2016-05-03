@@ -1,0 +1,122 @@
+import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.InformeDeTarea;
+import icaro.infraestructura.recursosOrganizacion.recursoTrazas.ItfUsoRecursoTrazas;
+import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
+import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.*;
+import icaro.infraestructura.patronAgenteCognitivo.procesadorObjetivos.gestorTareas.ItfGestorTareas;
+import icaro.aplicaciones.Rosace.informacion.*;
+import icaro.aplicaciones.Rosace.tareasComunes.*;
+import icaro.aplicaciones.agentes.agenteLadron.objetivos.*;
+import icaro.aplicaciones.agentes.agenteLadron.tareas.*;
+import icaro.aplicaciones.Robocop.informacion.*;
+import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
+
+import java.util.ArrayList;
+import java.lang.String;
+
+
+global ItfGestorTareas gestorTareas;
+global ItfUsoRecursoTrazas recursoTrazas;
+global String agentId;   // ******************************************** ID del agente ladron para usar en reglas
+global String agentType; // ******************************************** Tipo del agente (ladron) para usar en reglas
+
+//Primera regla que se ejecutara. Solo se debe disparar una vez.
+rule "Acciones Iniciales Prueba Cambio Rol "
+ when
+	not ( exists(Focus()))
+ then
+	TareaSincrona tarea = gestorTareas.crearTareaSincrona(InicializarLadron.class);
+	tarea.ejecutar( );   
+	System.out.println( "\n"+agentId +"EJECUTO LA REGLA Acciones Iniciales\n\n" ); 
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," :REGLA " + drools.getRule().getName());
+end
+
+rule "Acciones Iniciales Objetivo "
+ when
+	focoActual : Focus(foco == null)
+	not ( exists(Objetivo()))
+ then
+	Objetivo ob = new Saludar();
+    insert(ob);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+rule "Regla de focalizacion de observar entorno"
+ when
+    obj:Saludar(state==Objetivo.PENDING)
+    f:Focus(foco == null)
+ then
+    f.setFoco(obj);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    update(f);
+end
+
+rule "Regla de resolucion de observar entorno"
+ when
+    obj:Saludar(state==Objetivo.PENDING)
+    f:Focus(foco==obj)
+ then
+    obj.setState(Objetivo.SOLVING);
+    update(obj);
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(DecirHola.class);
+ 	tarea.ejecutar("hola, estoy funcionando y soy ");
+ 	obj.setState(Objetivo.REFINED);
+    update(obj);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
+end
+
+/*
+rule "Inicio Listar Amigos"
+	when
+		obj1:Saludar(state==Objetivo.REFINED)
+		f:Focus(foco==obj1)
+	then
+		Objetivo obj2 = new ListarAmigos();
+    	insert(obj2);
+    	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());    
+end
+
+rule "Regla de focalizacion de Listar Amigos tras Saludar"
+	when
+		obj1:Saludar(state==Objetivo.REFINED)		
+		f:Focus(foco == obj1)
+		obj2:ListarAmigos(state==Objetivo.PENDING)
+	then
+		f.setFoco(obj2);
+		recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+		update(f);
+		retract(obj1);
+end
+
+
+rule "Regla de CrearEquipo"
+ when
+    obj:ListarAmigos(state==Objetivo.PENDING)
+    f:Focus(foco==obj)
+ then
+    obj.setState(Objetivo.SOLVING);
+    update(obj);
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(CrearEquipo.class);
+ 	tarea.ejecutar();//"Quien eres? Yo soy ");
+ 	//obj.setState(Objetivo.REFINED);
+    //update(obj);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
+end*/
+
+/*rule "Regla de responder de Listar Amigos"    //focoActual : Focus(objFocalizado : foco != obj )
+ when
+    obj:ListarAmigos(state==Objetivo.SOLVING) 					// Estado en el que queda el objetivo al enviar la peticion de identificacion
+    f:Focus(foco==obj)
+    exists (PeticionIdentificacion(destinatId:identAgente != agentId))		// Si me llega una peticion de identificacion de otro agente
+ then
+    //obj.setState(Objetivo.SOLVING);
+    //update(obj);
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(Responder.class);
+ 	tarea.ejecutar("Ladron", destinatId);
+ 	obj.setState(Objetivo.REFINED);
+    update(obj);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
+end
+*/

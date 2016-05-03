@@ -49,7 +49,19 @@
 			       	rol="AgenteAplicacion" 
 			       	localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionAgteControladorSimuladorRosaceReactivo.comportamiento"
 					tipo="Reactivo" />
-     		<icaro:DescComportamientoAgente  
+    		<icaro:DescComportamientoAgente
+					nombreComportamiento="AgenteAplicacionAsignadorTareas" 
+					rol="AgenteAplicacion" 
+					localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionAsignadorTareasCognitivo" 
+					tipo="Cognitivo" 
+       				localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionAsignadorTareasCognitivo.procesoResolucionObjetivos.reglasjearqJefeCambioRol.drl"/>
+       		<icaro:DescComportamientoAgente  
+       				nombreComportamiento="AgenteAplicacionLadron" 
+       				rol="AgenteAplicacion" 
+       				localizacionComportamiento="icaro.aplicaciones.agentes.agenteLadron" 
+       				tipo="Cognitivo"
+       				localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteLadron.reglas.reglasLadron.drl"/>		
+       		<icaro:DescComportamientoAgente  
        				nombreComportamiento="AgenteAplicacionPolicia" 
        				rol="AgenteAplicacion" 
        				localizacionComportamiento="icaro.aplicaciones.agentes.agentePolicia" 
@@ -93,9 +105,11 @@
 			<icaro:InstanciaGestor id="GestorAgentes" refDescripcion="GestorAgentes">
 				<icaro:componentesGestionados>
 	                <icaro:componenteGestionado refId="AgenteControladorSimuladorRosaceReactivo1" tipoComponente="AgenteAplicacion"/>
+	                <icaro:componenteGestionado refId="Comisaria" tipoComponente="AgenteAplicacion"/>
+	                <icaro:componenteGestionado refId="Ladron1" tipoComponente="AgenteAplicacion"/>
+	                <icaro:componenteGestionado refId="Ladron2" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Policia1" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Policia2" tipoComponente="AgenteAplicacion"/>
-	                <icaro:componenteGestionado refId="Comisaria" tipoComponente="AgenteAplicacion"/>
 				</icaro:componentesGestionados>
 			</icaro:InstanciaGestor>
 			<icaro:InstanciaGestor id="GestorRecursos" refDescripcion="GestorRecursos">
@@ -113,6 +127,14 @@
 	        <icaro:Instancia 
 	        	id="AgenteControladorSimuladorRosaceReactivo1" 
         		refDescripcion="AgenteAplicacionAgteControladorSimuladorRosace">
+	        </icaro:Instancia>
+	        <icaro:Instancia 
+	        	id="Ladron1" 
+	        	refDescripcion="AgenteAplicacionLadron">
+	        </icaro:Instancia>
+	        <icaro:Instancia 
+	        	id="Ladron2" 
+	        	refDescripcion="AgenteAplicacionLadron">
 	        </icaro:Instancia>
 	        <icaro:Instancia 
 	        	id="Policia1" 
