@@ -9,7 +9,7 @@ public class InicializarPolicia extends TareaSincrona {
 	@Override
 	public void ejecutar(Object... params) {
 		try {
-			System.out.println(params[0]+"----"+params[1]);
+			//System.out.println(params[0]+"----"+params[1]);
 			// Objetivo objetivoEjecutantedeTarea = (Objetivo)params[0];
 			// String identTarea = this.getIdentTarea();
 			
