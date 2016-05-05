@@ -27,8 +27,8 @@ public class ArranqueSistemaConCrtlGestorO {
     public static void main(String args[]) {
 
         boolean herramientaArrancada = false;
-
-        // creamos los recursos de la organizaci�n
+        
+        // creamos los recursos de la organizacion
 
         ItfUsoConfiguracion configuracionExterna = null;
         ItfUsoRecursoTrazas recursoTrazas = null;
