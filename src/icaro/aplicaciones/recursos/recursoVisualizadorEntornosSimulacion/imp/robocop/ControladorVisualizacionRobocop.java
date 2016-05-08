@@ -1,21 +1,19 @@
 package icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.robocop;
 
-import org.openide.util.Exceptions;
-
 public class ControladorVisualizacionRobocop {
 
 	private VisorMovimientoRobocop visorMovimientoEscen;
 
+	public ControladorVisualizacionRobocop(){
+		try {
+			visorMovimientoEscen = new VisorMovimientoRobocop();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void peticionMostrarEscenarioMovimiento() {
-        try {          
-            if (visorMovimientoEscen == null)
-            	visorMovimientoEscen = new VisorMovimientoRobocop();
-            
-            visorMovimientoEscen.visualizarEscenario();
-                        
-        } catch (Exception ex) {
-            Exceptions.printStackTrace(ex);
-        }
+        visorMovimientoEscen.visualizarEscenario();
 	}
 	
 	public VisorMovimientoRobocop getVisorMovimientoRobocop(){

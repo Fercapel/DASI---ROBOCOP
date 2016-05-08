@@ -1,6 +1,5 @@
 package icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.robocop;
 
-import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -106,12 +105,14 @@ public class VisorMovimientoRobocop extends JFrame {
 	}
 
 	public void visualizarEscenario() {
-		this.setVisible(true);
+		if(!this.isVisible())
+			this.setVisible(true);
 	}
 
 	/**
 	 * Ejecutar ventana.
 	 */
+	/*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -123,5 +124,5 @@ public class VisorMovimientoRobocop extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 }

@@ -18,13 +18,13 @@ public class ClaseGeneradoraVisualizacionRobocop extends ImplRecursoSimple imple
 	
 	public ClaseGeneradoraVisualizacionRobocop(String idRecurso) throws RemoteException {
 		super(idRecurso);
-		
 		//recursoId = idRecurso;
         try {
             trazas.aceptaNuevaTraza(new InfoTraza(idRecurso, "El constructor de la clase generadora del recurso " + idRecurso + " ha completado su ejecucion ....", InfoTraza.NivelTraza.debug));
             //notifEvt = new NotificadorInfoUsuarioSimulador(recursoId, identAgenteaReportar);
 
             controladorIUSimulador = new ControladorVisualizacionRobocop();
+    		visorMovimiento = controladorIUSimulador.getVisorMovimientoRobocop();
             //controladorIUSimulador = new ControladorVisualizacionRobocop(notifEvt);
             
         } catch (Exception e) {
@@ -37,7 +37,6 @@ public class ClaseGeneradoraVisualizacionRobocop extends ImplRecursoSimple imple
 	@Override
 	public void mostrarEscenarioMovimiento() throws Exception {
 		controladorIUSimulador.peticionMostrarEscenarioMovimiento();
-		visorMovimiento = controladorIUSimulador.getVisorMovimientoRobocop();
 	}
 
 	@Override
@@ -49,9 +48,7 @@ public class ClaseGeneradoraVisualizacionRobocop extends ImplRecursoSimple imple
 
 	@Override
 	public synchronized void mostrarPosicionRobot(String identRobot, int xActual, int yActual) {
-		if(visorMovimiento == null){
-			controladorIUSimulador.peticionMostrarEscenarioMovimiento();
-		}
+		controladorIUSimulador.peticionMostrarEscenarioMovimiento();
 		visorMovimiento.cambiarPosicionRobot(identRobot, xActual, yActual);
 	}
 

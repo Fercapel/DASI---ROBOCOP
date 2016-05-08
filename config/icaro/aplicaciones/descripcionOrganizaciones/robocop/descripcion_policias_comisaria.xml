@@ -49,12 +49,6 @@
 			       	rol="AgenteAplicacion" 
 			       	localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionAgteControladorSimuladorRosaceReactivo.comportamiento"
 					tipo="Reactivo" />
-    		<icaro:DescComportamientoAgente
-					nombreComportamiento="AgenteAplicacionAsignadorTareas" 
-					rol="AgenteAplicacion" 
-					localizacionComportamiento="icaro.aplicaciones.agentes.agenteAplicacionAsignadorTareasCognitivo" 
-					tipo="Cognitivo" 
-       				localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteAplicacionAsignadorTareasCognitivo.procesoResolucionObjetivos.reglasjearqJefeCambioRol.drl"/>
      		<icaro:DescComportamientoAgente  
        				nombreComportamiento="AgenteAplicacionPolicia" 
        				rol="AgenteAplicacion" 
@@ -99,7 +93,6 @@
 			<icaro:InstanciaGestor id="GestorAgentes" refDescripcion="GestorAgentes">
 				<icaro:componentesGestionados>
 	                <icaro:componenteGestionado refId="AgenteControladorSimuladorRosaceReactivo1" tipoComponente="AgenteAplicacion"/>
-	                <icaro:componenteGestionado refId="ComisariaAnt" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Policia1" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Policia2" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Comisaria" tipoComponente="AgenteAplicacion"/>
@@ -108,8 +101,8 @@
 			<icaro:InstanciaGestor id="GestorRecursos" refDescripcion="GestorRecursos">
 				<icaro:componentesGestionados>
                 	<icaro:componenteGestionado refId="RecursoVisualizadorEntornoSimulacionRobocop" tipoComponente="RecursoAplicacion"/>	    
-					<icaro:componenteGestionado refId="RecursoPersistenciaEntornosSimulacion1" tipoComponente="RecursoAplicacion"/> 
-					<icaro:componenteGestionado refId="RecursoCreacionEntornosSimulacion1" tipoComponente="RecursoAplicacion"/> 
+					<!--<icaro:componenteGestionado refId="RecursoPersistenciaEntornosSimulacion1" tipoComponente="RecursoAplicacion"/>--> 
+					<!--<icaro:componenteGestionado refId="RecursoCreacionEntornosSimulacion1" tipoComponente="RecursoAplicacion"/>--> 
                 </icaro:componentesGestionados>
 			</icaro:InstanciaGestor>
 		</icaro:Gestores>
@@ -120,10 +113,6 @@
 	        <icaro:Instancia 
 	        	id="AgenteControladorSimuladorRosaceReactivo1" 
         		refDescripcion="AgenteAplicacionAgteControladorSimuladorRosace">
-	        </icaro:Instancia>
-	        <icaro:Instancia 
-	        	id="ComisariaAnt" 
-        		refDescripcion="AgenteAplicacionAsignadorTareas">
 	        </icaro:Instancia>
 	        <icaro:Instancia 
 	        	id="Policia1" 
@@ -146,14 +135,14 @@
 				id="RecursoVisualizadorEntornoSimulacionRobocop" 
 				refDescripcion="RecursoVisualizadorEntornoSimulacion" 
 				xsi:type="icaro:Instancia"/>
-            <icaro:Instancia 
+            <!--<icaro:Instancia 
             	id="RecursoPersistenciaEntornosSimulacion1" 
             	refDescripcion="RecursoPersistenciaEntornosSimulacion" 
-            	xsi:type="icaro:Instancia"/>
-            <icaro:Instancia 
+            	xsi:type="icaro:Instancia"/>-->
+            <!--<icaro:Instancia 
             	id="RecursoCreacionEntornosSimulacion1" 
             	refDescripcion="RecursoCreacionEntornosSimulacion" 
-            	xsi:type="icaro:Instancia"/>                
+            	xsi:type="icaro:Instancia"/>-->                
 		</icaro:RecursosAplicacion>
 		<!--******************************************************************************************************
 		******************   Descripcion comun del nodo en el que se despliegan las instancias  ******************
