@@ -1,13 +1,12 @@
 package icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop;
 
-import icaro.aplicaciones.agentes.componentesInternos.movimientoCtrl.InfoCompMovimiento;
 import icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop.imp.FactoriaRIntMovimientoCtrlRobocop;
 import icaro.infraestructura.entidadesBasicas.excepciones.ExcepcionEnComponente;
 import icaro.infraestructura.patronAgenteCognitivo.procesadorObjetivos.factoriaEInterfacesPrObj.ItfProcesadorObjetivos;
 
 public abstract class FactoriaAbstrCplInternoRobocop {
 
-	public abstract InfoCompMovimiento crearComponenteInterno(String identClaseQueImplementaInterfaz,
+	public abstract InfoCompMovimientoRobocop crearComponenteInterno(String identClaseQueImplementaInterfaz,
 			ItfProcesadorObjetivos procObj);
 
 	public abstract boolean verificarExisteInterfazUsoComponente(String identClaseQueImplementaInterfaz);

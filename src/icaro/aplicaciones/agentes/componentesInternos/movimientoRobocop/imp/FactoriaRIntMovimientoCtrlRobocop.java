@@ -3,8 +3,8 @@ package icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop.imp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import icaro.aplicaciones.agentes.componentesInternos.movimientoCtrl.InfoCompMovimiento;
 import icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop.FactoriaAbstrCplInternoRobocop;
+import icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop.InfoCompMovimientoRobocop;
 import icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop.ItfUsoMovimientoCtrlRopocop;
 import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.ItfUsoRecursoVisualizadorEntornoSimulacion;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
@@ -16,7 +16,7 @@ public class FactoriaRIntMovimientoCtrlRobocop extends FactoriaAbstrCplInternoRo
 	private ItfUsoRecursoVisualizadorEntornoSimulacion itfUsoRecVisEntornoSimul;
 
 	@Override
-	public InfoCompMovimiento crearComponenteInterno(String identClaseQueImplementaInterfaz,
+	public InfoCompMovimientoRobocop crearComponenteInterno(String identClaseQueImplementaInterfaz,
 			ItfProcesadorObjetivos procObj) {
 		String identComponenteAcrear = procObj.getAgentId() + identClaseQueImplementaInterfaz;
 		MaquinaEstadosMovimientoRobocop maquinaEstados = new MaquinaEstadosMovimientoRobocop();
@@ -35,7 +35,7 @@ public class FactoriaRIntMovimientoCtrlRobocop extends FactoriaAbstrCplInternoRo
 		ItfUsoMovimientoCtrlRopocop itfMov = (ItfUsoMovimientoCtrlRopocop) maquinaEstados
 				.cambiarEstado(MaquinaEstadosMovimientoRobocop.EstadoMovimientoRobot.PARADO);
 
-		InfoCompMovimiento infoCompCreado = new InfoCompMovimiento(identComponenteAcrear);
+		InfoCompMovimientoRobocop infoCompCreado = new InfoCompMovimientoRobocop(identComponenteAcrear);
 		infoCompCreado.setitfAccesoComponente(itfMov);
 
 		return infoCompCreado;

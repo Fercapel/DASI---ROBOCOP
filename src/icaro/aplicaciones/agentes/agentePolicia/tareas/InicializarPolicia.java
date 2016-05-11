@@ -25,7 +25,7 @@ public class InicializarPolicia extends TareaSincrona {
 			 *  Prueba concepto -> Poner al policía en la posicion 0,0 del mapa
 			 */
 			String idAgente = this.getIdentAgente();
-			itfCompMov.mostrarPosicionRobot(idAgente, 0, 0);
+			itfCompMov.mostrarRobotEnOrigen(idAgente);
 
 		} catch (Exception e) {
 			e.printStackTrace();
