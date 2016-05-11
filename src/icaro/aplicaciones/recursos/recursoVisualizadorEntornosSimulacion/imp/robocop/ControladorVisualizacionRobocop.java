@@ -1,5 +1,7 @@
 package icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.robocop;
 
+import icaro.aplicaciones.Robocop.InfoMapa;
+
 public class ControladorVisualizacionRobocop {
 
 	private VisorMovimientoRobocop visorMovimientoEscen;
@@ -10,6 +12,10 @@ public class ControladorVisualizacionRobocop {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void cargarMapa(InfoMapa mapa) {
+        visorMovimientoEscen.cargarMapa(mapa);
 	}
 	
 	public void peticionMostrarEscenarioMovimiento() {

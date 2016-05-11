@@ -71,8 +71,8 @@
 		   		nombre="RecursoVisualizadorEntornoSimulacion" 
 		   		localizacionClaseGeneradora="icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.robocop.ClaseGeneradoraVisualizacionRobocop"/>			            		
 			<icaro:DescRecursoAplicacion 
-				nombre="RecursoPersistenciaEntornosSimulacion" 
-				localizacionClaseGeneradora="icaro.aplicaciones.recursos.recursoPersistenciaEntornosSimulacion.imp.ClaseGeneradoraRecursoPersistenciaEntornosSimulacion"/>			            		
+				nombre="RecursoPersistenciaEntornoSimulacion" 
+				localizacionClaseGeneradora="icaro.aplicaciones.recursos.recursoPersistenciaEntornosSimulacion.imp.robocop.ClaseGeneradoraPersistenciaRobocop"/>			            		
 			<icaro:DescRecursoAplicacion 
 				nombre="RecursoCreacionEntornosSimulacion" 
 				localizacionClaseGeneradora="icaro.aplicaciones.recursos.recursoCreacionEntornosSimulacion.imp.ClaseGeneradoraRecursoCreacionEntornosSimulacion"/>		
@@ -101,7 +101,7 @@
 			<icaro:InstanciaGestor id="GestorRecursos" refDescripcion="GestorRecursos">
 				<icaro:componentesGestionados>
                 	<icaro:componenteGestionado refId="RecursoVisualizadorEntornoSimulacionRobocop" tipoComponente="RecursoAplicacion"/>	    
-					<!--<icaro:componenteGestionado refId="RecursoPersistenciaEntornosSimulacion1" tipoComponente="RecursoAplicacion"/>--> 
+					<icaro:componenteGestionado refId="RecursoPersistenciaEntornoSimulacionRobocop" tipoComponente="RecursoAplicacion"/> 
 					<!--<icaro:componenteGestionado refId="RecursoCreacionEntornosSimulacion1" tipoComponente="RecursoAplicacion"/>--> 
                 </icaro:componentesGestionados>
 			</icaro:InstanciaGestor>
@@ -135,10 +135,10 @@
 				id="RecursoVisualizadorEntornoSimulacionRobocop" 
 				refDescripcion="RecursoVisualizadorEntornoSimulacion" 
 				xsi:type="icaro:Instancia"/>
-            <!--<icaro:Instancia 
-            	id="RecursoPersistenciaEntornosSimulacion1" 
-            	refDescripcion="RecursoPersistenciaEntornosSimulacion" 
-            	xsi:type="icaro:Instancia"/>-->
+            <icaro:Instancia 
+            	id="RecursoPersistenciaEntornoSimulacionRobocop" 
+            	refDescripcion="RecursoPersistenciaEntornoSimulacion" 
+            	xsi:type="icaro:Instancia"/>
             <!--<icaro:Instancia 
             	id="RecursoCreacionEntornosSimulacion1" 
             	refDescripcion="RecursoCreacionEntornosSimulacion" 

@@ -2,6 +2,7 @@ package icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.ro
 
 import java.rmi.RemoteException;
 
+import icaro.aplicaciones.Robocop.InfoMapa;
 import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.ItfUsoRecursoVisualizadorEntornoSimulacion;
 import icaro.infraestructura.patronRecursoSimple.imp.ImplRecursoSimple;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
@@ -35,6 +36,11 @@ public class ClaseGeneradoraVisualizacionRobocop extends ImplRecursoSimple imple
 	}
 
 	@Override
+	public void cargarMapa(InfoMapa mapa) throws Exception {
+		controladorIUSimulador.cargarMapa(mapa);
+	}
+	
+	@Override
 	public void mostrarEscenarioMovimiento() throws Exception {
 		controladorIUSimulador.peticionMostrarEscenarioMovimiento();
 	}
@@ -50,6 +56,11 @@ public class ClaseGeneradoraVisualizacionRobocop extends ImplRecursoSimple imple
 	public synchronized void mostrarPosicionRobot(String identRobot, int xActual, int yActual) {
 		controladorIUSimulador.peticionMostrarEscenarioMovimiento();
 		visorMovimiento.cambiarPosicionRobot(identRobot, xActual, yActual);
+	}
+
+	@Override
+	public void mostrarRobotEnOrigen(String identRobot) throws Exception {
+		visorMovimiento.moverOrigenRobot(identRobot);
 	}
 
 }
