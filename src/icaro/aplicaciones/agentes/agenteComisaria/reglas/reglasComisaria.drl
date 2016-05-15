@@ -93,7 +93,7 @@ rule "Regla de resolucion de enviar lugar robo"
  when
     obj:LlevarPoliciasLugarRobo(state==Objetivo.PENDING)
     miEquipo: InfoEquipo(inicioContactoConEquipo == true)
-    f:Focus(foco==obj)
+    f:Focus(foco==obj) 
     //not( exists ( InfoEquipo(inicioContactoConEquipo == false)  ))
  then
  	System.out.println("--------- Hello 3");
