@@ -19,7 +19,7 @@ global ItfUsoRecursoTrazas recursoTrazas;
 global String agentId;
 
 //Primera regla que se ejecutara. Solo se debe disparar una vez.
-rule "Acciones Iniciales Prueba Cambio Rol "
+rule "Acciones Iniciales"
  when
 	not ( exists(Focus()))
  then
@@ -39,7 +39,7 @@ rule "Acciones Iniciales Objetivo "
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
 
-rule "Regla de focalizacion de observar entorno"
+rule "Regla de focalizacion de definir equipo"
  when
     obj:DefinirMiEquipo(state==Objetivo.PENDING)
     f:Focus(foco == null)
@@ -49,17 +49,58 @@ rule "Regla de focalizacion de observar entorno"
     update(f);
 end
 
-rule "Regla de resolucion de observar entorno"
+rule "Regla de resolucion de definir equipo"
  when
     obj:DefinirMiEquipo(state==Objetivo.PENDING)
     // miEquipo: InfoEquipo(inicioContactoConEquipo == false)
     f:Focus(foco==obj)
-    not( exists ( InfoEquipo(inicioContactoConEquipo == false)  ))
+    not( exists ( InfoEquipo(inicioContactoConEquipo == true)  ))
  then
     obj.setState(Objetivo.SOLVING);
     update(obj);
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(FormarEquipo.class);
  	tarea.ejecutar();  
+ 	
+ 	obj.setState(Objetivo.REFINED); // SOLVED
+    update(obj);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
+    
+    Objetivo ob2 = new LlevarPoliciasLugarRobo();
+    insert(ob2);
+end
+
+rule "Regla de finalizacion de definir equipo"
+ when
+    obj:DefinirMiEquipo(state==Objetivo.REFINED) // SOLVED
+    f:Focus(foco==obj)
+    obj2:LlevarPoliciasLugarRobo(state==Objetivo.PENDING)
+ then
+ 	System.out.println("--------- Hello 2");
+ 	f.setFoco(obj2);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"Nuevo Foco : " + f.getFoco());
+    retract(obj);
+    update(f);
+end
+
+
+
+
+// SEGUNDA ACCION
+
+rule "Regla de resolucion de enviar lugar robo"
+ when
+    obj:LlevarPoliciasLugarRobo(state==Objetivo.PENDING)
+    miEquipo: InfoEquipo(inicioContactoConEquipo == true)
+    f:Focus(foco==obj)
+    //not( exists ( InfoEquipo(inicioContactoConEquipo == false)  ))
+ then
+ 	System.out.println("--------- Hello 3");
+    obj.setState(Objetivo.SOLVING);
+    update(obj);
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(EnviarInfoLugarRobo.class);
+ 	tarea.ejecutar(miEquipo);  
  	
  	obj.setState(Objetivo.REFINED);
     update(obj);
@@ -67,17 +108,20 @@ rule "Regla de resolucion de observar entorno"
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
 end
 
-rule "Regla de finalizacion de observar entorno"
+rule "Regla de finalizacion de enviar lugar robo"
  when
-    obj:DefinirMiEquipo(state==Objetivo.SOLVED)
+    obj:LlevarPoliciasLugarRobo(state==Objetivo.REFINED)
     f:Focus(foco==obj)
  then
+ 	System.out.println("--------- Hello 4");
  	f.setFoco(null);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"Nuevo Foco : " + f.getFoco());
     retract(obj);
     update(f);
 end
+
+
 
 
 /*

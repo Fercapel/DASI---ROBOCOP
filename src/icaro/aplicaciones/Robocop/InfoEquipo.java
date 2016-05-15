@@ -21,6 +21,7 @@ public class InfoEquipo {
 		for (int i = 0; i < miembros.size(); i++){
 			this.teamRobotIds.add(miembros.get(i));
 		}
+		System.out.println("Equipo formado");
 	}
 
 	public String getIdentEquipo() {
