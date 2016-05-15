@@ -2,6 +2,7 @@ package icaro.aplicaciones.agentes.agenteComisaria.tareas;
 
 import icaro.aplicaciones.Robocop.Coordenada;
 import icaro.aplicaciones.Robocop.InfoEquipo;
+import icaro.infraestructura.entidadesBasicas.comunicacion.MensajeSimple;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 
@@ -22,8 +23,10 @@ public class EnviarInfoLugarRobo extends TareaSincrona {
 		
 		this.coordEdificio = new Coordenada(coord_x, coord_y);
 		
-		this.getComunicator().informaraGrupoAgentes(this.coordEdificio,
-				miEquipo.getTeamRobotIds());
+		MensajeSimple mensaje_coordendas = new MensajeSimple(this.coordEdificio, this.getIdentAgente(), miEquipo);
+		
+		this.getComunicator().informaraGrupoAgentes(mensaje_coordendas, miEquipo.getTeamRobotIds());
+		
 		trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente,
 				"Mensaje con las coordenadas del lugar del robo enviado", InfoTraza.NivelTraza.info));
 		System.out.println("Mensaje con las coordenadas del lugar del robo enviado: (" + coord_x + ", " + coord_y + ")");

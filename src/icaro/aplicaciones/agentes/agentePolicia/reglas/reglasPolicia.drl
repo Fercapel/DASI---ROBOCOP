@@ -20,7 +20,7 @@ global ItfUsoRecursoTrazas recursoTrazas;
 global String agentId;
 
 //Primera regla que se ejecutara. Solo se debe disparar una vez.
-rule "Acciones Iniciales Prueba Cambio Rol "
+rule "Acciones Iniciales Policia "
  when
 	not ( exists(Focus()))
  then
@@ -30,7 +30,7 @@ rule "Acciones Iniciales Prueba Cambio Rol "
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," :REGLA " + drools.getRule().getName());
 end
 
-rule "Acciones Iniciales Objetivo "
+rule "Acciones Iniciales Objetivo Policia"
  when
 	focoActual : Focus(foco == null)
 	not ( exists(Objetivo()))
@@ -40,7 +40,7 @@ rule "Acciones Iniciales Objetivo "
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
 
-rule "Regla de focalizacion de observar entorno"
+rule "Regla de focalizacion de recibir saludos"
  when
     obj:RecibirSaludos(state==Objetivo.PENDING)
     f:Focus(foco == null)
@@ -58,12 +58,15 @@ rule "Regla de resolucion de observar entorno"
     // mensajeObj:MensajeSimple()
     //not( exists ( MensajeACK(msgAConfirmar == mensajeObj  )))
     // exists(MensajeSimple())
-    exists(InfoEquipo())
+    exists(InfoEquipo(inicioContactoConEquipo == true))
+    //miEquipo: InfoEquipo(inicioContactoConEquipo == true)
  then
+ 	//MensajeSimple mensajeObj = MensajeSimple("Recibido: equipo formado", "Comisaria", miEquipo);
+ 
     obj.setState(Objetivo.SOLVING);
     update(obj);
     //TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarMensajeConfirmacion.class);
- 	//tarea.ejecutar(mensajeObj);
+ 	//tarea.ejecutar(miEquipo, "Recibido: equipo formado");
  	
  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(DecirHola.class);
  	tarea.ejecutar("Probando------------------");
