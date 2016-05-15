@@ -1,10 +1,10 @@
 package icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop.imp;
 
 import icaro.aplicaciones.agentes.componentesInternos.movimientoCtrl.imp.MaquinaEstadoMovimientoCtrl;
-import icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop.ItfUsoMovimientoCtrlRopocop;
+import icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop.ItfUsoMovimientoCtrlRobocop;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 
-public class RobotMoviendose extends EstadoAbstractoMovimientoRobocop implements ItfUsoMovimientoCtrlRopocop {
+public class RobotMoviendose extends EstadoAbstractoMovimientoRobocop implements ItfUsoMovimientoCtrlRobocop {
 
 	public RobotMoviendose(MaquinaEstadosMovimientoRobocop maquinaEstados) {
 		super(maquinaEstados, MaquinaEstadosMovimientoRobocop.EstadoMovimientoRobot.MOVIENDOSE);

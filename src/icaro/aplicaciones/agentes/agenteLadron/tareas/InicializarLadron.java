@@ -24,7 +24,7 @@ public class InicializarLadron extends TareaSincrona {
 
 			String idAgente = this.getIdentAgente();
 			System.out.println("--0---0--0--0--0--0--0"+idAgente);
-			itfCompMov.mostrarPosicionRobot(idAgente, 3, 3);
+			itfCompMov.mostrarPosicionRobot(idAgente, 2, 2);
 
 		} catch (Exception e) {
 			e.printStackTrace();

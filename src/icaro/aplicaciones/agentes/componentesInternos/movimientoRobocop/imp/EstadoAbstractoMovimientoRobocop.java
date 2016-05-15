@@ -1,13 +1,13 @@
 package icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop.imp;
 
-import icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop.ItfUsoMovimientoCtrlRopocop;
+import icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop.ItfUsoMovimientoCtrlRobocop;
 import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.ItfUsoRecursoVisualizadorEntornoSimulacion;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.patronAgenteCognitivo.procesadorObjetivos.factoriaEInterfacesPrObj.ItfProcesadorObjetivos;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.ItfUsoRecursoTrazas;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 
-public abstract class EstadoAbstractoMovimientoRobocop implements ItfUsoMovimientoCtrlRopocop {
+public abstract class EstadoAbstractoMovimientoRobocop implements ItfUsoMovimientoCtrlRobocop {
 
 	public EstadoAbstractoMovimientoRobocop estadoActual;
 	public MaquinaEstadosMovimientoRobocop maquinaEstados;

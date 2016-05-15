@@ -108,6 +108,7 @@
 	                <icaro:componenteGestionado refId="Comisaria" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Ladron1" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Ladron2" tipoComponente="AgenteAplicacion"/>
+	                <icaro:componenteGestionado refId="Ladron3" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Policia1" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Policia2" tipoComponente="AgenteAplicacion"/>
 				</icaro:componentesGestionados>
@@ -134,6 +135,10 @@
 	        </icaro:Instancia>
 	        <icaro:Instancia 
 	        	id="Ladron2" 
+	        	refDescripcion="AgenteAplicacionLadron">
+	        </icaro:Instancia>
+	        <icaro:Instancia 
+	        	id="Ladron3" 
 	        	refDescripcion="AgenteAplicacionLadron">
 	        </icaro:Instancia>
 	        <icaro:Instancia 

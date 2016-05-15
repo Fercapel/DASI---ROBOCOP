@@ -1,6 +1,6 @@
 package icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop;
 
-public interface ItfUsoMovimientoCtrlRopocop {
+public interface ItfUsoMovimientoCtrlRobocop {
 	
 	public void inicializarInfoMovimiento(int x, int y);
     public void moverADestino(String identDest, int x, int y);

@@ -65,7 +65,7 @@ rule "Regla de resolucion de observar entorno"
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
 end
 
-/*
+
 rule "Inicio Listar Amigos"
 	when
 		obj1:Saludar(state==Objetivo.REFINED)
@@ -98,9 +98,85 @@ rule "Regla de CrearEquipo"
     update(obj);
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(CrearEquipo.class);
  	tarea.ejecutar();//"Quien eres? Yo soy ");
- 	//obj.setState(Objetivo.REFINED);
-    //update(obj);
+ 	obj.setState(Objetivo.REFINED);
+    update(obj);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
+end
+
+rule "Regla de crear objetivo Robar"
+ when
+    obj1:ListarAmigos(state==Objetivo.REFINED)
+    f:Focus(foco==obj1)
+ then
+    Objetivo obj2 = new Robar();
+    insert(obj2);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
+end
+
+rule "Regla de focalizacion de Robar tras Listar Amigos"
+ when
+    obj1:ListarAmigos(state==Objetivo.REFINED)
+    f:Focus(foco==obj1)
+    obj2:Robar(state==Objetivo.PENDING)
+ then
+	f.setFoco(obj2);
+	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+	update(f);
+	retract(obj1);
+end
+
+rule "Regla de Robar 4,4"
+ when
+    obj1:Robar(state==Objetivo.PENDING)
+    f:Focus(foco==obj1)
+ then	
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(IrLugarRobo.class);
+ 	tarea.ejecutar(4,4);
+    obj1.setState(Objetivo.SOLVING);
+    update(obj1);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
+end
+
+rule "Regla de Robar 5,5"
+ when
+    obj1:Robar(state==Objetivo.SOLVING)
+    f:Focus(foco==obj1)
+ then	
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(IrLugarRobo.class);
+ 	tarea.ejecutar(5,5);
+    obj1.setState(Objetivo.REFINED);
+    update(obj1);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
+end
+/*
+
+rule "Regla de IrLugarRobo 4,4"
+ when
+    obj:Robar(state==Objetivo.PENDING)
+    f:Focus(foco==obj)
+ then
+    obj.setState(Objetivo.SOLVING);
+    update(obj);
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(IrLugarRobo.class);
+ 	tarea.ejecutar("4","4");
+ 	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
+end
+
+rule "Regla de IrLugarRobo 5,5"
+ when
+    obj:Robar(state==Objetivo.SOLVING)
+    f:Focus(foco==obj)
+ then
+    obj.setState(Objetivo.PENDING);
+    update(obj);
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(IrLugarRobo.class);
+ 	tarea.ejecutar("5","5");
+ 	recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
 end*/
 

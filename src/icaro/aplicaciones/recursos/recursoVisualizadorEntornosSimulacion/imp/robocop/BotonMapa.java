@@ -72,6 +72,7 @@ public class BotonMapa extends JButton{
 
 	public void eliminarAgente(EnumAgentes agente){
 		this.iconos.eliminarIcono(agente);
+		this.repaint();
 	}
 	
 	public Construccion getConstruccion(){

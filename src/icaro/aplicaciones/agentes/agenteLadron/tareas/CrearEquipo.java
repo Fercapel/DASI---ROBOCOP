@@ -21,19 +21,22 @@ public class CrearEquipo extends TareaSincrona{
 
 			equipo.incluirEnEquipo("Ladron1");
 			equipo.incluirEnEquipo("Ladron2");
+			equipo.incluirEnEquipo("Ladron3");
 			
-			for(int i = 1; i <= 2; i++){
+			for(int i = 1; i <= 3; i++){
 				
 				if(!nombreAgenteEmisor.contains(Integer.toString(i))){
 					this.getComunicator().enviarInfoAotroAgente(equipo, "Ladron"+i);
 
-					trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se ejecuta la tarea " + this.identTarea + " Emisor: "+ nombreAgenteEmisor+" Equipo: " +equipo.toString() + " Receptor: "+ "Ladron"+i+"\n" );
 					
 
-					System.out.println("-----------------------------------------------------------Ejecutando petición de identificación: "+ nombreAgenteEmisor +" " + equipo.toString() + " " + "Ladron"+i);  
-
+					
 				}
 			}
+			trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se ejecuta la tarea " + this.identTarea + " Emisor: "+ nombreAgenteEmisor+" Equipo: " +equipo.toString() + "\n" );
+
+			System.out.println("-----------------------------------------------------------Ejecutando creación de equipo: "+ nombreAgenteEmisor +" " + equipo.toString());  
+
 			//nombreAgenteReceptor = (String) params[1];
 
 			//RespuestaIdentificacion respuesta = new RespuestaIdentificacion (nombreAgenteEmisor, tipo, nombreAgenteReceptor);

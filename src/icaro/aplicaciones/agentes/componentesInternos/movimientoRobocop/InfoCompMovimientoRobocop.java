@@ -5,7 +5,7 @@ import icaro.infraestructura.patronAgenteCognitivo.procesadorObjetivos.factoriaE
 
 public class InfoCompMovimientoRobocop extends InfoCompInterno {
 
-	public ItfUsoMovimientoCtrlRopocop itfAccesoComponente;
+	public ItfUsoMovimientoCtrlRobocop itfAccesoComponente;
 	public ItfProcesadorObjetivos itfAccesoControlEntidad;
 	private String identEstadoRobot;
 	private String identDestino;
@@ -14,7 +14,7 @@ public class InfoCompMovimientoRobocop extends InfoCompInterno {
 		super(componenteId);
 	}
 
-	public void setitfAccesoComponente(ItfUsoMovimientoCtrlRopocop itfAccComponente) {
+	public void setitfAccesoComponente(ItfUsoMovimientoCtrlRobocop itfAccComponente) {
 		itfAccesoComponente = itfAccComponente;
 	}
 

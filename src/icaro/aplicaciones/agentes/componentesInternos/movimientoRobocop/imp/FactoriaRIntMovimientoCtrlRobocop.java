@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 import icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop.FactoriaAbstrCplInternoRobocop;
 import icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop.InfoCompMovimientoRobocop;
-import icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop.ItfUsoMovimientoCtrlRopocop;
+import icaro.aplicaciones.agentes.componentesInternos.movimientoRobocop.ItfUsoMovimientoCtrlRobocop;
 import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.ItfUsoRecursoVisualizadorEntornoSimulacion;
 import icaro.infraestructura.entidadesBasicas.NombresPredefinidos;
 import icaro.infraestructura.patronAgenteCognitivo.procesadorObjetivos.factoriaEInterfacesPrObj.ItfProcesadorObjetivos;
@@ -32,7 +32,7 @@ public class FactoriaRIntMovimientoCtrlRobocop extends FactoriaAbstrCplInternoRo
 		}
 		
 		maquinaEstados.cambiarEstado(MaquinaEstadosMovimientoRobocop.EstadoMovimientoRobot.PARADO);
-		ItfUsoMovimientoCtrlRopocop itfMov = (ItfUsoMovimientoCtrlRopocop) maquinaEstados
+		ItfUsoMovimientoCtrlRobocop itfMov = (ItfUsoMovimientoCtrlRobocop) maquinaEstados
 				.cambiarEstado(MaquinaEstadosMovimientoRobocop.EstadoMovimientoRobot.PARADO);
 
 		InfoCompMovimientoRobocop infoCompCreado = new InfoCompMovimientoRobocop(identComponenteAcrear);
