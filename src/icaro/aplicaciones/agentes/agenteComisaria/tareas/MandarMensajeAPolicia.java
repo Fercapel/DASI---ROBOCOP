@@ -7,6 +7,8 @@ import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
  * Clase que permite que la comisaria mande un mensaje al policia 
  * */
 
+// BORRAR
+
 public class MandarMensajeAPolicia extends TareaSincrona{
 
 	private String nombreAgenteEmisor;

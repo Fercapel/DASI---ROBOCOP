@@ -8,6 +8,9 @@ import java.io.Serializable;
 /*
  * Clase que representa un mensaje de confirmacion de otro mensaje
  * */
+
+// BORRAR
+
 public class MensajeACK implements Serializable{
 	
 	public String identAgente; // Identificador del agente que emite la confirmacion de la propuesta

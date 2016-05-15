@@ -23,9 +23,12 @@ public class EnviarInfoLugarRobo extends TareaSincrona {
 		
 		this.coordEdificio = new Coordenada(coord_x, coord_y);
 		
-		MensajeSimple mensaje_coordendas = new MensajeSimple(this.coordEdificio, this.getIdentAgente(), miEquipo);
+		//MensajeSimple mensaje_coordendas = new MensajeSimple(this.coordEdificio, this.getIdentAgente(), miEquipo);
 		
-		this.getComunicator().informaraGrupoAgentes(mensaje_coordendas, miEquipo.getTeamRobotIds());
+		// Insertar en la base de conocimiento
+		this.getEnvioHechos().actualizarHechoWithoutFireRules(this.coordEdificio);
+		
+		this.getComunicator().informaraGrupoAgentes(this.coordEdificio, miEquipo.getTeamRobotIds());
 		
 		trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente,
 				"Mensaje con las coordenadas del lugar del robo enviado", InfoTraza.NivelTraza.info));

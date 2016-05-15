@@ -2,6 +2,8 @@ package icaro.aplicaciones.Robocop;
 
 import java.io.Serializable;
 
+// BORRAR
+
 public class Mensaje implements Serializable {
 
 

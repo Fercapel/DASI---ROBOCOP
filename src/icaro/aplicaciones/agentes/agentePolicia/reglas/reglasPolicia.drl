@@ -50,16 +50,13 @@ rule "Regla de focalizacion de recibir saludos"
     update(f);
 end
 
-rule "Regla de resolucion de observar entorno"
+rule "Regla de resolucion de recibir saludos"
  when
     obj:RecibirSaludos(state==Objetivo.PENDING)
     f:Focus(foco==obj)
-    // mensajeObj:Mensaje(identAgente == "Comisaria" , mensaje == "Hola Policia, soy la Comisaria")
-    // mensajeObj:MensajeSimple()
-    //not( exists ( MensajeACK(msgAConfirmar == mensajeObj  )))
-    // exists(MensajeSimple())
-    exists(InfoEquipo(inicioContactoConEquipo == true))
-    //miEquipo: InfoEquipo(inicioContactoConEquipo == true)
+    
+    //exists(InfoEquipo(inicioContactoConEquipo == true))
+    miEquipo: InfoEquipo(inicioContactoConEquipo == true)
  then
  	//MensajeSimple mensajeObj = MensajeSimple("Recibido: equipo formado", "Comisaria", miEquipo);
  
@@ -69,7 +66,44 @@ rule "Regla de resolucion de observar entorno"
  	//tarea.ejecutar(miEquipo, "Recibido: equipo formado");
  	
  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(DecirHola.class);
- 	tarea.ejecutar("Probando------------------");
+ 	tarea.ejecutar("Recibido: EQUIPO FORMADO", miEquipo);
+ 	
+ 	obj.setState(Objetivo.REFINED);
+    update(obj);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
+    
+    Objetivo ob2 = new IrLugarDelRobo();
+    insert(ob2);
+end
+
+rule "Regla de finalizacion de recibir saludos"
+ when
+    obj:RecibirSaludos(state==Objetivo.REFINED) // SOLVED
+    f:Focus(foco==obj)
+    obj2:IrLugarDelRobo(state==Objetivo.PENDING)
+ then
+ 	f.setFoco(obj2);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"Nuevo Foco : " + f.getFoco());
+    retract(obj);
+    update(f);
+end
+
+
+// SEGUNDA ACCION
+
+rule "Regla de resolucion de recibir coordenadas"
+ when
+    obj:IrLugarDelRobo(state==Objetivo.PENDING)
+    f:Focus(foco==obj) 
+    coordenada:Coordenada()
+ then
+	System.out.println("--------- Hello 4");
+    obj.setState(Objetivo.SOLVING);
+    update(obj);
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(RecibirCoordenadasLugarRobo.class);
+ 	tarea.ejecutar(coordenada);  
  	
  	obj.setState(Objetivo.REFINED);
     update(obj);
@@ -77,11 +111,12 @@ rule "Regla de resolucion de observar entorno"
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
 end
 
-rule "Regla de finalizacion de observar entorno"
+rule "Regla de finalizacion de recibir coordendas"
  when
-    obj:RecibirSaludos(state==Objetivo.SOLVED)
+    obj:IrLugarDelRobo(state==Objetivo.REFINED)
     f:Focus(foco==obj)
  then
+ 	//System.out.println("--------- Hello 4");
  	f.setFoco(null);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"Nuevo Foco : " + f.getFoco());

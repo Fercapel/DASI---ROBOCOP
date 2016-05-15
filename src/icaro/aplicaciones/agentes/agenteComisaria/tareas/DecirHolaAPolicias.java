@@ -2,6 +2,9 @@ package icaro.aplicaciones.agentes.agenteComisaria.tareas;
 
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 
+
+// BORRAR
+
 public class DecirHolaAPolicias extends TareaSincrona{
     @Override
 	public void ejecutar(Object... params) {
