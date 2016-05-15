@@ -5,8 +5,9 @@ import java.util.ArrayList;
 
 public class Equipo implements Serializable{
 
-	public String idEquipo;
-	public ArrayList<String> equipo;
+	private String idEquipo;
+	private ArrayList<String> equipo;
+	private boolean inicioContactoConEquipo = false;
 
 	public Equipo(String idEquipo) {
 		this.idEquipo = idEquipo;
@@ -51,6 +52,14 @@ public class Equipo implements Serializable{
 		}
 		text.substring(0, text.length() - 2);
 		return text;
+	}
+
+	public boolean getInicioContactoConEquipo() {
+		return inicioContactoConEquipo;
+	}
+
+	public void setInicioContactoConEquipo(boolean inicioContactoConEquipo) {
+		this.inicioContactoConEquipo = inicioContactoConEquipo;
 	}
 
 } 

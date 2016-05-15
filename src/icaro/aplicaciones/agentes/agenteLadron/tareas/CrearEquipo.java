@@ -28,11 +28,12 @@ public class CrearEquipo extends TareaSincrona{
 				if(!nombreAgenteEmisor.contains(Integer.toString(i))){
 					this.getComunicator().enviarInfoAotroAgente(equipo, "Ladron"+i);
 
-					
-
-					
 				}
 			}
+			equipo.setInicioContactoConEquipo(true);
+			this.getEnvioHechos().actualizarHechoWithoutFireRules(equipo);
+
+			
 			trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se ejecuta la tarea " + this.identTarea + " Emisor: "+ nombreAgenteEmisor+" Equipo: " +equipo.toString() + "\n" );
 
 			System.out.println("-----------------------------------------------------------Ejecutando creación de equipo: "+ nombreAgenteEmisor +" " + equipo.toString());  
