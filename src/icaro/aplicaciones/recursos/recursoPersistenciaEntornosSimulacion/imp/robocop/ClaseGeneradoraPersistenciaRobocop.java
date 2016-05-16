@@ -4,12 +4,23 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+
+import org.jgraph.graph.DefaultEdge;
+import org.netbeans.modules.visual.graph.layout.hierarchicalsupport.DirectedGraph;
 
 import icaro.aplicaciones.Robocop.InfoMapa;
 import icaro.aplicaciones.Robocop.InfoVariables;
 import icaro.aplicaciones.recursos.recursoPersistenciaEntornosSimulacion.ItfUsoRecursoPersistenciaEntornoSimulacion;
 import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.robocop.Construccion;
 import icaro.infraestructura.patronRecursoSimple.imp.ImplRecursoSimple;
+import salvo.jesus.graph.WeightedGraph;
+
+//TODO: imports nuevos
+import java.util.List;
+import org.jgrapht.alg.*;
+import org.jgrapht.*;
+import org.jgrapht.graph.*;
 
 public class ClaseGeneradoraPersistenciaRobocop extends ImplRecursoSimple
 		implements ItfUsoRecursoPersistenciaEntornoSimulacion {
@@ -38,7 +49,7 @@ public class ClaseGeneradoraPersistenciaRobocop extends ImplRecursoSimple
 	 * AgenteId2;x;y
 	 *    ...
 	 *    
-	 * La representaciÛn del mapa est· formada por los siguientes caracteres:   	
+	 * La representaci√≥n del mapa est√° formada por los siguientes caracteres:   	
 	 * C para comisaria
 	 * H para hogares
 	 * S para calles
@@ -89,7 +100,138 @@ public class ClaseGeneradoraPersistenciaRobocop extends ImplRecursoSimple
 			}
 		}
 
+//////////////////////////////////////////////////////////////////////////
+		//mira los imports nuevos
+		Graph<Integer, DefaultWeightedEdge> _grafo =
+	            new DefaultDirectedGraph<Integer, DefaultWeightedEdge>
+	            (DefaultWeightedEdge.class);
+	    int numFilas = mapa.getNumeroFilas(),
+    		numColumnas = mapa.getNumeroColumnas();
+	    int V = numFilas * numColumnas;
+	    ArrayList<Construccion> auxmapa = mapa.getMapa();
+	    
+	    Construccion[][] tablero = new Construccion[numFilas][numColumnas];
+	    for(int i = 0; i < V; i++){
+	    	int f = i / numFilas;
+	    	int c = i % numColumnas;
+	    	tablero[f][c] = auxmapa.get(i);
+	    	_grafo.addVertex(i );
+	    }
+	   
+	    for(int f = 0; f < numFilas; f++){
+	    	for(int c = 0; c < numColumnas; c++){
+	    		int actual = f*numFilas + c,
+    				arriba = (f-1)*numFilas + c,
+    				abajo = (f+1)*numFilas + c,
+    				izquierda = actual -1,
+    				derecha = actual +1;
+	    		
+	    		if(tablero[f][c] == Construccion.CALLE){
+	    			if(f == 0){//primera fila del mapa
+	    				if(c == 0){//primera columna del mapa
+	    					if(tablero[f][c+1] == Construccion.CALLE)
+	    						_grafo.addEdge(actual, derecha);
+	    					if(tablero[f+1][c] == Construccion.CALLE)//abajo
+	    	    				_grafo.addEdge(actual, abajo);	    					
+	    				}
+	    				
+	    				else if(c == numColumnas -1){    
+	    					if(tablero[f][c-1] == Construccion.CALLE)
+	    						_grafo.addEdge(actual, izquierda);
+	    					if(tablero[f+1][c] == Construccion.CALLE)//abajo
+	    	    				_grafo.addEdge(actual, abajo);	
+	    				}
+	    				
+	    				else{
+	    					if(tablero[f][c-1] == Construccion.CALLE)
+	    						_grafo.addEdge(actual, izquierda);
+	    					if(tablero[f][c+1] == Construccion.CALLE)
+	    						_grafo.addEdge(actual, derecha);
+	    					if(tablero[f+1][c] == Construccion.CALLE)//abajo
+	    	    				_grafo.addEdge(actual, abajo);	
+	    				}	    				
+	    			}
+	    			
+	    			else if(f == numFilas-1){//ultima fila del mapa
+	    				if(c == 0){//primera columna del mapa//	 
+//	    					if(tablero[f-1][c] == Construccion.CALLE)//arriba
+	    	    				_grafo.addEdge(actual, arriba);	 
+	    					if(tablero[f][c+1] == Construccion.CALLE)
+	    						_grafo.addEdge(actual, derecha);
+	    				}
+	    				else if(c == numColumnas -1){
+	    					if(tablero[f][c-1] == Construccion.CALLE)
+	    						_grafo.addEdge(actual, izquierda);
+//	    					if(tablero[f-1][c] == Construccion.CALLE)//arriba
+	    	    				_grafo.addEdge(actual, arriba);	 
+	    				}
+	    				
+	    				else{
+	    					if(tablero[f][c-1] == Construccion.CALLE)
+	    						_grafo.addEdge(actual, izquierda);
+	    					if(tablero[f][c+1] == Construccion.CALLE)
+	    						_grafo.addEdge(actual, derecha);
+//	    					if(tablero[f-1][c] == Construccion.CALLE)//arriba
+	    	    				_grafo.addEdge(actual, arriba);	
+	    				}
+	    			}
+	    			
+	    			else{
+	    				if(c == 0){//primera columna del mapa
+//	    					if(tablero[f-1][c] == Construccion.CALLE)//arriba
+	    	    				_grafo.addEdge(actual, arriba);	
+	    					if(tablero[f][c+1] == Construccion.CALLE)
+	    						_grafo.addEdge(actual, derecha);
+	    					if(tablero[f+1][c] == Construccion.CALLE)//abajo
+	    	    				_grafo.addEdge(actual, abajo);	
+	    				}
+	    				
+	    				else if(c == numColumnas -1){
+//	    					if(tablero[f-1][c] == Construccion.CALLE)//arriba
+	    	    				_grafo.addEdge(actual, arriba);	
+	    					if(tablero[f][c-1] == Construccion.CALLE)
+	    						_grafo.addEdge(actual, izquierda);
+	    					if(tablero[f+1][c] == Construccion.CALLE)//abajo
+	    	    				_grafo.addEdge(actual, abajo);	
+	    				}
+	    				else{
+//	    					if(tablero[f-1][c] == Construccion.CALLE)//arriba
+	    	    				_grafo.addEdge(actual, arriba);	
+	    					if(tablero[f][c-1] == Construccion.CALLE)
+	    						_grafo.addEdge(actual, izquierda);	
+	    					if(tablero[f][c+1] == Construccion.CALLE)
+	    						_grafo.addEdge(actual, derecha);
+	    					if(tablero[f+1][c] == Construccion.CALLE)//abajo
+	    	    				_grafo.addEdge(actual, abajo);	
+	    					
+	    				}
+	    			}
+	    		}
+	    		else{
+	    			if(f == numFilas-1);
+	    			else{
+	    				if(tablero[f+1][c] == Construccion.CALLE)//abajo
+    	    				_grafo.addEdge(actual, abajo);	
+	    			}
+	    		}
+	    	}
+	    }
+
+        //Primero hacemos los recorridos de los policias hasta la casa del robo
+	    int casa_robo = 38;
+        DijkstraShortestPath<Integer, DefaultWeightedEdge> path2 = new DijkstraShortestPath<Integer, DefaultWeightedEdge>(_grafo, 40, casa_robo);
+        DijkstraShortestPath<Integer, DefaultWeightedEdge> path3 = new DijkstraShortestPath<Integer, DefaultWeightedEdge>(_grafo, 31, casa_robo);
+       
+        //Nos quedamos con el poli que esta mas cerca y mostramos su camino
+        int origen = (path2.getPathLength() <= path3.getPathLength() ? 40 : 31);        
+        System.err.println("\n" + (path2.getPathLength() <= path3.getPathLength() ? path2.getPathEdgeList() : path3.getPathEdgeList()));
+        
+        //Mostramos el camino que sigue el poli desde la casa del robo hasta la comisaria
+        DijkstraShortestPath<Integer, DefaultWeightedEdge> path4 = new DijkstraShortestPath<Integer, DefaultWeightedEdge>(_grafo, casa_robo, 0);
+        System.err.println("\nDIST: ("+ path3.getPathLength() +")" + path4.getPathEdgeList() + "\n");
+
+		
+		////////////////////////////////////////////////////////////////////////////
 		return mapa;
 	}
-
 }
