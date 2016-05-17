@@ -58,8 +58,8 @@ rule "Regla de resolucion de recibir saludos"
     //exists(InfoEquipo(inicioContactoConEquipo == true))
     miEquipo: InfoEquipo(inicioContactoConEquipo == true)
  then
- 	//MensajeSimple mensajeObj = MensajeSimple("Recibido: equipo formado", "Comisaria", miEquipo);
  
+ 	
     obj.setState(Objetivo.SOLVING);
     update(obj);
     //TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarMensajeConfirmacion.class);
@@ -97,21 +97,21 @@ rule "Regla de resolucion de recibir coordenadas"
  when
     obj:IrLugarDelRobo(state==Objetivo.PENDING)
     f:Focus(foco==obj) 
-    coordenada:Coordenada()
+    coordenada:Coordenada(idAgente == agentId)
  then
-	System.out.println("--------- Hello 4");
-    obj.setState(Objetivo.SOLVING);
+	System.out.println("--------- Regla de recibir coordenada --- " + agentId);
+    //obj.setState(Objetivo.SOLVING);
     update(obj);
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(RecibirCoordenadasLugarRobo.class);
  	tarea.ejecutar(coordenada);  
  	
- 	obj.setState(Objetivo.REFINED);
+ 	// obj.setState(Objetivo.REFINED);
     update(obj);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
 end
 
-rule "Regla de finalizacion de recibir coordendas"
+rule "Regla de finalizacion de recibir coordenadas"
  when
     obj:IrLugarDelRobo(state==Objetivo.REFINED)
     f:Focus(foco==obj)

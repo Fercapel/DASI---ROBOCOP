@@ -24,7 +24,7 @@ public class RecibirCoordenadasLugarRobo extends TareaSincrona{
 		
 		trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente,
 				"Mensaje con las coordenadas del lugar del robo recibido", InfoTraza.NivelTraza.info));
-		System.out.println("Mensaje con las coordenadas del lugar del robo recibido: (" + coord_x + ", " + coord_y + ")");
+		System.out.println("Mensaje con las coordenadas del lugar del robo recibido: (" + coord_x + ", " + coord_y + ") -------- " + this.getIdentAgente());
 	}
 
 }
