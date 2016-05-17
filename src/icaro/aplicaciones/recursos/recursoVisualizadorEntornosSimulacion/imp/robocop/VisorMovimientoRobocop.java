@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.swing.JFrame;
 
+import icaro.aplicaciones.Robocop.Coordenada;
 import icaro.aplicaciones.Robocop.InfoMapa;
 
 public class VisorMovimientoRobocop extends JFrame {
