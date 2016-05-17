@@ -1,4 +1,4 @@
-package icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.robocop;
+package icaro.aplicaciones.Robocop;
 
 public class Coordenada {
 

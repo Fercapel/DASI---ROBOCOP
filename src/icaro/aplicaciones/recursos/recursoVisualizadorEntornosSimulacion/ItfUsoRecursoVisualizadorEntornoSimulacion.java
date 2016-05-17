@@ -1,7 +1,7 @@
 package icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion;
 
+import icaro.aplicaciones.Robocop.Coordenada;
 import icaro.aplicaciones.Robocop.InfoMapa;
-import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.robocop.Coordenada;
 import icaro.infraestructura.patronRecursoSimple.ItfUsoRecursoSimple;
 
 public interface ItfUsoRecursoVisualizadorEntornoSimulacion extends ItfUsoRecursoSimple {	

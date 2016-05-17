@@ -5,11 +5,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.rmi.RemoteException;
 
+import icaro.aplicaciones.Robocop.Coordenada;
 import icaro.aplicaciones.Robocop.InfoMapa;
 import icaro.aplicaciones.Robocop.InfoVariables;
 import icaro.aplicaciones.recursos.recursoPersistenciaEntornosSimulacion.ItfUsoRecursoPersistenciaEntornoSimulacion;
 import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.robocop.Construccion;
-import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.robocop.Coordenada;
 import icaro.infraestructura.patronRecursoSimple.imp.ImplRecursoSimple;
 
 public class ClaseGeneradoraPersistenciaRobocop extends ImplRecursoSimple

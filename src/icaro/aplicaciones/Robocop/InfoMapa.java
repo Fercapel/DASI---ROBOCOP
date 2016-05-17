@@ -9,7 +9,6 @@ import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultDirectedGraph;
 
 import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.robocop.Construccion;
-import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.robocop.Coordenada;
 
 public class InfoMapa{
 

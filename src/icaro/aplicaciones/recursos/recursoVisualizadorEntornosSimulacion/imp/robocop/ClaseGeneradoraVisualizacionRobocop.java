@@ -2,6 +2,7 @@ package icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.ro
 
 import java.rmi.RemoteException;
 
+import icaro.aplicaciones.Robocop.Coordenada;
 import icaro.aplicaciones.Robocop.InfoMapa;
 import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.ItfUsoRecursoVisualizadorEntornoSimulacion;
 import icaro.infraestructura.patronRecursoSimple.imp.ImplRecursoSimple;
