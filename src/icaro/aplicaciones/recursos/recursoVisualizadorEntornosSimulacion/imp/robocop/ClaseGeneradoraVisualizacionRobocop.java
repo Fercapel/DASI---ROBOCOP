@@ -63,4 +63,16 @@ public class ClaseGeneradoraVisualizacionRobocop extends ImplRecursoSimple imple
 		visorMovimiento.moverOrigenRobot(identRobot);
 	}
 
+	@Override
+	public void inicializarDestinoRobot(String identRobot, Coordenada cActual, String identDestino, Coordenada cDestino)
+			throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mostrarPosicionRobot(String identRobot, Coordenada c) throws Exception {
+		visorMovimiento.moverOrigenRobot(identRobot);
+	}
+
 }

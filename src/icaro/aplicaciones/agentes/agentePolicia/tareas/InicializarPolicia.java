@@ -26,7 +26,6 @@ public class InicializarPolicia extends TareaSincrona {
 			 */
 			String idAgente = this.getIdentAgente();
 			itfCompMov.mostrarRobotEnOrigen(idAgente);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

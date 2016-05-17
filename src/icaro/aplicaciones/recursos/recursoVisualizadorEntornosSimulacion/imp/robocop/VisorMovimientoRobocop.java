@@ -35,49 +35,6 @@ public class VisorMovimientoRobocop extends JFrame {
 		JFrame.setDefaultLookAndFeelDecorated(true);
 	}
 
-	/*
-	 * this.getContentPane().setLayout(new GridLayout(filas, columnas));
-
-		for (int i = 0; i < 64; i++) {
-			// ----
-			// Ejemplo (probando mapa)
-			// TODO leer mapa de archivo
-			Construccion c;
-			if (i == 0) {
-				c = Construccion.COMISARIA;
-			} else if (i == 50 || i == 54) {
-				c = Construccion.ALMACEN;
-			} else if (i % 4 == 0 || (i > 8 * 1 && i < 8 * 2) || (i > 8 * 3 && i < 8 * 4) || (i > 8 * 5 && i < 8 * 6)
-					|| (i > 8 * 7 && i < 8 * 8)) {
-				c = Construccion.CALLE;
-			} else {
-				c = Construccion.CASA;
-			}
-			// -----
-			BotonMapa b = new BotonMapa(c);
-			this.getContentPane().add(b);
-			botonesMapa.add(b);
-		}
-
-		// Ejemplo (posicionando policias y ladrones)
-		//
-		/*
-		 * botonesMapa.get(0).añadirAgente(EnumAgentes.POLICIA);
-		 * botonesMapa.get(14).añadirAgente(EnumAgentes.POLICIA);
-		 * 
-		 * botonesMapa.get(30).añadirAgente(EnumAgentes.POLICIA);
-		 * botonesMapa.get(30).añadirAgente(EnumAgentes.POLICIA);
-		 * botonesMapa.get(30).añadirAgente(EnumAgentes.POLICIA);
-		 * botonesMapa.get(30).añadirAgente(EnumAgentes.POLICIA);
-		 * botonesMapa.get(30).añadirAgente(EnumAgentes.BOMBA);
-		 * botonesMapa.get(30).añadirAgente(EnumAgentes.LADRON);
-		 * botonesMapa.get(30).añadirAgente(EnumAgentes.LADRON_CAPTURADO);
-		 * 
-		 * botonesMapa.get(56).añadirAgente(EnumAgentes.LADRON);
-		 * botonesMapa.get(46).añadirAgente(EnumAgentes.LADRON);
-		 */
-		// --------------------------------------------------
-
 	public synchronized void cargarMapa(InfoMapa mapa) {
 		if(this.mapa == null){
 			this.mapa = mapa;
@@ -94,8 +51,9 @@ public class VisorMovimientoRobocop extends JFrame {
 	
 	public synchronized void moverOrigenRobot(String idRobot) {
 		Integer pos = tablaEntidades.get(idRobot);
-		int newPos = mapa.getPosicionInicial(idRobot);
-		System.out.println("----OOOOO----"+idRobot+" "+newPos%mapa.getNumeroFilas()+" "+newPos/mapa.getNumeroFilas());
+		Coordenada c = mapa.getPosicionInicial(idRobot);
+		int newPos = c.getPosArray(mapa.getNumeroColumnas());
+		System.out.println("----OOOOO----"+idRobot+" "+c.toString());
 		EnumAgentes agente = tipoAgente(idRobot);
 		if (pos != null) {
 			botonesMapa.get(pos).eliminarAgente(agente);
@@ -106,9 +64,22 @@ public class VisorMovimientoRobocop extends JFrame {
 	}
 
 	public synchronized void cambiarPosicionRobot(String idRobot, int x, int y) {
-		System.out.println("----OOOOO----"+idRobot+" "+x+" "+y);
+		System.out.println("----OOOOO----"+idRobot+" ("+x+", "+y+") ");
 		Integer pos = tablaEntidades.get(idRobot);
-		int newPos = y*mapa.getNumeroFilas() + x;
+		int newPos = y*mapa.getNumeroColumnas() + x;
+		EnumAgentes agente = tipoAgente(idRobot);
+		if (pos != null) {
+			botonesMapa.get(pos).eliminarAgente(agente);
+		} 
+		
+		tablaEntidades.put(idRobot, newPos);
+		botonesMapa.get(newPos).añadirAgente(agente);
+	}
+	
+	public synchronized void cambiarPosicionRobot(String idRobot, Coordenada c) {
+		System.out.println("----OOOOO----"+idRobot+" "+c.toString());
+		Integer pos = tablaEntidades.get(idRobot);
+		int newPos = c.getPosArray(mapa.getNumeroColumnas());
 		EnumAgentes agente = tipoAgente(idRobot);
 		if (pos != null) {
 			botonesMapa.get(pos).eliminarAgente(agente);
@@ -131,6 +102,10 @@ public class VisorMovimientoRobocop extends JFrame {
 	public void visualizarEscenario() {
 		if(!this.isVisible())
 			this.setVisible(true);
+	}
+	
+	public void caminoMinimo(Coordenada cInicio, Coordenada cFinal){
+		mapa.obtenerCaminoMinimo(cInicio, cFinal);
 	}
 
 	/**
