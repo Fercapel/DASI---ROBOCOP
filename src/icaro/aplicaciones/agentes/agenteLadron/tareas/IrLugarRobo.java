@@ -36,7 +36,7 @@ public class IrLugarRobo extends TareaSincrona{
 			System.out.println("Soy:"+itfVisualizacion);
 			itfVisualizacion.mostrarPosicionRobot(nombreAgenteEmisor, coord_x, coord_y);
 
-
+			this.getEnvioHechos().eliminarHechoWithoutFireRules(coordRobo);
 
 
 			trazas.aceptaNuevaTrazaEjecReglas(this.identAgente, "Se ejecuta la tarea " + this.identTarea + " Emisor: "+ nombreAgenteEmisor+"\n" );
