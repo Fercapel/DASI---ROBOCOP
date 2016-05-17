@@ -7,6 +7,7 @@ import icaro.aplicaciones.Rosace.informacion.*;
 import icaro.aplicaciones.Rosace.tareasComunes.*;
 import icaro.aplicaciones.agentes.agenteLadron.objetivos.*;
 import icaro.aplicaciones.agentes.agenteLadron.tareas.*;
+import icaro.aplicaciones.Robocop.*;
 import icaro.aplicaciones.Robocop.informacion.*;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 
@@ -129,7 +130,35 @@ rule "Regla de focalizacion de Robar tras Listar Amigos"
 	retract(obj1);
 end
 
-rule "Regla de Robar 4,4"
+rule "Regla de CrearCoordenadaRobo"
+ when
+    obj1:Robar(state==Objetivo.PENDING)
+    f:Focus(foco==obj1)
+    not( exists ( CoordenadaLadron()  ))
+ then	
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(CrearCoordenadaRobo.class);
+ 	tarea.ejecutar(2,4);
+    //obj1.setState(Objetivo.SOLVING);
+    //update(obj1);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
+end
+
+rule "Regla de IrLugarRobo"
+ when
+    obj1:Robar(state==Objetivo.PENDING)
+    f:Focus(foco==obj1)
+    coordRobo:CoordenadaLadron(nombreLadron == agentId)
+ then	
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(IrLugarRobo.class);
+ 	tarea.ejecutar(coordRobo);
+    obj1.setState(Objetivo.REFINED);
+    update(obj1);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
+end
+
+/*rule "Regla de Robar 4,4"
  when
     obj1:Robar(state==Objetivo.PENDING)
     f:Focus(foco==obj1)
@@ -153,7 +182,7 @@ rule "Regla de Robar 5,5"
     update(obj1);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
-end
+end*/
 /*
 
 rule "Regla de IrLugarRobo 4,4"
