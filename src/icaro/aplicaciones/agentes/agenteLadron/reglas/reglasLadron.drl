@@ -150,9 +150,10 @@ rule "Regla de IrLugarRobo"
     f:Focus(foco==obj1)
     coordRobo:Coordenada(idAgente == agentId)
     infoLadron:InfoLadron(nombreAgente == agentId,estadoActual != "DESTINO")
+    miEquipo:Equipo(todosEnDestino == false)
  then	
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(IrLugarRobo.class);
- 	tarea.ejecutar(infoLadron,coordRobo);
+ 	tarea.ejecutar(infoLadron,coordRobo, miEquipo);
     //obj1.setState(Objetivo.REFINED);
     //update(obj1);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());

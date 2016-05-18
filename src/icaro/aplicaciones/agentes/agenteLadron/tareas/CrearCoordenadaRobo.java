@@ -21,10 +21,6 @@ public class CrearCoordenadaRobo extends TareaSincrona {
 		// Insertar en la base de conocimiento
 		
 		//for(int i = 1; i <= 3; i++){
-		if(!eq.todosEnDestino()){
-			System.out.println("AUN NO ESTAMOS TODOSSS");
-		}
-		else System.out.println("YA ESTAMOSSSS TODOS!!!!!");
 		if(nombreAgenteEmisor.contains(Integer.toString(1))){
 
 			this.coordRobo = new Coordenada(coord_x, coord_y, "Ladron"+Integer.toString(2));

@@ -36,6 +36,7 @@ public class IrLugarRobo extends TareaSincrona{
 			
 			this.infoLadron = (InfoLadron)params[0];
 			this.coordRobo = (Coordenada)params[1];
+			this.equipo = (Equipo) params[2];
 			
 			Coordenada coordActual = infoLadron.getCoordenada();
 			
@@ -63,7 +64,8 @@ public class IrLugarRobo extends TareaSincrona{
 				infoLadron.setEstadoActual("DESTINO");
 				this.getEnvioHechos().actualizarHechoWithoutFireRules(infoLadron);
 				
-				equipo.llegadaADestino(Integer.parseInt(nombreAgenteEmisor.substring(nombreAgenteEmisor.length() - 1))); //marcar agente como en destino
+				this.equipo.llegadaADestino(Integer.parseInt(nombreAgenteEmisor.substring(nombreAgenteEmisor.length() - 1))); //marcar agente como en destino
+				this.getEnvioHechos().actualizarHechoWithoutFireRules(this.equipo);
 				
 				this.getComunicator().enviarInfoAotroAgente(coordRobo, "Comisaria");
 				System.out.println("Hola COMISARIA, soy " + nombreAgenteEmisor + " y mis compañeros y yo vamos a robar en"+ " : (" + coordRobo.getX() + ", " + coordRobo.getY() + ")");
