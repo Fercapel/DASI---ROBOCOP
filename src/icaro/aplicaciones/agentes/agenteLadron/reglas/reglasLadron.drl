@@ -18,7 +18,6 @@ import java.lang.String;
 global ItfGestorTareas gestorTareas;
 global ItfUsoRecursoTrazas recursoTrazas;
 global String agentId;   // ******************************************** ID del agente ladron para usar en reglas
-global String agentType; // ******************************************** Tipo del agente (ladron) para usar en reglas
 
 //Primera regla que se ejecutara. Solo se debe disparar una vez.
 rule "Acciones Iniciales Prueba Cambio Rol "
@@ -134,10 +133,11 @@ rule "Regla de CrearCoordenadaRobo"
  when
     obj1:Robar(state==Objetivo.PENDING)
     f:Focus(foco==obj1)
-    not( exists ( CoordenadaLadron()  ))
+    not( exists ( Coordenada(idAgente == agentId)  ))
+    miEquipo:Equipo(todosEnDestino == false)
  then	
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(CrearCoordenadaRobo.class);
- 	tarea.ejecutar(2,4);
+ 	tarea.ejecutar(miEquipo, 2,4);
     //obj1.setState(Objetivo.SOLVING);
     //update(obj1);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
@@ -148,12 +148,13 @@ rule "Regla de IrLugarRobo"
  when
     obj1:Robar(state==Objetivo.PENDING)
     f:Focus(foco==obj1)
-    coordRobo:CoordenadaLadron(nombreLadron == agentId)
+    coordRobo:Coordenada(idAgente == agentId)
+    infoLadron:InfoLadron(nombreAgente == agentId,estadoActual != "DESTINO")
  then	
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(IrLugarRobo.class);
- 	tarea.ejecutar(coordRobo);
-    obj1.setState(Objetivo.REFINED);
-    update(obj1);
+ 	tarea.ejecutar(infoLadron,coordRobo);
+    //obj1.setState(Objetivo.REFINED);
+    //update(obj1);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
 end

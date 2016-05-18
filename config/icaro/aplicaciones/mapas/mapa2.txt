@@ -11,5 +11,5 @@ SSSSSSSS
 Policia1;0;5
 Policia2;7;3
 Ladron1;1;7
-Ladron2;0;3
-Ladron3;5;5
+Ladron2;6;7
+Ladron3;5;1
