@@ -57,6 +57,7 @@ rule "Regla de resolucion de recibir saludos"
     
     //exists(InfoEquipo(inicioContactoConEquipo == true))
     miEquipo: InfoEquipo(inicioContactoConEquipo == true)
+    //infoAg: InfoAgente(nombreAgente == agentId)
  then
  
  	

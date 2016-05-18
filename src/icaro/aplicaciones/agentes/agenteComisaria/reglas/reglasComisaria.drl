@@ -54,7 +54,7 @@ rule "Regla de resolucion de definir equipo"
     obj:DefinirMiEquipo(state==Objetivo.PENDING)
     // miEquipo: InfoEquipo(inicioContactoConEquipo == false)
     f:Focus(foco==obj)
-    not( exists ( InfoEquipo(inicioContactoConEquipo == true)  ))
+    not( exists ( InfoEquipo( )))
  then
     obj.setState(Objetivo.SOLVING);
     update(obj);

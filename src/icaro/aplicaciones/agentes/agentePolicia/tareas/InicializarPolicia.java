@@ -1,5 +1,7 @@
 package icaro.aplicaciones.agentes.agentePolicia.tareas;
 
+import icaro.aplicaciones.Robocop.Coordenada;
+import icaro.aplicaciones.Robocop.InfoAgente;
 import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.ItfUsoRecursoVisualizadorEntornoSimulacion;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Focus;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
@@ -21,12 +23,18 @@ public class InicializarPolicia extends TareaSincrona {
 			
 			//Obtener recurso visualización
 			ItfUsoRecursoVisualizadorEntornoSimulacion itfCompMov = (ItfUsoRecursoVisualizadorEntornoSimulacion) repoInterfaces.obtenerInterfazUso("RecursoVisualizadorEntornoSimulacionRobocop");
+			
 			/*
 			 *  Prueba concepto -> Poner al policía en la posicion 0,0 del mapa
 			 */
 			String idAgente = this.getIdentAgente();
 			itfCompMov.mostrarRobotEnOrigen(idAgente);
-
+			
+			// Los policias ahora van a estar en la posicion (0,0)
+			InfoAgente infoAg = new InfoAgente(this.getIdentAgente(), new Coordenada(0,0));
+			
+			this.getEnvioHechos().actualizarHechoWithoutFireRules(infoAg);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

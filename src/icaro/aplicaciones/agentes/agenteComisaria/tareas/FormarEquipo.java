@@ -1,41 +1,47 @@
 package icaro.aplicaciones.agentes.agenteComisaria.tareas;
 
-import java.util.ArrayList;
-
+import icaro.aplicaciones.Robocop.InfoAgente;
 import icaro.aplicaciones.Robocop.InfoEquipo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 
+import java.util.HashMap;
+
 public class FormarEquipo extends TareaSincrona {
 
-	private ArrayList<String> agentesEquipo;
+	private HashMap<String, InfoAgente> agentesEquipo;
 
 	@Override
 	public void ejecutar(Object... params) {
 		// TODO Auto-generated method stub
 
-		agentesEquipo = new ArrayList<String>();
+		agentesEquipo = new HashMap<String, InfoAgente>();
 
 		// agentesEquipo.add("Comisaria");
-		agentesEquipo.add("Policia1");
-		agentesEquipo.add("Policia2");
+	
+		
+		/*agentesEquipo.add(new HashMap("Policia1", ));
+		agentesEquipo.add("Policia2");*/
 
 		InfoEquipo equipoInfo = new InfoEquipo("Comisaria", "MiEquipo",
 				agentesEquipo);
 
 		this.getComunicator().informaraGrupoAgentes(equipoInfo,
 				equipoInfo.getTeamRobotIds());
-		equipoInfo.setInicioContactoConEquipo(true);
+		equipoInfo.setInicioContactoConEquipo(false);
+		
+		
+		// Forma un equipo sin tener conocimiento sobre ello
 
 		// Insertar en la base de conocimiento
 		this.getEnvioHechos().actualizarHechoWithoutFireRules(equipoInfo);
 
 		trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente,
-				"Numero de agentes de los que espero respuesta:"
+				"FormandoEquipo ---------"
 						+ agentesEquipo.size(), InfoTraza.NivelTraza.info));
 
 		System.out
-				.println("FormandoEquipo -- Numero de agentes de los que espero respuesta:"
+				.println("FormandoEquipo ---------"
 						+ equipoInfo.getTeamRobotIds().size());
 	}
 
