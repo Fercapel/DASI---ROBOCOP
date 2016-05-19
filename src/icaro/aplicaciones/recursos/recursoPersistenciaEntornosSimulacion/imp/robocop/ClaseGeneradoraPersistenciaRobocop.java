@@ -21,9 +21,11 @@ public class ClaseGeneradoraPersistenciaRobocop extends ImplRecursoSimple
 	private static final long serialVersionUID = 1L;
 
 	private InfoMapa mapa;
-
+	private Boolean mapaRelleno;
+	
 	public ClaseGeneradoraPersistenciaRobocop(String idRecurso) throws RemoteException {
 		super(idRecurso);
+		this.mapaRelleno = false;
 	}
 	
 	/*
@@ -89,8 +91,10 @@ public class ClaseGeneradoraPersistenciaRobocop extends ImplRecursoSimple
 				j++;
 			}
 		}
-
-		mapa.rellenarGrafo();
+		if(!mapaRelleno){
+			mapa.rellenarGrafo();
+			mapaRelleno=true;
+		}
 		return mapa;
 	}
 }
