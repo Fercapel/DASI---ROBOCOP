@@ -11,6 +11,7 @@ import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.
 public class FormarEquipo extends TareaSincrona{
 
 	private ArrayList <String> agentesEquipo = new ArrayList<String>();
+	private ArrayList <String> ladronesSueltos = new ArrayList<String>();
 	
 	@Override
 	public void ejecutar(Object... params) {
@@ -21,6 +22,7 @@ public class FormarEquipo extends TareaSincrona{
 		try {
 			itfCompPer =(ItfUsoRecursoPersistenciaEntornoSimulacion) repoInterfaces.obtenerInterfazUso("RecursoPersistenciaEntornoSimulacionRobocop");
 			agentesEquipo = itfCompPer.obtenerMapa().getPolicias();
+			ladronesSueltos = itfCompPer.obtenerMapa().getLadrones();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -35,6 +37,8 @@ public class FormarEquipo extends TareaSincrona{
         System.out.println("FormandoEquipo -- Numero de agentes de los que espero respuesta:" + equipoInfo.getTeamRobotIds().size());
         
 		this.getComunicator().informaraGrupoAgentes(equipoInfo, equipoInfo.getTeamRobotIds());
+		this.getComunicator().informaraGrupoAgentes(eComisaria, ladronesSueltos);
+		
         equipoInfo.setInicioContactoConEquipo(true);
 	}
 

@@ -17,6 +17,7 @@ public class InfoMapa{
 	private Map<String, Integer> posicionesIniciales;
 	
 	private ArrayList<String> polis;
+	private ArrayList<String> ladrones;
 	
 	private Graph<Integer, Arista> _grafo;
 	
@@ -27,12 +28,14 @@ public class InfoMapa{
 		this.mapa = new ArrayList<Construccion>();
 		this.posicionesIniciales = new HashMap<String, Integer>();
 		this.polis = new ArrayList<String>();
+		this.ladrones = new ArrayList<String>();
 	}
 	
 	public InfoMapa(int numCols, int numFilas){
 		this.mapa = new ArrayList<Construccion>();
 		this.posicionesIniciales = new HashMap<String, Integer>();
 		this.polis = new ArrayList<String>();
+		this.ladrones = new ArrayList<String>();
 		this.numCols = numCols;
 		this.numFilas = numFilas;
 		for(int i = 0; i<numCols*numFilas; i++){
@@ -161,6 +164,8 @@ public class InfoMapa{
 	public void setPosicionInicial(String id, Coordenada c){
 		if(id.toLowerCase().contains("poli")){
 			polis.add(id);
+		} else if(id.toLowerCase().contains("ladron")){
+			ladrones.add(id);
 		}
 		
 		if(c.getX()<numFilas && c.getY()<numCols){
@@ -173,6 +178,20 @@ public class InfoMapa{
 	
 	public ArrayList<String> getPolicias(){
 		return polis;
+	}
+	
+	public ArrayList<String> getLadrones() {
+		return ladrones;
+	}
+	
+	public Coordenada obtenerCasaRandom() {
+		Coordenada c;
+		while(true){
+			c = posicionRandom();
+			if(mapa.get(c.getPosArray(numCols)) == Construccion.CASA){
+				return c;
+			}
+		}
 	}
 	
 	public Coordenada getPosicionInicial(String id){

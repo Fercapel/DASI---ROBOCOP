@@ -10,3 +10,6 @@ HSHHHHSH
 SSSSSSSS
 Policia1;0;5
 Policia2;7;3
+Ladron1;5;3
+Ladron2;1;1
+Ladron3;7;6
