@@ -109,6 +109,10 @@ public class VisorMovimientoRobocop extends JFrame {
 		mapa.obtenerCaminoMinimo(cInicio, cFinal);
 	}
 
+	public Coordenada getCoordenadasOrigen(String identRobot) {
+		return mapa.getPosicionInicial(identRobot);
+	}
+
 	/**
 	 * Ejecutar ventana.
 	 */

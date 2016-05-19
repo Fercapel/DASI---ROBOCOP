@@ -76,4 +76,9 @@ public class ClaseGeneradoraVisualizacionRobocop extends ImplRecursoSimple imple
 		visorMovimiento.moverOrigenRobot(identRobot);
 	}
 
+	@Override
+	public Coordenada getRobotOrigen(String identRobot) throws Exception {
+		return visorMovimiento.getCoordenadasOrigen(identRobot);
+	}
+
 }

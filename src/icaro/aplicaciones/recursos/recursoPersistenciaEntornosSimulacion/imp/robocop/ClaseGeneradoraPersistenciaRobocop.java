@@ -25,7 +25,7 @@ public class ClaseGeneradoraPersistenciaRobocop extends ImplRecursoSimple
 	public ClaseGeneradoraPersistenciaRobocop(String idRecurso) throws RemoteException {
 		super(idRecurso);
 	}
-
+	
 	/*
 	 * Lee mapas de la forma:
 	 * 
