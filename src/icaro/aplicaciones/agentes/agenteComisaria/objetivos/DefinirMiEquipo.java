@@ -11,7 +11,6 @@ public class DefinirMiEquipo extends Objetivo {
 	public String id;
 	public String misionId; // identificador de la mision del equipo
 
-	/** Crea una nueva instancia del objetivo */
 	public DefinirMiEquipo() {
 		super.setgoalId("DefinirMiEquipo");
 	}
