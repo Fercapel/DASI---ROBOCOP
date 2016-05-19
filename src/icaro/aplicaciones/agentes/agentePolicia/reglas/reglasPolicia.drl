@@ -3,8 +3,6 @@ import icaro.infraestructura.recursosOrganizacion.recursoTrazas.ItfUsoRecursoTra
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.*;
 import icaro.infraestructura.patronAgenteCognitivo.procesadorObjetivos.gestorTareas.ItfGestorTareas;
-//import icaro.aplicaciones.Rosace.informacion.*;
-//import icaro.aplicaciones.Rosace.tareasComunes.*;
 import icaro.aplicaciones.agentes.agentePolicia.objetivos.*;
 import icaro.aplicaciones.agentes.agentePolicia.tareas.*;
 import icaro.aplicaciones.Robocop.*;
@@ -19,7 +17,9 @@ global ItfGestorTareas gestorTareas;
 global ItfUsoRecursoTrazas recursoTrazas;
 global String agentId;
 
-//Primera regla que se ejecutara. Solo se debe disparar una vez.
+//-------------------------------------------------------------------//
+//  Primera regla que se ejecutara. Solo se debe disparar una vez    //
+//-------------------------------------------------------------------//
 rule "Acciones Iniciales Prueba Cambio Rol "
  when
 	not ( exists(Focus()))
@@ -35,14 +35,17 @@ rule "Acciones Iniciales Objetivo "
 	focoActual : Focus(foco == null)
 	not ( exists(Objetivo()))
  then
-	Objetivo ob = new RecibirSaludos();
+	Objetivo ob = new EnviarCoordenadas();
     insert(ob);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
 
-rule "Regla de focalizacion de observar entorno"
+//-------------------------------------------------------------------//
+//             Notificar Posicion al Conocer la Comisaria            //
+//-------------------------------------------------------------------//
+rule "Regla de focalizacion Enviar Coordenadas"
  when
-    obj:RecibirSaludos(state==Objetivo.PENDING)
+    obj:EnviarCoordenadas(state==Objetivo.PENDING)
     f:Focus(foco == null)
  then
     f.setFoco(obj);
@@ -50,33 +53,28 @@ rule "Regla de focalizacion de observar entorno"
     update(f);
 end
 
-rule "Regla de resolucion de observar entorno"
+rule "Regla de resolucion de Enviar Coordenadas"
  when
-    obj:RecibirSaludos(state==Objetivo.PENDING)
+    obj:EnviarCoordenadas(state==Objetivo.PENDING)
     f:Focus(foco==obj)
-    // mensajeObj:Mensaje(identAgente == "Comisaria" , mensaje == "Hola Policia, soy la Comisaria")
-    // mensajeObj:MensajeSimple()
-    //not( exists ( MensajeACK(msgAConfirmar == mensajeObj  )))
-    // exists(MensajeSimple())
     exists(InfoEquipo())
+    mensajeObj:InfoEquipo()
+    ePolicia:EstadoPolicia()
  then
     obj.setState(Objetivo.SOLVING);
     update(obj);
-    //TareaSincrona tarea = gestorTareas.crearTareaSincrona(MandarMensajeConfirmacion.class);
- 	//tarea.ejecutar(mensajeObj);
  	
- 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(DecirHola.class);
- 	tarea.ejecutar("Probando------------------");
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(InformarDePosicion.class);
+ 	tarea.ejecutar(mensajeObj, ePolicia);
  	
- 	obj.setState(Objetivo.REFINED);
+ 	obj.setState(Objetivo.REFINED); //SOLVED
     update(obj);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
-    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," ESTADO ACTUAL: " + f.getFoco());
 end
 
-rule "Regla de finalizacion de observar entorno"
+rule "Regla de finalizacion de Enviar Coordenadas"
  when
-    obj:RecibirSaludos(state==Objetivo.SOLVED)
+    obj:EnviarCoordenadas(state==Objetivo.SOLVED)
     f:Focus(foco==obj)
  then
  	f.setFoco(null);
