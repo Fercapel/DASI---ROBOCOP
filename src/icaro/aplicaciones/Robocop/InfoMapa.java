@@ -13,7 +13,10 @@ import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.imp.rob
 public class InfoMapa{
 
 	private ArrayList<Construccion> mapa;
+	
 	private Map<String, Integer> posicionesIniciales;
+	
+	private ArrayList<String> polis;
 	
 	private Graph<Integer, Arista> _grafo;
 	
@@ -23,10 +26,13 @@ public class InfoMapa{
 	public InfoMapa(){
 		this.mapa = new ArrayList<Construccion>();
 		this.posicionesIniciales = new HashMap<String, Integer>();
+		this.polis = new ArrayList<String>();
 	}
 	
 	public InfoMapa(int numCols, int numFilas){
 		this.mapa = new ArrayList<Construccion>();
+		this.posicionesIniciales = new HashMap<String, Integer>();
+		this.polis = new ArrayList<String>();
 		this.numCols = numCols;
 		this.numFilas = numFilas;
 		for(int i = 0; i<numCols*numFilas; i++){
@@ -153,12 +159,20 @@ public class InfoMapa{
 	}
 	
 	public void setPosicionInicial(String id, Coordenada c){
+		if(id.toLowerCase().contains("poli")){
+			polis.add(id);
+		}
+		
 		if(c.getX()<numFilas && c.getY()<numCols){
 			posicionesIniciales.put(id, c.getPosArray(numCols));
 			return;
-		}
+		}		
 		
 		posicionesIniciales.put(id, posicionRandom().getPosArray(numCols));
+	}
+	
+	public ArrayList<String> getPolicias(){
+		return polis;
 	}
 	
 	public Coordenada getPosicionInicial(String id){
