@@ -7,6 +7,7 @@ import icaro.aplicaciones.Robocop.*;
 import icaro.aplicaciones.agentes.agenteLadron.objetivos.*;
 import icaro.aplicaciones.agentes.agenteLadron.tareas.*;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
+import icaro.infraestructura.entidadesBasicas.comunicacion.MensajeSimple;
 
 import java.util.ArrayList;
 import java.lang.String;
@@ -158,31 +159,57 @@ rule "Regla de resolucion de EjecutarRobo -> IrHastaElRobo"
  when
     obj:EjecutarRobo(state==Objetivo.PENDING)
     f:Focus(foco==obj)
-    eLadron:EstadoLadron()
+    eLadron:EstadoLadron(iniciarRobo==false)
  then
     obj.setState(Objetivo.SOLVING);
     update(obj);
     
     TareaSincrona tarea = gestorTareas.crearTareaSincrona(IrHastaElRobo.class);
  	tarea.ejecutar(eLadron, obj);  
-    
-    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
-end
-
-/*
-rule "Regla de resolucion de MoverseAlRobo"
- when
-    obj:DecidirLugarDelRobo(state==Objetivo.SOLVED)
-    f:Focus(foco==obj)
- then
-    obj.setState(Objetivo.SOLVING);
+ 	
+ 	obj.setState(Objetivo.PENDING);
     update(obj);
     
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
 
+rule "Regla de resolucion de EjecutarRobo -> AvisarListoParaRobar"
+ when
+    obj:EjecutarRobo(state==Objetivo.PENDING)
+    f:Focus(foco==obj)
+    eLadron:EstadoLadron(iniciarRobo==false, esperandoCompañeros==true)
+ then
+    obj.setState(Objetivo.SOLVING);
+    update(obj);
+    
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(AvisarListoParaRobar.class);
+ 	tarea.ejecutar(eLadron);  
+ 	
+ 	obj.setState(Objetivo.PENDING);
+    update(obj);
+    
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
 
-rule "Regla de finalizacion de EnviarLugarDelRobo"
+rule "Regla de resolucion de EjecutarRobo -> EsperarCompañeros"
+ when
+    obj:EjecutarRobo(state==Objetivo.PENDING)
+    f:Focus(foco==obj)
+    eLadron:EstadoLadron(iniciarRobo==true, esperandoCompañeros==true)
+    eComisaria:EstadoComisaria()
+    msg:MensajeSimple()
+ then
+    obj.setState(Objetivo.SOLVING);
+    update(obj);
+    
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(IniciarRobo.class);
+ 	tarea.ejecutar(eLadron, eComisaria, msg, obj);  
+ 	    
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+/*
+rule "Regla de finalizacion "
  when
     obj:DecidirLugarDelRobo(state==Objetivo.SOLVED)
     f:Focus(foco==obj)

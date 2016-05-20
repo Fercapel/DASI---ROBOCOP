@@ -14,14 +14,20 @@ public class EstadoLadron extends EstadoAgente{
 	private Coordenada coordenadasDelRobo;
 	
 	private boolean propuestaRealizada;
-	private boolean moverseAlRobo;
+	
+	private boolean iniciarRobo;
+	private boolean esperandoCompañeros;
+	
+	private ArrayList<String> compañerosPreparados;
 	
 	public EstadoLadron(String id) {
 		super(id);
 		this.propuestasRobo = new ArrayList<PropuestaDeRobo>();
 		this.compañeros = new ArrayList<String>();
+		this.compañerosPreparados = new ArrayList<String>();
 		this.camino = new ArrayList<Coordenada>();
-		this.moverseAlRobo = false;
+		this.iniciarRobo = false;
+		this.esperandoCompañeros = false;
 		this.propuestaRealizada = false;
 	}
 	
@@ -39,12 +45,12 @@ public class EstadoLadron extends EstadoAgente{
 		return compañeros;
 	}
 	
-	public boolean isMoverseAlRobo() {
-		return moverseAlRobo;
+	public boolean isIniciarRobo() {
+		return iniciarRobo;
 	}
 	
-	public void setMoverseAlRobo(boolean moverseAlRobo) {
-		this.moverseAlRobo = moverseAlRobo;
+	public void setIniciarRobo(boolean iniciarRobo) {
+		this.iniciarRobo = iniciarRobo;
 	}
 	
 	public boolean isPropuestaRealizada() {
@@ -57,6 +63,23 @@ public class EstadoLadron extends EstadoAgente{
 	
 	public ArrayList<PropuestaDeRobo> getPropuestasRobo() {
 		return propuestasRobo;
+	}
+	
+	public void añadirCompañeroPreparado(String compi){
+		if(!compañerosPreparados.contains(compi))
+			compañerosPreparados.add(compi);
+	}
+	
+	public boolean estanTodosPreparados(){
+		return compañerosPreparados.size() == compañeros.size();
+	}
+	
+	public void setEsperandoCompañeros(boolean esperandoCompañeros) {
+		this.esperandoCompañeros = esperandoCompañeros;
+	}
+	
+	public boolean isEsperandoCompañeros() {
+		return esperandoCompañeros;
 	}
 	
 	public void setCoordenadasDelRobo(Coordenada coordenadasDelRobo) {

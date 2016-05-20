@@ -41,10 +41,11 @@ public class IrHastaElRobo extends TareaSincrona{
 			
 			//Si he lelgado al lugar del robo he cumplido la tarea
 			if(nuevaCoordenada.getPosArray(mapa.getNumeroColumnas()) == eLadron.getCoordenadasDelRobo().getPosArray(mapa.getNumeroColumnas())){
-				obj.setSolved();
-			} else {
-				obj.setPending();
-			}
+				eLadron.setEsperandoCompañeros(true);
+			} 
+			
+			obj.setPending();
+			
 
 			trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Me he movido a " + nuevaCoordenada.toString(), InfoTraza.NivelTraza.info));     
 	        
