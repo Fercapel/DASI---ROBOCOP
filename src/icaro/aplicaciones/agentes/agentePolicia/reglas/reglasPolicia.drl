@@ -67,7 +67,7 @@ rule "Regla de resolucion de Enviar Coordenadas"
  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(InformarDePosicion.class);
  	tarea.ejecutar(mensajeObj, ePolicia);
  	
- 	obj.setState(Objetivo.REFINED); //SOLVED
+ 	obj.setState(Objetivo.SOLVED);
     update(obj);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
@@ -77,10 +77,70 @@ rule "Regla de finalizacion de Enviar Coordenadas"
     obj:EnviarCoordenadas(state==Objetivo.SOLVED)
     f:Focus(foco==obj)
  then
+ 	retract(obj);
+    Objetivo ob = new DetenerRobo();
+    insert(ob);
+    f.setFoco(null);
+    update(f);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+//-------------------------------------------------------------------//
+//                    IR AL LUGAR DEL ROBO                           //
+//-------------------------------------------------------------------//
+rule "Regla de focalizacion DetenerRobo"
+ when
+    obj:DetenerRobo(state==Objetivo.PENDING)
+    f:Focus(foco == null)
+ then
+    f.setFoco(obj);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    update(f);
+end
+
+rule "Regla de resolucion de DetenerRobo --> ObtenerOrdenMoverme"
+ when
+    obj:DetenerRobo(state==Objetivo.PENDING)
+    f:Focus(foco==obj)
+    robo:RoboEnProceso()
+    ePolicia:EstadoPolicia()
+ then
+    obj.setState(Objetivo.SOLVING);
+    update(obj);
+ 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(ObtenerOrdenMoverme.class);
+ 	tarea.ejecutar(ePolicia, robo);
+ 	
+ 	obj.setState(Objetivo.REFINED);
+    update(obj);
+
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+rule "Regla de resolucion de DetenerRobo --> IrAlRobo"
+ when
+    obj:DetenerRobo(state==Objetivo.REFINED)
+    f:Focus(foco==obj)
+    ePolicia:EstadoPolicia()
+ then
+    obj.setState(Objetivo.SOLVING);
+    update(obj);
+ 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(IrAlRobo.class);
+ 	tarea.ejecutar(ePolicia, obj);
+
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+/*
+rule "Regla de finalizacion de DetenerRobo"
+ when
+    obj:DetenerRobo(state==Objetivo.SOLVED)
+    f:Focus(foco==obj)
+ then
  	f.setFoco(null);
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId,"Nuevo Foco : " + f.getFoco());
     retract(obj);
     update(f);
 end
-
+*/
