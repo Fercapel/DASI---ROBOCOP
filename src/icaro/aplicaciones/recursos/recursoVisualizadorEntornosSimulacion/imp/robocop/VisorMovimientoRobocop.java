@@ -30,7 +30,7 @@ public class VisorMovimientoRobocop extends JFrame {
 	 * Inicializar contenido de la ventana.
 	 */
 	private void initialize() {
-		this.setBounds(500, 500, 384, 384);
+		this.setBounds(950, 100, 384, 384);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JFrame.setDefaultLookAndFeelDecorated(true);
@@ -78,6 +78,11 @@ public class VisorMovimientoRobocop extends JFrame {
 	}
 	
 	public synchronized void cambiarPosicionRobot(String idRobot, Coordenada c) {
+		try {
+			wait(200);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		System.out.println("----OOOOO----"+idRobot+" "+c.toString());
 		Integer pos = tablaEntidades.get(idRobot);
 		int newPos = c.getPosArray(mapa.getNumeroColumnas());
@@ -88,6 +93,7 @@ public class VisorMovimientoRobocop extends JFrame {
 		
 		tablaEntidades.put(idRobot, newPos);
 		botonesMapa.get(newPos).añadirAgente(agente);
+		this.repaint();
 	}
 	
 	private EnumAgentes tipoAgente(String idRobot) {
