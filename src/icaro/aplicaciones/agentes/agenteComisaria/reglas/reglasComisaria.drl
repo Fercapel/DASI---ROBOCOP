@@ -74,10 +74,52 @@ rule "Regla de finalizacion de FormarEquipo"
     f:Focus(foco==obj)
  then
     retract(obj);
+    Objetivo ob = new EsperarRobo();
+    insert(ob);
+    f.setFoco(null);
+    update(f);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+//-------------------------------------------------------------------//
+//                    ESPERAR QUE SUCEDA UN ROBO                     //
+//-------------------------------------------------------------------//
+rule "Regla de focalizacion de EsperarRobo"
+ when
+    obj:EsperarRobo(state==Objetivo.PENDING)
+    f:Focus(foco == null)
+ then
+    f.setFoco(obj);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    update(f);
+end
+
+rule "Regla de resolucion de EsperarRobo"
+ when
+    obj:EsperarRobo(state==Objetivo.PENDING)
+    f:Focus(foco==obj)
+    robo:RoboEnProceso()
+    eComisaria:EstadoComisaria()
+ then
+    obj.setState(Objetivo.SOLVING);
+    update(obj);
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(RegistrarRobo.class);
+ 	tarea.ejecutar(eComisaria, robo, obj);  
+    
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+rule "Regla de finalización de EsperarRobo "
+ when
+    obj:EsperarRobo(state==Objetivo.SOLVED)
+    f:Focus(foco==obj)
+ then
+    retract(obj);
     Objetivo ob = new EnviarLugarDelRobo();
     insert(ob);
     f.setFoco(null);
     update(f);
+    
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
 
@@ -126,15 +168,18 @@ rule "Regla de resolucion de EnviarLugarDelRobo -> EvaluarCamino"
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
 
-/*
+
 rule "Regla de finalizacion de EnviarLugarDelRobo"
  when
     obj:EnviarLugarDelRobo(state==Objetivo.SOLVED)
     f:Focus(foco==obj)
  then
     retract(obj);
+    Objetivo ob = new EsperarRobo();
+    insert(ob);
     f.setFoco(null);
     update(f);
+    
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
-*/
+

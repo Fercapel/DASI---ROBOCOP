@@ -15,7 +15,10 @@ public class InformarPoliciaMasCercano extends TareaSincrona{
 	public void ejecutar(Object... params) {
 
 		EstadoComisaria eComisaria = (EstadoComisaria) params[0];
-		Coordenada coordenajaObj = new Coordenada(7,6);
+		Coordenada coordenajaObj = eComisaria.getRobosASofocar().get(0);
+		//eComisaria.añadirRoboSofocados(coordenajaObj);
+		
+		this.getEnvioHechos().actualizarHechoWithoutFireRules(eComisaria);
 		
 		InfoMapa mapa;
 		try {
