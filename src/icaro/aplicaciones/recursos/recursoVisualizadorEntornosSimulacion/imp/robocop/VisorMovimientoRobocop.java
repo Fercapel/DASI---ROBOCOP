@@ -119,6 +119,10 @@ public class VisorMovimientoRobocop extends JFrame {
 		return mapa.getPosicionInicial(identRobot);
 	}
 
+	public int getNumeroLadronesEn(Coordenada c){
+		return this.botonesMapa.get(c.getPosArray(mapa.getNumeroColumnas())).getNumeroLadrones();
+	}
+	
 	/**
 	 * Ejecutar ventana.
 	 */

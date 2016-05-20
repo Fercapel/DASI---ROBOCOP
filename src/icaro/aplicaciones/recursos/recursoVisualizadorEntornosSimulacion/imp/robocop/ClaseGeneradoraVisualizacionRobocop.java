@@ -82,4 +82,9 @@ public class ClaseGeneradoraVisualizacionRobocop extends ImplRecursoSimple imple
 		return visorMovimiento.getCoordenadasOrigen(identRobot);
 	}
 
+	@Override
+	public int getNumeroLadronesDibujadosEn(Coordenada coordenadas) throws Exception {
+		return visorMovimiento.getNumeroLadronesEn(coordenadas);
+	}
+
 }

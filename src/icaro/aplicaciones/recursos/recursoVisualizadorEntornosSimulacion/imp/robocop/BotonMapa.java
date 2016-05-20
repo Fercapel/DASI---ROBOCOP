@@ -74,6 +74,10 @@ public class BotonMapa extends JButton{
 		this.iconos.eliminarIcono(agente);
 	}
 	
+	public int getNumeroLadrones(){
+		return this.iconos.getIconosLadrones().size();
+	}
+	
 	public Construccion getConstruccion(){
 		return this.contr;
 	}
