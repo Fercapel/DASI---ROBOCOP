@@ -7,6 +7,8 @@ import java.util.Map;
 public class EstadoComisaria extends EstadoAgente {
 
 	private ArrayList<String> misAgentes;
+	private ArrayList<String> agentesOcupados;
+	
 	private Map<String, Coordenada> coordenadasAgente;
 	
 	private ArrayList<Coordenada> robosASofocar;
@@ -23,6 +25,7 @@ public class EstadoComisaria extends EstadoAgente {
 		robosAEnviarRefuerzos = new ArrayList<RoboEnProceso>();
 		robosSofocados = new ArrayList<Coordenada>();
 		coordenadasAgente = new HashMap<String, Coordenada>();
+		agentesOcupados = new ArrayList<String>();
 	}
 	
 	public ArrayList<String> getMisAgentes() {
@@ -63,6 +66,23 @@ public class EstadoComisaria extends EstadoAgente {
 	
 	public ArrayList<Coordenada> getRobosASofocar() {
 		return robosASofocar;
+	}
+	
+	public ArrayList<String> getAgentesOcupados() {
+		return agentesOcupados;
+	}
+	
+	public void anadirAgenteOcupado(String agente){
+		if(!agentesOcupados.contains(agente))
+			agentesOcupados.add(agente);
+	}
+	
+	public void quitarAgenteOcupado(String agente){
+		agentesOcupados.remove(agente);
+	}
+	
+	public boolean estaOcupado(String idAgente){
+		return agentesOcupados.contains(idAgente);
 	}
 	
 	/*
@@ -110,11 +130,17 @@ public class EstadoComisaria extends EstadoAgente {
 	/*
 	 * LISTA DE ROBOS A ENVIAR REFUERZOS
 	 */
-	public boolean añadirRoboAEnviarRefuerzos(RoboEnProceso robo){		
+	public boolean añadirRoboAEnviarRefuerzos(RoboEnProceso robo){			
 		for(RoboEnProceso roboExt : this.robosAEnviarRefuerzos){
 			if(robo.getCoordenadaRobo().getX()==roboExt.getCoordenadaRobo().getX() && 
 					robo.getCoordenadaRobo().getY() == roboExt.getCoordenadaRobo().getY()){
 				return false;
+			}
+		}
+		for(Coordenada cd : this.robosASofocar){
+			if(cd.getX()==robo.getCoordenadaRobo().getX() && cd.getY() == robo.getCoordenadaRobo().getY()){
+				robosASofocar.remove(cd);
+				break;
 			}
 		}
 		

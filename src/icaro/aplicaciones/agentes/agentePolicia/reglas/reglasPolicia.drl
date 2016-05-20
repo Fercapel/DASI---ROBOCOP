@@ -131,6 +131,69 @@ rule "Regla de resolucion de DetenerRobo --> IrAlRobo"
 
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
+
+rule "Regla de finalizacion de DetenerRobo"
+ when
+    obj:DetenerRobo(state==Objetivo.SOLVED)
+    f:Focus(foco==obj)
+ then
+ 	retract(obj);
+    Objetivo ob = new DetenerLadrones();
+    insert(ob);
+    f.setFoco(null);
+    update(f);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+//-------------------------------------------------------------------//
+//        DETENER LADRONES (PEDIR REFUERZOS SI ES NECESARIO          //
+//-------------------------------------------------------------------//
+rule "Regla de focalizacion DetenerLadrones"
+ when
+    obj:DetenerLadrones(state==Objetivo.PENDING)
+    f:Focus(foco == null)
+ then
+    f.setFoco(obj);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    update(f);
+end
+
+rule "Regla de resolucion de DetenerLadrones --> EvaluarSituacion"
+ when
+    obj:DetenerLadrones(state==Objetivo.PENDING)
+    f:Focus(foco==obj)
+    info:InfoEquipo()
+    ePolicia:EstadoPolicia()
+ then
+    obj.setState(Objetivo.SOLVING);
+    update(obj);
+ 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(EvaluarSituacion.class);
+ 	tarea.ejecutar(ePolicia, info);
+ 	
+ 	obj.setState(Objetivo.REFINED);
+    update(obj);
+
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+/*
+rule "Regla de resolucion de DetenerLadrones --> PedirRefuerzos"
+ when
+    obj:DetenerRobo(state==Objetivo.REFINED)
+    f:Focus(foco==obj)
+    ePolicia:EstadoPolicia()
+ then
+    obj.setState(Objetivo.SOLVING);
+    update(obj);
+ 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(PedirRefuerzos.class);
+ 	tarea.ejecutar(ePolicia);
+ 	
+ 	obj.setState(Objetivo.SOLVED);
+    update(obj);
+
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
 /*
 rule "Regla de finalizacion de DetenerRobo"
  when
