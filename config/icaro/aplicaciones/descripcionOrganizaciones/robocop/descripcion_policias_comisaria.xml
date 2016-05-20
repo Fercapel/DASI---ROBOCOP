@@ -101,6 +101,8 @@
 	                <icaro:componenteGestionado refId="AgenteControladorSimuladorRosaceReactivo1" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Policia1" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Policia2" tipoComponente="AgenteAplicacion"/>
+	                <icaro:componenteGestionado refId="Policia3" tipoComponente="AgenteAplicacion"/>
+	                <icaro:componenteGestionado refId="Policia4" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Ladron1" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Ladron2" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Ladron3" tipoComponente="AgenteAplicacion"/>
@@ -129,6 +131,14 @@
 	        </icaro:Instancia>
 	        <icaro:Instancia 
 	        	id="Policia2" 
+	        	refDescripcion="AgenteAplicacionPolicia">
+	        </icaro:Instancia>
+	        <icaro:Instancia 
+	        	id="Policia3" 
+	        	refDescripcion="AgenteAplicacionPolicia">
+	        </icaro:Instancia>
+	        <icaro:Instancia 
+	        	id="Policia4" 
 	        	refDescripcion="AgenteAplicacionPolicia">
 	        </icaro:Instancia>
 	        <icaro:Instancia 
