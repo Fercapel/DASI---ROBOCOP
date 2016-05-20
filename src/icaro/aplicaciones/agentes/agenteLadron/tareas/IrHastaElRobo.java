@@ -39,7 +39,7 @@ public class IrHastaElRobo extends TareaSincrona{
 			itfCompVis.mostrarPosicionRobot(this.getIdentAgente(), nuevaCoordenada);
 			eLadron.setCoordenadas(nuevaCoordenada);
 			
-			//Si he lelgado al lugar del robo he cumplido la tarea
+			//Si he llegado al lugar del robo he cumplido la tarea
 			if(nuevaCoordenada.getPosArray(mapa.getNumeroColumnas()) == eLadron.getCoordenadasDelRobo().getPosArray(mapa.getNumeroColumnas())){
 				eLadron.setEsperandoCompañeros(true);
 			} 

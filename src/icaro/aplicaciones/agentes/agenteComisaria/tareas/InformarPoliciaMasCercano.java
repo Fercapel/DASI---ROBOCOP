@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import icaro.aplicaciones.Robocop.Coordenada;
 import icaro.aplicaciones.Robocop.EstadoComisaria;
 import icaro.aplicaciones.Robocop.InfoMapa;
+import icaro.aplicaciones.Robocop.RoboEnProceso;
 import icaro.aplicaciones.recursos.recursoPersistenciaEntornosSimulacion.ItfUsoRecursoPersistenciaEntornoSimulacion;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
@@ -26,7 +27,6 @@ public class InformarPoliciaMasCercano extends TareaSincrona{
 			mapa = itfCompPer.obtenerMapa();
 			String agenteCercano="";
 			int pasosMinimo = Integer.MAX_VALUE;
-			ArrayList<Coordenada> camino;
 			
 			//Obtener policia más cercano
 			for(String agente : eComisaria.getMisAgentes()){
@@ -35,19 +35,19 @@ public class InformarPoliciaMasCercano extends TareaSincrona{
 				if(pasos < pasosMinimo){
 					pasosMinimo = pasos;
 					agenteCercano = agente;
-					camino = caminoAux;
 				}
 			}
 			
-			//TODO: MANDAR MENSAJE A DICHO POLICIA CON EL ARRAYLIST CAMINO
+			ArrayList<String> policiasQueVan = new ArrayList<String>();
+			policiasQueVan.add(agenteCercano);
+			
+			this.getComunicator().informaraGrupoAgentes(new RoboEnProceso(coordenajaObj), policiasQueVan);
 			
 			trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Agente Mas Cercado -> "+agenteCercano, InfoTraza.NivelTraza.info));     
 	        System.out.println("Agente Mas Cercado -> "+agenteCercano);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-
 
 	}
 }
