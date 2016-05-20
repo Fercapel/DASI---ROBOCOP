@@ -51,7 +51,6 @@ public class SeleccionarPropuestaRobo extends TareaSincrona{
 				
 				//Me quedo con las coordenadas de la propuesta mejor (Lugar donde será el robo)
 				eLadron.setCoordenadasDelRobo(pFinal.getCoordenada());
-				eLadron.setMoverseAlRobo(true);
 				obj.setSolved();
 				
 				trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Obtenidas todas las propuestas --> Robo en" + pFinal.getCoordenada().toString() + " con coste total " + pFinal.getCoste(), InfoTraza.NivelTraza.info));     
