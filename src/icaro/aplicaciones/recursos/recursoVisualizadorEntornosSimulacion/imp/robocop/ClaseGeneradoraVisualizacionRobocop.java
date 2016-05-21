@@ -87,4 +87,9 @@ public class ClaseGeneradoraVisualizacionRobocop extends ImplRecursoSimple imple
 		return visorMovimiento.getNumeroLadronesEn(coordenadas);
 	}
 
+	@Override
+	public int getNumeroPoliciasDibujadosEn(Coordenada coordenadas) throws Exception {
+		return visorMovimiento.getNumeroPoliciasEn(coordenadas);
+	}
+
 }

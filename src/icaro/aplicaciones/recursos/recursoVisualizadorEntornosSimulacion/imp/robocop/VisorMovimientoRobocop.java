@@ -54,7 +54,6 @@ public class VisorMovimientoRobocop extends JFrame {
 		Integer pos = tablaEntidades.get(idRobot);
 		Coordenada c = mapa.getPosicionInicial(idRobot);
 		int newPos = c.getPosArray(mapa.getNumeroColumnas());
-		System.out.println("----OOOOO----"+idRobot+" "+c.toString());
 		EnumAgentes agente = tipoAgente(idRobot);
 		if (pos != null) {
 			botonesMapa.get(pos).eliminarAgente(agente);
@@ -65,7 +64,6 @@ public class VisorMovimientoRobocop extends JFrame {
 	}
 
 	public synchronized void cambiarPosicionRobot(String idRobot, int x, int y) {
-		System.out.println("----OOOOO----"+idRobot+" ("+x+", "+y+") ");
 		Integer pos = tablaEntidades.get(idRobot);
 		int newPos = y*mapa.getNumeroColumnas() + x;
 		EnumAgentes agente = tipoAgente(idRobot);
@@ -83,7 +81,6 @@ public class VisorMovimientoRobocop extends JFrame {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		System.out.println("----OOOOO----"+idRobot+" "+c.toString());
 		Integer pos = tablaEntidades.get(idRobot);
 		int newPos = c.getPosArray(mapa.getNumeroColumnas());
 		EnumAgentes agente = tipoAgente(idRobot);
@@ -121,6 +118,10 @@ public class VisorMovimientoRobocop extends JFrame {
 
 	public int getNumeroLadronesEn(Coordenada c){
 		return this.botonesMapa.get(c.getPosArray(mapa.getNumeroColumnas())).getNumeroLadrones();
+	}
+
+	public int getNumeroPoliciasEn(Coordenada c) {
+		return this.botonesMapa.get(c.getPosArray(mapa.getNumeroColumnas())).getNumeroPolicias();
 	}
 	
 	/**

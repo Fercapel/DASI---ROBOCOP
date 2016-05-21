@@ -64,7 +64,11 @@ public class ClaseGeneradoraPersistenciaRobocop extends ImplRecursoSimple
 					mapa.setNumeroColumnas(Integer.parseInt(line));
 				} else if(j>=nFilas+2){
 					String[] vars = line.split(";"); 
-					mapa.setPosicionInicial(vars[0], new Coordenada(Integer.parseInt(vars[1]), Integer.parseInt(vars[2])));
+					if(vars.length == 3){
+						mapa.setPosicionInicial(vars[0], new Coordenada(Integer.parseInt(vars[1]), Integer.parseInt(vars[2])));
+					} else {
+						mapa.setPosicionInicialLadronConEquipo(vars[0], (String)vars[3].replace(" ", ""), new Coordenada(Integer.parseInt(vars[1]), Integer.parseInt(vars[2])));
+					}
 				} else {
 					char[] l = line.toCharArray();
 					for (int i = 0; i < line.length(); i++) {

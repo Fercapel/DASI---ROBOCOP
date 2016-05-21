@@ -81,4 +81,8 @@ public class BotonMapa extends JButton{
 	public Construccion getConstruccion(){
 		return this.contr;
 	}
+
+	public int getNumeroPolicias() {
+		return this.iconos.getIconosPolicias().size();
+	}
 }
