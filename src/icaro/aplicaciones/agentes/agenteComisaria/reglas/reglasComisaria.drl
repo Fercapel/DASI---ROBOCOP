@@ -18,7 +18,7 @@ global String agentId;
 //-------------------------------------------------------------------//
 //  Primera regla que se ejecutara. Solo se debe disparar una vez    //
 //-------------------------------------------------------------------//
-rule "Acciones Iniciales Prueba Cambio Rol "
+rule "Acciones Iniciales "
  when
 	not ( exists(Focus()))
  then

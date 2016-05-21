@@ -22,7 +22,7 @@ public class FormarEquipo extends TareaSincrona{
 		try {
 			itfCompPer =(ItfUsoRecursoPersistenciaEntornoSimulacion) repoInterfaces.obtenerInterfazUso("RecursoPersistenciaEntornoSimulacionRobocop");
 			agentesEquipo = itfCompPer.obtenerMapa().getPolicias();
-			ladronesSueltos = itfCompPer.obtenerMapa().getLadrones();
+			ladronesSueltos = itfCompPer.obtenerMapa().getTodosLosLadrones();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

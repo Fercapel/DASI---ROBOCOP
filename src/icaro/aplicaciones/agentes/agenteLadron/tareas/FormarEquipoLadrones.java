@@ -3,6 +3,7 @@ package icaro.aplicaciones.agentes.agenteLadron.tareas;
 import java.util.ArrayList;
 
 import icaro.aplicaciones.Robocop.EstadoLadron;
+import icaro.aplicaciones.Robocop.InfoMapa;
 import icaro.aplicaciones.recursos.recursoPersistenciaEntornosSimulacion.ItfUsoRecursoPersistenciaEntornoSimulacion;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 import icaro.infraestructura.recursosOrganizacion.recursoTrazas.imp.componentes.InfoTraza;
@@ -18,8 +19,10 @@ public class FormarEquipoLadrones extends TareaSincrona{
 		try {
 			itfCompPer =(ItfUsoRecursoPersistenciaEntornoSimulacion) repoInterfaces.obtenerInterfazUso("RecursoPersistenciaEntornoSimulacionRobocop");
 			String idAgente = this.getIdentAgente();
+			InfoMapa mapa = itfCompPer.obtenerMapa();
 			
-			ArrayList <String> agentesLadrones = itfCompPer.obtenerMapa().getLadrones();
+			String miEquipoId = mapa.getEquipoDeLadron(idAgente);
+			ArrayList <String> agentesLadrones = mapa.getLadrones(miEquipoId);
 			
 			for(String l : agentesLadrones){		
 				if(!l.equals(idAgente))
@@ -27,9 +30,9 @@ public class FormarEquipoLadrones extends TareaSincrona{
 			}
 			this.getEnvioHechos().actualizarHechoWithoutFireRules(eLadron);
 			
-			trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Equipo de ladrones formado: "+eLadron.getCompañeros(), InfoTraza.NivelTraza.info));     
+			trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Equipo "+miEquipoId+" de ladrones formado: "+eLadron.getCompañeros(), InfoTraza.NivelTraza.info));     
 	        
-	        System.out.println("Equipo de ladrones formado "+eLadron.getCompañeros());
+	        System.out.println("Equipo "+miEquipoId+" de ladrones formado: "+eLadron.getCompañeros());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

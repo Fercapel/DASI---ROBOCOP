@@ -20,7 +20,9 @@ public class IniciarRobo extends TareaSincrona{
 		MensajeSimple msg = (MensajeSimple) params[2];
 		Objetivo obj = (Objetivo) params[3];
 		
-		eLadron.añadirCompañeroPreparado((String)msg.getEmisor());
+		if(!this.getIdentAgente().equals((String)msg.getEmisor())){
+			eLadron.añadirCompañeroPreparado((String)msg.getEmisor());
+		}
 		this.getEnvioHechos().eliminarHechoWithoutFireRules(msg);
 		
 		if(eLadron.estanTodosPreparados()){

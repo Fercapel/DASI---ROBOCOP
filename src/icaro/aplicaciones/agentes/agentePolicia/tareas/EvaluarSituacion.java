@@ -21,7 +21,7 @@ public class EvaluarSituacion extends TareaSincrona{
 		try {
 			itfCompVis =(ItfUsoRecursoVisualizadorEntornoSimulacion) repoInterfaces.obtenerInterfazUso("RecursoVisualizadorEntornoSimulacionRobocop");
 			int numLadrones = itfCompVis.getNumeroLadronesDibujadosEn(ePolicia.getCoordenadas());
-			
+			int numPolicias = itfCompVis.getNumeroPoliciasDibujadosEn(ePolicia.getCoordenadas());
 
 			trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Hay " + numLadrones + "Ladrones robando en "+ePolicia.getCoordenadas().toString(), InfoTraza.NivelTraza.info));     
 	        
@@ -31,7 +31,11 @@ public class EvaluarSituacion extends TareaSincrona{
 			jefe.add(info.getIdentAgenteJefeEquipo());
 			
 			//Comunicar a la comisaria cuantos refuerzos se necesitan
-			this.getComunicator().informaraGrupoAgentes(new RoboEnProceso(ePolicia.getCoordenadas(), numLadrones-1), jefe);
+			if(numLadrones-numPolicias>0){
+				this.getComunicator().informaraGrupoAgentes(new RoboEnProceso(ePolicia.getCoordenadas(), numLadrones-numPolicias), jefe);
+			} else {
+				this.getComunicator().informaraGrupoAgentes(new RoboEnProceso(ePolicia.getCoordenadas(), true), jefe);
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();

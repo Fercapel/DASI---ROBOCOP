@@ -17,7 +17,9 @@ public class InfoMapa{
 	private Map<String, Integer> posicionesIniciales;
 	
 	private ArrayList<String> polis;
-	private ArrayList<String> ladrones;
+	private Map<String, ArrayList<String>> ladrones;
+	private Map<String, String> equiposLadrones;
+	private ArrayList<String> todosLosLadrones;
 	
 	private Graph<Integer, Arista> _grafo;
 	
@@ -28,14 +30,18 @@ public class InfoMapa{
 		this.mapa = new ArrayList<Construccion>();
 		this.posicionesIniciales = new HashMap<String, Integer>();
 		this.polis = new ArrayList<String>();
-		this.ladrones = new ArrayList<String>();
+		this.ladrones = new HashMap<String, ArrayList<String>>();
+		this.equiposLadrones = new HashMap<String, String>();
+		this.todosLosLadrones = new ArrayList<String>();
 	}
 	
 	public InfoMapa(int numCols, int numFilas){
 		this.mapa = new ArrayList<Construccion>();
 		this.posicionesIniciales = new HashMap<String, Integer>();
 		this.polis = new ArrayList<String>();
-		this.ladrones = new ArrayList<String>();
+		this.ladrones = new HashMap<String, ArrayList<String>>();
+		this.todosLosLadrones = new ArrayList<String>();
+		this.equiposLadrones = new HashMap<String, String>();
 		this.numCols = numCols;
 		this.numFilas = numFilas;
 		for(int i = 0; i<numCols*numFilas; i++){
@@ -162,10 +168,13 @@ public class InfoMapa{
 	}
 	
 	public void setPosicionInicial(String id, Coordenada c){
+		System.out.println("----------->setPosicionInicial "+id);
+
 		if(id.toLowerCase().contains("poli")){
 			polis.add(id);
 		} else if(id.toLowerCase().contains("ladron")){
-			ladrones.add(id);
+			setPosicionInicialLadronConEquipo(id, "default", c);
+			return;
 		}
 		
 		if(c.getX()<numFilas && c.getY()<numCols){
@@ -176,12 +185,46 @@ public class InfoMapa{
 		posicionesIniciales.put(id, posicionRandom().getPosArray(numCols));
 	}
 	
+	public void setPosicionInicialLadronConEquipo(String ladronId, String equipoLadrones, Coordenada c){
+		System.out.println("----------->setPosicionInicialLadronConEquipo "+ladronId+" - "+equipoLadrones);
+
+		if(ladronId.toLowerCase().contains("poli")){
+			polis.add(ladronId);
+		} else if(ladronId.toLowerCase().contains("ladron")){
+			if(!ladrones.containsKey(equipoLadrones))
+			{
+				System.out.println("----------->Iniciando equipo "+equipoLadrones);
+				ladrones.put(equipoLadrones, new ArrayList<String>());
+			} else {
+				System.out.println("----------->Ya existe equipo "+equipoLadrones);
+			}
+			ladrones.get(equipoLadrones).add(ladronId);
+			equiposLadrones.put(ladronId, equipoLadrones);
+			todosLosLadrones.add(ladronId);
+		}
+		
+		if(c.getX()<numFilas && c.getY()<numCols){
+			posicionesIniciales.put(ladronId, c.getPosArray(numCols));
+			return;
+		}		
+		
+		posicionesIniciales.put(equipoLadrones, posicionRandom().getPosArray(numCols));
+	}
+	
+	public String getEquipoDeLadron(String idLadron){
+		return equiposLadrones.get(idLadron);
+	}
+	
 	public ArrayList<String> getPolicias(){
 		return polis;
 	}
 	
-	public ArrayList<String> getLadrones() {
-		return ladrones;
+	public ArrayList<String> getLadrones(String nombreEquipo) {
+		return ladrones.get(nombreEquipo);
+	}
+	
+	public ArrayList<String> getTodosLosLadrones() {
+		return todosLosLadrones;
 	}
 	
 	public Coordenada obtenerCasaRandom() {

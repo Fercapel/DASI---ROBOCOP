@@ -1,5 +1,7 @@
 package icaro.aplicaciones.agentes.agenteLadron.tareas;
 
+import java.util.ArrayList;
+
 import icaro.aplicaciones.Robocop.EstadoLadron;
 import icaro.infraestructura.entidadesBasicas.comunicacion.MensajeSimple;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
@@ -20,8 +22,13 @@ public class AvisarListoParaRobar extends TareaSincrona{
 		trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Estoy listo para el robo", InfoTraza.NivelTraza.info));     
         
         System.out.println("Estoy listo para el robo");
-        
-		this.getComunicator().informaraGrupoAgentes(msgListo, eLadron.getCompañeros());
+        if(!eLadron.getCompañeros().isEmpty()){
+        	this.getComunicator().informaraGrupoAgentes(msgListo, eLadron.getCompañeros());
+        } else {
+        	ArrayList<String> i = new ArrayList<String>();
+        	i.add(this.getIdentAgente());
+        	this.getComunicator().informaraGrupoAgentes(msgListo, i);
+        }
 	}
 		
 }

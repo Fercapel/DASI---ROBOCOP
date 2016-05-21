@@ -1,5 +1,7 @@
 package icaro.aplicaciones.agentes.agenteLadron.tareas;
 
+import java.util.ArrayList;
+
 import icaro.aplicaciones.Robocop.Coordenada;
 import icaro.aplicaciones.Robocop.EstadoLadron;
 import icaro.aplicaciones.Robocop.InfoMapa;
@@ -37,7 +39,13 @@ public class ProponerRobo extends TareaSincrona{
         
         System.out.println("Creando Propuesta de Robo:" + c.toString() + " con coste " + coste + " " + eLadron.getCompañeros());
         
-		this.getComunicator().informaraGrupoAgentes(propuesta, eLadron.getCompañeros());
+        if(!eLadron.getCompañeros().isEmpty()){
+        	this.getComunicator().informaraGrupoAgentes(propuesta, eLadron.getCompañeros());
+        } else {
+        	ArrayList<String> i = new ArrayList<String>();
+        	i.add(idAgente);
+        	this.getComunicator().informaraGrupoAgentes(propuesta, i);
+        }
 	}
 
 }

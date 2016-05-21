@@ -34,7 +34,9 @@ public class SeleccionarPropuestaRobo extends TareaSincrona{
 		propuesta.añadirEvaluacion(coste, idAgente);
 		
 		//Reenvio la propuesta con la nueva evaluacion
-		this.getComunicator().informaraGrupoAgentes(propuesta, eLadron.getCompañeros());
+		if(!eLadron.getCompañeros().isEmpty()){
+			this.getComunicator().informaraGrupoAgentes(propuesta, eLadron.getCompañeros());
+        } 
 
 		//Compruebo que la propuesta ha sido evaluada por todo el equipo, entonces la guardo como propuesta válida
 		if(propuesta.getIdEvaluadores().size()==eLadron.getCompañeros().size()+1){
