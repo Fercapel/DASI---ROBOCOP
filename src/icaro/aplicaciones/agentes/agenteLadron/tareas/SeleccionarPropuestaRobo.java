@@ -46,7 +46,15 @@ public class SeleccionarPropuestaRobo extends TareaSincrona{
 			if(eLadron.getPropuestasRobo().size()==eLadron.getCompañeros().size()+1){
 				PropuestaDeRobo pFinal = new PropuestaDeRobo("", new Coordenada(), Integer.MAX_VALUE); 
 				for(PropuestaDeRobo p : eLadron.getPropuestasRobo()){
-					if(p.getCoste() < pFinal.getCoste()){
+					if(p.getCoste() == pFinal.getCoste()){
+						if(p.getCoordenada().getX() < pFinal.getCoordenada().getX()){
+							pFinal = p;
+						} else if (p.getCoordenada().getX() == pFinal.getCoordenada().getX()){
+							if (p.getCoordenada().getY() < pFinal.getCoordenada().getY()){
+								pFinal = p;
+							}
+						}
+					} else if(p.getCoste() < pFinal.getCoste()){
 						pFinal = p;
 					}
 				}
