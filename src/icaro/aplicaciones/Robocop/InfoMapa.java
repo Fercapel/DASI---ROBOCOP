@@ -187,7 +187,9 @@ public class InfoMapa{
 	
 	public void setPosicionInicialLadronConEquipo(String ladronId, String equipoLadrones, Coordenada c){
 		System.out.println("----------->setPosicionInicialLadronConEquipo "+ladronId+" - "+equipoLadrones);
-
+		if(equipoLadrones == ""){
+			equipoLadrones = "default";
+		}
 		if(ladronId.toLowerCase().contains("poli")){
 			polis.add(ladronId);
 		} else if(ladronId.toLowerCase().contains("ladron")){
