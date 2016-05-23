@@ -109,6 +109,20 @@ rule "Regla de resolucion de EsperarRobo"
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
 
+rule "Regla de finalización de EsperarRobo SOFOCADO  "
+ when
+    obj:EsperarRobo(state==Objetivo.REFINED)
+    f:Focus(foco==obj)
+ then
+    retract(obj);
+    Objetivo ob = new InformarDetencion();
+    insert(ob);
+    f.setFoco(null);
+    update(f);
+    
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
 rule "Regla de finalización de EsperarRobo "
  when
     obj:EsperarRobo(state==Objetivo.SOLVED)
@@ -172,6 +186,50 @@ end
 rule "Regla de finalizacion de EnviarLugarDelRobo"
  when
     obj:EnviarLugarDelRobo(state==Objetivo.SOLVED)
+    f:Focus(foco==obj)
+ then
+    retract(obj);
+    Objetivo ob = new EsperarRobo();
+    insert(ob);
+    f.setFoco(null);
+    update(f);
+    
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+//-------------------------------------------------------------------//
+//               INFORMAR DE QUE DENTENGAN A LOS LADRONES            //
+//-------------------------------------------------------------------//
+rule "Regla de focalizacion de InformarDetencion"
+ when
+    obj:InformarDetencion(state==Objetivo.PENDING)
+    f:Focus(foco == null)
+ then
+    f.setFoco(obj);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    update(f);
+end
+
+rule "Regla de resolucion de InformarDetencion"
+ when
+    obj:InformarDetencion(state==Objetivo.PENDING)
+    f:Focus(foco==obj)
+    eComisaria:EstadoComisaria()
+ then
+    obj.setState(Objetivo.SOLVING);
+    update(obj);
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(AsignarParejasLadronPolicia.class);
+ 	tarea.ejecutar(eComisaria);  
+
+	obj.setState(Objetivo.SOLVED);
+    update(obj);
+    
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+rule "Regla de finalizacion de InformarDetencion"
+ when
+    obj:InformarDetencion(state==Objetivo.SOLVED)
     f:Focus(foco==obj)
  then
     retract(obj);

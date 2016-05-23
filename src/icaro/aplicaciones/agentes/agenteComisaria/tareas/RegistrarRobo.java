@@ -16,17 +16,15 @@ public class RegistrarRobo extends TareaSincrona{
 		Objetivo obj = (Objetivo) params[2];
 		
 		if(robo.isSofocado()){
-			eComisaria.añadirRoboSofocados(robo.getCoordenadaRobo());
-			System.out.println("AÑADIR SOFOCADOS  -V- "+eComisaria.getRobosASofocar().toString());
-
-			obj.setPending();
+			eComisaria.añadirRoboSofocados(robo);
+			eComisaria.setRoboAResolver(robo);
+			obj.setRefined();
 		} else if(!robo.isNecesitoRefuerzos()){
-			if(eComisaria.añadirRoboASofocar(robo.getCoordenadaRobo())){
+			if(eComisaria.añadirRoboASofocar(robo)){
 				obj.setSolved();
 			} else {
 				obj.setPending();
 			}
-			System.out.println("AÑADIR A SOFOCAR  -V- "+eComisaria.getRobosASofocar().toString());
 
 		} else {
 			if(eComisaria.añadirRoboAEnviarRefuerzos(robo)){
@@ -34,7 +32,6 @@ public class RegistrarRobo extends TareaSincrona{
 			} else {
 				obj.setPending();
 			}
-			System.out.println("ENVIAR REFUERZOS  -V- "+eComisaria.getRobosASofocar().toString());
 
 		}
 		

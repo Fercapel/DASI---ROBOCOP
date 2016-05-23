@@ -35,3 +35,4 @@ Ladron4;5;3;B
 Ladron5;19;19;B
 Ladron6;6;8;B
 Ladron7;15;4;C
+Comisaria;8;4;

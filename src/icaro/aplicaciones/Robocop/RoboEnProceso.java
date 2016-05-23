@@ -8,6 +8,8 @@ public class RoboEnProceso {
 	
 	private boolean sofocado;
 	
+	private String equipoDeRobo;
+	
 	public RoboEnProceso(Coordenada coordenadaRobo){
 		this.necesitoRefuerzos = false;
 		this.sofocado = false;
@@ -25,6 +27,14 @@ public class RoboEnProceso {
 		this.sofocado = false;
 		this.coordenadaRobo = coordenadaRobo;
 		this.efectivos = efectivos;
+	}
+	
+	public void setEquipoDeRobo(String equipoDeRobo) {
+		this.equipoDeRobo = equipoDeRobo;
+	}
+	
+	public String getEquipoDeRobo() {
+		return equipoDeRobo;
 	}
 	
 	public Coordenada getCoordenadaRobo() {

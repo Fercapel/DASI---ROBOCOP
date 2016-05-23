@@ -175,7 +175,7 @@ public class InfoMapa{
 		} else if(id.toLowerCase().contains("ladron")){
 			setPosicionInicialLadronConEquipo(id, "default", c);
 			return;
-		}
+		} 
 		
 		if(c.getX()<numFilas && c.getY()<numCols){
 			posicionesIniciales.put(id, c.getPosArray(numCols));
@@ -186,7 +186,6 @@ public class InfoMapa{
 	}
 	
 	public void setPosicionInicialLadronConEquipo(String ladronId, String equipoLadrones, Coordenada c){
-		System.out.println("----------->setPosicionInicialLadronConEquipo "+ladronId+" - "+equipoLadrones);
 		if(equipoLadrones == ""){
 			equipoLadrones = "default";
 		}
@@ -195,11 +194,8 @@ public class InfoMapa{
 		} else if(ladronId.toLowerCase().contains("ladron")){
 			if(!ladrones.containsKey(equipoLadrones))
 			{
-				System.out.println("----------->Iniciando equipo "+equipoLadrones);
 				ladrones.put(equipoLadrones, new ArrayList<String>());
-			} else {
-				System.out.println("----------->Ya existe equipo "+equipoLadrones);
-			}
+			} 
 			ladrones.get(equipoLadrones).add(ladronId);
 			equiposLadrones.put(ladronId, equipoLadrones);
 			todosLosLadrones.add(ladronId);
