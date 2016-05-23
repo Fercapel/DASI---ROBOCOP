@@ -171,11 +171,71 @@ rule "Regla de resolucion de DetenerLadrones --> EvaluarSituacion"
  	TareaSincrona tarea = gestorTareas.crearTareaSincrona(EvaluarSituacion.class);
  	tarea.ejecutar(ePolicia, info);
  	
+ 	obj.setState(Objetivo.SOLVED);
+    update(obj);
+
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+rule "Regla de finalizacion de DetenerLadrones"
+ when
+    obj:DetenerLadrones(state==Objetivo.SOLVED)
+    f:Focus(foco==obj)
+ then
+ 	retract(obj);
+    Objetivo ob = new LlevarAComisaria();
+    insert(ob);
+    f.setFoco(null);
+    update(f);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+//-------------------------------------------------------------------//
+//                        LLEVAR A COMISARIA                         //
+//-------------------------------------------------------------------//
+rule "Regla de focalizacion LlevarAComisaria"
+ when
+    obj:LlevarAComisaria(state==Objetivo.PENDING)
+    f:Focus(foco == null)
+ then
+    f.setFoco(obj);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    update(f);
+end
+
+rule "Regla de resolucion de LlevarAComisaria -> EsposarLadron"
+ when
+    obj:LlevarAComisaria(state==Objetivo.PENDING)
+    f:Focus(foco==obj)
+    lParejas:ListaParejas()
+ then
+    obj.setState(Objetivo.SOLVING);
+    update(obj);
+ 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(EsposarLadron.class);
+ 	tarea.ejecutar(lParejas);
+ 	
  	obj.setState(Objetivo.REFINED);
     update(obj);
 
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
+
+rule "Regla de resolucion de LlevarAComisaria -> AcompañarLadron"
+ when
+    obj:LlevarAComisaria(state==Objetivo.REFINED)
+    f:Focus(foco==obj)
+    pareja:ParejaLadronPolicia()
+ then
+ 	obj.setState(Objetivo.PENDING);
+    update(obj);
+ 	
+ 	TareaSincrona tarea = gestorTareas.crearTareaSincrona(AcompañarLadron.class);
+ 	tarea.ejecutar(pareja, obj);
+
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
 /*
 rule "Regla de resolucion de DetenerLadrones --> PedirRefuerzos"
  when

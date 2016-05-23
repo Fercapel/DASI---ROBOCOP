@@ -11,25 +11,57 @@ public class EstadoComisaria extends EstadoAgente {
 	
 	private Map<String, Coordenada> coordenadasAgente;
 	
-	private ArrayList<Coordenada> robosASofocar;
+	private Map<String, ArrayList<String>> parejasAgenteLadron;
+	
+	private ArrayList<RoboEnProceso> robosASofocar;
 	private ArrayList<RoboEnProceso> robosAEnviarRefuerzos;
-	private ArrayList<Coordenada> robosSofocados;
-	private ArrayList<Coordenada> robosExplorados;
+	private ArrayList<RoboEnProceso> robosSofocados;
+	private ArrayList<RoboEnProceso> robosExplorados;
 	
 	private boolean puedoEvaluarCaminos;
+	
+	private RoboEnProceso roboAResolver;
 	
 	public EstadoComisaria(String id) {
 		super(id);
 		puedoEvaluarCaminos = false;
 		misAgentes = new ArrayList<String>();
 		
-		robosASofocar = new ArrayList<Coordenada>();
+		robosASofocar = new ArrayList<RoboEnProceso>();
 		robosAEnviarRefuerzos = new ArrayList<RoboEnProceso>();
-		robosSofocados = new ArrayList<Coordenada>();
-		robosExplorados = new ArrayList<Coordenada>();
+		robosSofocados = new ArrayList<RoboEnProceso>();
+		robosExplorados = new ArrayList<RoboEnProceso>();
+		
+		parejasAgenteLadron = new HashMap<String, ArrayList<String>>();
 		
 		coordenadasAgente = new HashMap<String, Coordenada>();
 		agentesOcupados = new ArrayList<String>();
+	}
+	
+	public void añadirPareja(String equipo, String policia)	{
+		parejasAgenteLadron.get(equipo).add(policia);
+	}
+	
+	public void añadirPareja(String equipo, ArrayList<String> policias)	{
+		if(!parejasAgenteLadron.containsKey(equipo)){
+			parejasAgenteLadron.put(equipo, policias);
+		} else {
+			parejasAgenteLadron.get(equipo).addAll(policias);
+		}
+		
+		System.out.println("----VV----"+parejasAgenteLadron.get(equipo).toString()+"-"+equipo);
+	}
+	
+	public ArrayList<String> obtenerParejas(String equipo){
+		return parejasAgenteLadron.get(equipo);
+	}
+	
+	public void setRoboAResolver(RoboEnProceso roboAResolver) {
+		this.roboAResolver = roboAResolver;
+	}
+	
+	public RoboEnProceso getRoboAResolver() {
+		return roboAResolver;
 	}
 	
 	public ArrayList<String> getMisAgentes() {
@@ -68,7 +100,7 @@ public class EstadoComisaria extends EstadoAgente {
 		this.puedoEvaluarCaminos = puedoEvaluarCaminos;
 	}
 	
-	public ArrayList<Coordenada> getRobosASofocar() {
+	public ArrayList<RoboEnProceso> getRobosASofocar() {
 		return robosASofocar;
 	}
 	
@@ -92,45 +124,49 @@ public class EstadoComisaria extends EstadoAgente {
 	/*
 	 * LISTA DE ROBOS A SOFOCAR
 	 */
-	public boolean añadirRoboASofocar(Coordenada c){
-		for(Coordenada cd : this.robosExplorados){
-			if(cd.getX()==c.getX() && cd.getY() == c.getY()){
+	public boolean añadirRoboASofocar(RoboEnProceso c){
+		for(RoboEnProceso cd : this.robosExplorados){
+			if(cd.getCoordenadaRobo().getX()==c.getCoordenadaRobo().getX() && 
+					cd.getCoordenadaRobo().getY() == c.getCoordenadaRobo().getY()){
 				return false;
 			}
 		}
 		for(RoboEnProceso robo : this.robosAEnviarRefuerzos){
-			if(robo.getCoordenadaRobo().getX()==c.getX() && robo.getCoordenadaRobo().getY() == c.getY()){
+			if(robo.getCoordenadaRobo().getX()==c.getCoordenadaRobo().getX() && 
+					robo.getCoordenadaRobo().getY() == c.getCoordenadaRobo().getY()){
 				return false;
 			}
 		}
-		for(Coordenada cord : this.robosASofocar){
-			if(cord.getX()==c.getX() && 
-					cord.getY() == c.getY()){
+		for(RoboEnProceso cord : this.robosASofocar){
+			if(cord.getCoordenadaRobo().getX()==c.getCoordenadaRobo().getX() && 
+					cord.getCoordenadaRobo().getY() == c.getCoordenadaRobo().getY()){
 				return false;
 			}
 		}
-				
+	
 		this.robosASofocar.add(c);
 		return true;
 	}
 	
-	public ArrayList<Coordenada> getRobosSofocados() {
+	public ArrayList<RoboEnProceso> getRobosSofocados() {
 		return robosSofocados;
 	}
 	
 	/*
 	 * LISTA DE ROBOS EXPLORADOS
 	 */
-	public boolean añadirRoboExplorado(Coordenada c){
-		for(Coordenada cd : this.robosExplorados){
-			if(cd.getX()==c.getX() && cd.getY() == c.getY()){
+	public boolean añadirRoboExplorado(RoboEnProceso c){
+		for(RoboEnProceso cd : this.robosExplorados){
+			if(cd.getCoordenadaRobo().getX()==c.getCoordenadaRobo().getX() && 
+					cd.getCoordenadaRobo().getY() == c.getCoordenadaRobo().getY()){
 				return false;
 			}
 		}
-		for(Coordenada cord : this.robosASofocar){
-			if(cord.getX()==c.getX() && 
-					cord.getY() == c.getY()){
+		for(RoboEnProceso cord : this.robosASofocar){
+			if(cord.getCoordenadaRobo().getX()==c.getCoordenadaRobo().getX() && 
+					cord.getCoordenadaRobo().getY() == c.getCoordenadaRobo().getY()){
 				robosASofocar.remove(c);
+				c.setEquipoDeRobo(cord.getEquipoDeRobo());
 				break;
 			}
 		}
@@ -139,24 +175,41 @@ public class EstadoComisaria extends EstadoAgente {
 		return true;
 	}
 	
-	public ArrayList<Coordenada> getRobosExplorados() {
+	public ArrayList<RoboEnProceso> getRobosExplorados() {
 		return robosExplorados;
 	}
 	
 	/*
 	 * LISTA DE ROBOS ATENDIDOS
 	 */
-	public void añadirRoboSofocados(Coordenada c){	
-		for(Coordenada cd : this.robosASofocar){
-			if(cd.getX()==c.getX() && cd.getY() == c.getY()){
+	public void añadirRoboSofocados(RoboEnProceso c){	
+		for(RoboEnProceso cd : this.robosExplorados){
+			if(cd.getCoordenadaRobo().getX()==c.getCoordenadaRobo().getX() && 
+					cd.getCoordenadaRobo().getY() == c.getCoordenadaRobo().getY()){
+				c.setEquipoDeRobo(cd.getEquipoDeRobo());
+				break;
+			}
+		}
+		
+		for(RoboEnProceso cd : this.robosASofocar){
+			if(cd.getCoordenadaRobo().getX()==c.getCoordenadaRobo().getX() && 
+					cd.getCoordenadaRobo().getY() == c.getCoordenadaRobo().getY()){
+				c.setEquipoDeRobo(cd.getEquipoDeRobo());
 				robosASofocar.remove(cd);
 				break;
 			}
 		}
 		for(RoboEnProceso robo : this.robosAEnviarRefuerzos){
-			if(robo.getCoordenadaRobo().getX()==c.getX() && robo.getCoordenadaRobo().getY() == c.getY()){
+			if(robo.getCoordenadaRobo().getX()==c.getCoordenadaRobo().getX() && 
+					robo.getCoordenadaRobo().getY() == c.getCoordenadaRobo().getY()){
 				robosAEnviarRefuerzos.remove(robo);
 				break;
+			}
+		}
+		for(RoboEnProceso cord : this.robosSofocados){
+			if(cord.getCoordenadaRobo().getX()==c.getCoordenadaRobo().getX() && 
+					cord.getCoordenadaRobo().getY() == c.getCoordenadaRobo().getY()){
+				return;
 			}
 		}
 		this.robosSofocados.add(c);
@@ -170,8 +223,16 @@ public class EstadoComisaria extends EstadoAgente {
 	 * LISTA DE ROBOS A ENVIAR REFUERZOS
 	 */
 	public boolean añadirRoboAEnviarRefuerzos(RoboEnProceso robo){	
-		for(Coordenada cd : this.robosSofocados){
-			if(cd.getX()==robo.getCoordenadaRobo().getX() && cd.getY() == robo.getCoordenadaRobo().getY()){
+		for(RoboEnProceso cd : this.robosExplorados){
+			if(cd.getCoordenadaRobo().getX()==robo.getCoordenadaRobo().getX() && 
+					cd.getCoordenadaRobo().getY() == robo.getCoordenadaRobo().getY()){
+				robo.setEquipoDeRobo(cd.getEquipoDeRobo());
+				break;
+			}
+		}
+		for(RoboEnProceso cd : this.robosSofocados){
+			if(cd.getCoordenadaRobo().getX()==robo.getCoordenadaRobo().getX() && 
+					cd.getCoordenadaRobo().getY() == robo.getCoordenadaRobo().getY()){
 				return false;
 			}
 		}
@@ -181,8 +242,9 @@ public class EstadoComisaria extends EstadoAgente {
 				return false;
 			}
 		}
-		for(Coordenada cd : this.robosASofocar){
-			if(cd.getX()==robo.getCoordenadaRobo().getX() && cd.getY() == robo.getCoordenadaRobo().getY()){
+		for(RoboEnProceso cd : this.robosASofocar){
+			if(cd.getCoordenadaRobo().getX()==robo.getCoordenadaRobo().getX() && 
+					cd.getCoordenadaRobo().getY() == robo.getCoordenadaRobo().getY()){
 				robosASofocar.remove(cd);
 				break;
 			}

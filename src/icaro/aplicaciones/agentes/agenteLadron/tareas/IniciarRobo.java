@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import icaro.aplicaciones.Robocop.EstadoComisaria;
 import icaro.aplicaciones.Robocop.EstadoLadron;
 import icaro.aplicaciones.Robocop.RoboEnProceso;
+import icaro.aplicaciones.recursos.recursoPersistenciaEntornosSimulacion.ItfUsoRecursoPersistenciaEntornoSimulacion;
 import icaro.infraestructura.entidadesBasicas.comunicacion.MensajeSimple;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
@@ -20,15 +21,27 @@ public class IniciarRobo extends TareaSincrona{
 		MensajeSimple msg = (MensajeSimple) params[2];
 		Objetivo obj = (Objetivo) params[3];
 		
+		String equipo="default"; 
+		try {
+			ItfUsoRecursoPersistenciaEntornoSimulacion itfCompVis = (ItfUsoRecursoPersistenciaEntornoSimulacion) repoInterfaces.obtenerInterfazUso("RecursoPersistenciaEntornoSimulacionRobocop");
+			equipo = itfCompVis.obtenerMapa().getEquipoDeLadron(this.getIdentAgente());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		if(!this.getIdentAgente().equals((String)msg.getEmisor())){
 			eLadron.añadirCompañeroPreparado((String)msg.getEmisor());
 		}
+		this.getEnvioHechos().actualizarHechoWithoutFireRules(eLadron);
 		this.getEnvioHechos().eliminarHechoWithoutFireRules(msg);
 		
 		if(eLadron.estanTodosPreparados()){
 			ArrayList<String> comisaria = new ArrayList<String>();
 			comisaria.add(eComisaria.getIdAgente());
-			this.getComunicator().informaraGrupoAgentes(new RoboEnProceso(eLadron.getCoordenadasDelRobo()), comisaria);
+			RoboEnProceso robo = new RoboEnProceso(eLadron.getCoordenadasDelRobo());
+			robo.setEquipoDeRobo(equipo);
+			this.getComunicator().informaraGrupoAgentes(robo, comisaria);
 			obj.setSolved();
 			
 			trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Estamos todos: Vamos a iniciar el robo", InfoTraza.NivelTraza.info));     
