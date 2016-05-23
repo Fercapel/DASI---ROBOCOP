@@ -16,10 +16,10 @@ public class RegistrarRobo extends TareaSincrona{
 		Objetivo obj = (Objetivo) params[2];
 		
 		if(robo.isSofocado()){
-			eComisaria.añadirRoboSofocados(robo.getCoordenadaRobo());
+			eComisaria.añadirRoboSofocados(robo);
 			obj.setPending();
 		} else if(!robo.isNecesitoRefuerzos()){
-			if(eComisaria.añadirRoboASofocar(robo.getCoordenadaRobo())){
+			if(eComisaria.añadirRoboASofocar(robo)){
 				obj.setSolved();
 			} else {
 				obj.setPending();

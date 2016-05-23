@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import icaro.aplicaciones.Robocop.EstadoComisaria;
 import icaro.aplicaciones.Robocop.EstadoLadron;
+import icaro.aplicaciones.Robocop.InfoMapa;
 import icaro.aplicaciones.Robocop.RoboEnProceso;
+import icaro.aplicaciones.recursos.recursoPersistenciaEntornosSimulacion.ItfUsoRecursoPersistenciaEntornoSimulacion;
 import icaro.infraestructura.entidadesBasicas.comunicacion.MensajeSimple;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Objetivo;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
@@ -20,28 +22,45 @@ public class IniciarRobo extends TareaSincrona{
 		MensajeSimple msg = (MensajeSimple) params[2];
 		Objetivo obj = (Objetivo) params[3];
 		
-		if(!this.getIdentAgente().equals((String)msg.getEmisor())){
-			eLadron.añadirCompañeroPreparado((String)msg.getEmisor());
-		}
-		this.getEnvioHechos().eliminarHechoWithoutFireRules(msg);
-		
-		if(eLadron.estanTodosPreparados()){
-			ArrayList<String> comisaria = new ArrayList<String>();
-			comisaria.add(eComisaria.getIdAgente());
-			this.getComunicator().informaraGrupoAgentes(new RoboEnProceso(eLadron.getCoordenadasDelRobo()), comisaria);
-			obj.setSolved();
+		try{
+			if(!this.getIdentAgente().equals((String)msg.getEmisor())){
+				eLadron.añadirCompañeroPreparado((String)msg.getEmisor());
+			}
+			this.getEnvioHechos().eliminarHechoWithoutFireRules(msg);
 			
-			trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Estamos todos: Vamos a iniciar el robo", InfoTraza.NivelTraza.info));     
-	        
-	        System.out.println(this.identAgente +": Estamos todos: Vamos a iniciar el robo");
-		} else {
-			obj.setPending();
+			if(eLadron.estanTodosPreparados()){
+				ArrayList<String> comisaria = new ArrayList<String>();
+				comisaria.add(eComisaria.getIdAgente());
+				
+				ItfUsoRecursoPersistenciaEntornoSimulacion itfCompPer = (ItfUsoRecursoPersistenciaEntornoSimulacion) repoInterfaces.obtenerInterfazUso("RecursoPersistenciaEntornoSimulacionRobocop");
+				String idAgente = this.getIdentAgente();
+				InfoMapa mapa;
+				
+				mapa = itfCompPer.obtenerMapa();
+				
+				String miEquipoId = mapa.getEquipoDeLadron(idAgente);
+							
+				RoboEnProceso robo = new RoboEnProceso(eLadron.getCoordenadasDelRobo());
+				robo.setEquipoLadrones(miEquipoId);
+								
+				this.getComunicator().informaraGrupoAgentes(robo, comisaria);
+				obj.setSolved();
+				
+				trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Estamos todos: Vamos a iniciar el robo", InfoTraza.NivelTraza.info));     
+		        
+		        System.out.println(this.identAgente +": Estamos todos: Vamos a iniciar el robo");
+			} else {
+				obj.setPending();
+				
+				trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Esperando más compañeros", InfoTraza.NivelTraza.info));     
+		        
+		        System.out.println("Esperando más compañeros");
+			}
 			
-			trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Esperando más compañeros", InfoTraza.NivelTraza.info));     
-	        
-	        System.out.println("Esperando más compañeros");
+			this.getEnvioHechos().actualizarHecho(obj);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		this.getEnvioHechos().actualizarHecho(obj);
 	}
 }

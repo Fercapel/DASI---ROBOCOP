@@ -176,6 +176,8 @@ rule "Regla de resolucion de DetenerLadrones --> EvaluarSituacion"
 
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
+
+
 /*
 rule "Regla de resolucion de DetenerLadrones --> PedirRefuerzos"
  when

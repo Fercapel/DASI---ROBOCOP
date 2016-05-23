@@ -208,6 +208,50 @@ rule "Regla de resolucion de EjecutarRobo -> EsperarCompañeros"
     recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
 end
 
+rule "Regla de finalizacion de EjecutarRobo"
+ when
+    obj:EjecutarRobo(state==Objetivo.SOLVED)
+    f:Focus(foco==obj)
+ then
+    retract(obj);
+    Objetivo ob = new SerDetenido();
+    insert(ob);
+    f.setFoco(null);
+    update(f);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
+//-------------------------------------------------------------------//
+//                           SER DETENIDO                            //
+//-------------------------------------------------------------------//
+rule "Regla de focalizacion de SerDetenido"
+ when
+    obj:SerDetenido(state==Objetivo.PENDING)
+    f:Focus(foco == null)
+ then
+    f.setFoco(obj);
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+    update(f);
+end
+
+rule "Regla de resolucion de SerDetenido -> IrHastaElRobo"
+ when
+    obj:SerDetenido(state==Objetivo.PENDING)
+    f:Focus(foco==obj)
+    eLadron:EstadoLadron(getEstado()=="Libre")
+ then
+    obj.setState(Objetivo.SOLVING);
+    update(obj);
+    
+    TareaSincrona tarea = gestorTareas.crearTareaSincrona(IrHastaElRobo.class);
+ 	tarea.ejecutar(eLadron, obj);  
+ 	
+ 	obj.setState(Objetivo.PENDING);
+    update(obj);
+    
+    recursoTrazas.aceptaNuevaTrazaEjecReglas(agentId," EJECUTO LA REGLA: " + drools.getRule().getName());
+end
+
 /*
 rule "Regla de finalizacion "
  when

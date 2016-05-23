@@ -11,9 +11,9 @@ public class EstadoComisaria extends EstadoAgente {
 	
 	private Map<String, Coordenada> coordenadasAgente;
 	
-	private ArrayList<Coordenada> robosASofocar;
+	private ArrayList<RoboEnProceso> robosASofocar;
 	private ArrayList<RoboEnProceso> robosAEnviarRefuerzos;
-	private ArrayList<Coordenada> robosSofocados;
+	private ArrayList<RoboEnProceso> robosSofocados;
 	
 	private boolean puedoEvaluarCaminos;
 	
@@ -21,9 +21,9 @@ public class EstadoComisaria extends EstadoAgente {
 		super(id);
 		puedoEvaluarCaminos = false;
 		misAgentes = new ArrayList<String>();
-		robosASofocar = new ArrayList<Coordenada>();
+		robosASofocar = new ArrayList<RoboEnProceso>();
 		robosAEnviarRefuerzos = new ArrayList<RoboEnProceso>();
-		robosSofocados = new ArrayList<Coordenada>();
+		robosSofocados = new ArrayList<RoboEnProceso>();
 		coordenadasAgente = new HashMap<String, Coordenada>();
 		agentesOcupados = new ArrayList<String>();
 	}
@@ -64,7 +64,7 @@ public class EstadoComisaria extends EstadoAgente {
 		this.puedoEvaluarCaminos = puedoEvaluarCaminos;
 	}
 	
-	public ArrayList<Coordenada> getRobosASofocar() {
+	public ArrayList<RoboEnProceso> getRobosASofocar() {
 		return robosASofocar;
 	}
 	
@@ -88,39 +88,39 @@ public class EstadoComisaria extends EstadoAgente {
 	/*
 	 * LISTA DE ROBOS A SOFOCAR
 	 */
-	public boolean añadirRoboASofocar(Coordenada c){
-		for(Coordenada cord : this.robosASofocar){
-			if(cord.getX()==c.getX() && 
-					cord.getY() == c.getY()){
+	public boolean añadirRoboASofocar(RoboEnProceso r){
+		for(RoboEnProceso robo : this.robosASofocar){
+			if(robo.getCoordenadaRobo().getX()==r.getCoordenadaRobo().getX() && 
+					robo.getCoordenadaRobo().getY() == r.getCoordenadaRobo().getY()){
 				return false;
 			}
 		}
 				
-		this.robosASofocar.add(c);
+		this.robosASofocar.add(r);
 		return true;
 	}
 	
-	public ArrayList<Coordenada> getRobosSofocados() {
+	public ArrayList<RoboEnProceso> getRobosSofocados() {
 		return robosSofocados;
 	}
 	
 	/*
 	 * LISTA DE ROBOS ATENDIDOS
 	 */
-	public void añadirRoboSofocados(Coordenada c){	
-		for(Coordenada cd : this.robosASofocar){
-			if(cd.getX()==c.getX() && cd.getY() == c.getY()){
-				robosASofocar.remove(cd);
+	public void añadirRoboSofocados(RoboEnProceso r){	
+		for(RoboEnProceso robo : this.robosASofocar){
+			if(robo.getCoordenadaRobo().getX()==r.getCoordenadaRobo().getX() && robo.getCoordenadaRobo().getY() == r.getCoordenadaRobo().getY()){
+				robosASofocar.remove(robo);
 				break;
 			}
 		}
 		for(RoboEnProceso robo : this.robosAEnviarRefuerzos){
-			if(robo.getCoordenadaRobo().getX()==c.getX() && robo.getCoordenadaRobo().getY() == c.getY()){
+			if(robo.getCoordenadaRobo().getX()==r.getCoordenadaRobo().getX() && robo.getCoordenadaRobo().getY() == r.getCoordenadaRobo().getY()){
 				robosAEnviarRefuerzos.remove(robo);
 				break;
 			}
 		}
-		this.robosSofocados.add(c);
+		this.robosSofocados.add(r);
 	}
 	
 	public ArrayList<RoboEnProceso> getRobosAEnviarRefuerzos() {
@@ -130,21 +130,22 @@ public class EstadoComisaria extends EstadoAgente {
 	/*
 	 * LISTA DE ROBOS A ENVIAR REFUERZOS
 	 */
-	public boolean añadirRoboAEnviarRefuerzos(RoboEnProceso robo){			
-		for(RoboEnProceso roboExt : this.robosAEnviarRefuerzos){
-			if(robo.getCoordenadaRobo().getX()==roboExt.getCoordenadaRobo().getX() && 
-					robo.getCoordenadaRobo().getY() == roboExt.getCoordenadaRobo().getY()){
+	public boolean añadirRoboAEnviarRefuerzos(RoboEnProceso r){			
+		for(RoboEnProceso robo : this.robosAEnviarRefuerzos){
+			if(robo.getCoordenadaRobo().getX()==r.getCoordenadaRobo().getX() && 
+					robo.getCoordenadaRobo().getY() == r.getCoordenadaRobo().getY()){
 				return false;
 			}
 		}
-		for(Coordenada cd : this.robosASofocar){
-			if(cd.getX()==robo.getCoordenadaRobo().getX() && cd.getY() == robo.getCoordenadaRobo().getY()){
-				robosASofocar.remove(cd);
+		for(RoboEnProceso robo : this.robosASofocar){
+			if(robo.getCoordenadaRobo().getX()==r.getCoordenadaRobo().getX() &&
+					robo.getCoordenadaRobo().getY() == r.getCoordenadaRobo().getY()){
+				robosASofocar.remove(robo);
 				break;
 			}
 		}
 		
-		this.robosAEnviarRefuerzos.add(robo);
+		this.robosAEnviarRefuerzos.add(r);
 		return true;
 	}
 }

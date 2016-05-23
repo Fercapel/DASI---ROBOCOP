@@ -19,11 +19,16 @@ public class InformarPoliciaMasCercano extends TareaSincrona{
 		int cantidadAgentesNecesarios = 1;
 		
 		Coordenada coordenadaObj = null;
-		if(!eComisaria.getRobosASofocar().isEmpty())
-			coordenadaObj = eComisaria.getRobosASofocar().get(0);
+		String idEquipoLadron = null;
+		
+		if(!eComisaria.getRobosASofocar().isEmpty()){
+			coordenadaObj = eComisaria.getRobosASofocar().get(0).getCoordenadaRobo();
+			idEquipoLadron = eComisaria.getRobosASofocar().get(0).getEquipoLadrones();
+		}
 		else if(!eComisaria.getRobosAEnviarRefuerzos().isEmpty()){
 			coordenadaObj = eComisaria.getRobosAEnviarRefuerzos().get(0).getCoordenadaRobo();
 			cantidadAgentesNecesarios = eComisaria.getRobosAEnviarRefuerzos().get(0).getEfectivos();
+			idEquipoLadron = eComisaria.getRobosAEnviarRefuerzos().get(0).getEquipoLadrones();
 		}
 		
 		this.getEnvioHechos().actualizarHechoWithoutFireRules(eComisaria);
@@ -53,10 +58,14 @@ public class InformarPoliciaMasCercano extends TareaSincrona{
 					eComisaria.anadirAgenteOcupado(agenteCercano);
 				}
 				this.getEnvioHechos().actualizarHechoWithoutFireRules(eComisaria);
-
-				this.getComunicator().informaraGrupoAgentes(new RoboEnProceso(coordenadaObj), policiasQueVan);
+				RoboEnProceso robo = new RoboEnProceso(coordenadaObj);
+				robo.setEquipoLadrones(idEquipoLadron);
 				
-				trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Agente Mas Cercado -> "+policiasQueVan.toString(), InfoTraza.NivelTraza.info));     
+				System.out.println("SE ESTA PRODUCIENDO UN ROBO Y LO ESTÁN COMETIENDO : " + mapa.getLadrones(robo.getEquipoLadrones()).toString()); //consigue los identificadores de los ladrones
+				
+				this.getComunicator().informaraGrupoAgentes(robo, policiasQueVan);
+				
+				trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Agente Mas Cercano -> "+policiasQueVan.toString(), InfoTraza.NivelTraza.info));     
 		        System.out.println("Agente Mas Cercado -> "+policiasQueVan.toString());
 			} catch (Exception e) {
 				e.printStackTrace();

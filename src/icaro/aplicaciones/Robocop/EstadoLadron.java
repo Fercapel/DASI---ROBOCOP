@@ -20,6 +20,8 @@ public class EstadoLadron extends EstadoAgente{
 	
 	private ArrayList<String> compañerosPreparados;
 	
+	private String estado; // "Libre", "Detenido", "Encarcelado"
+	
 	public EstadoLadron(String id) {
 		super(id);
 		this.propuestasRobo = new ArrayList<PropuestaDeRobo>();
@@ -29,6 +31,7 @@ public class EstadoLadron extends EstadoAgente{
 		this.iniciarRobo = false;
 		this.esperandoCompañeros = false;
 		this.propuestaRealizada = false;
+		this.estado = "Libre";
 	}
 	
 	public void añadirCompañeros(String id){
@@ -111,5 +114,13 @@ public class EstadoLadron extends EstadoAgente{
 			this.camino = this.camino.subList(1, this.camino.size()-1);
 		}
 		return c;
+	}
+	
+	public String getEstado(){
+		return this.estado;
+	}
+	
+	public void setEstado(String estado){
+		this.estado = estado;
 	}
 }
