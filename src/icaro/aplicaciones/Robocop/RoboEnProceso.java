@@ -10,6 +10,7 @@ public class RoboEnProceso {
 	
 	public RoboEnProceso(Coordenada coordenadaRobo){
 		this.necesitoRefuerzos = false;
+		this.sofocado = false;
 		this.coordenadaRobo = coordenadaRobo;
 	}
 	
@@ -21,12 +22,17 @@ public class RoboEnProceso {
 	
 	public RoboEnProceso(Coordenada coordenadaRobo, int efectivos){
 		this.necesitoRefuerzos = true;
+		this.sofocado = false;
 		this.coordenadaRobo = coordenadaRobo;
 		this.efectivos = efectivos;
 	}
 	
 	public Coordenada getCoordenadaRobo() {
 		return coordenadaRobo;
+	}
+	
+	public void setEfectivos(int efectivos) {
+		this.efectivos = efectivos;
 	}
 	
 	public int getEfectivos() {
