@@ -1,30 +1,29 @@
-package icaro.aplicaciones.agentes.agenteComisaria.tareas;
+package icaro.aplicaciones.agentes.agenteLadron.tareas;
 
-import icaro.aplicaciones.Robocop.Coordenada;
-import icaro.aplicaciones.Robocop.EstadoComisaria;
+import icaro.aplicaciones.Robocop.EstadoLadron;
 import icaro.aplicaciones.recursos.recursoVisualizadorEntornosSimulacion.ItfUsoRecursoVisualizadorEntornoSimulacion;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.Focus;
 import icaro.infraestructura.entidadesBasicas.procesadorCognitivo.TareaSincrona;
 
-public class InicializarComisaria extends TareaSincrona {
+public class InicializarLadron extends TareaSincrona {
 
-	
 	@Override
 	public void ejecutar(Object... params) {
 		try {
+			
 			this.getItfConfigMotorDeReglas().setDepuracionActivationRulesDebugging(false);
 			this.getItfConfigMotorDeReglas().setfactHandlesMonitoring_afterActivationFired_DEBUGGING(false);
 			this.getEnvioHechos().insertarHechoWithoutFireRules(new Focus());
 
+			//Obtener recurso visualización
 			ItfUsoRecursoVisualizadorEntornoSimulacion itfCompMov = (ItfUsoRecursoVisualizadorEntornoSimulacion) repoInterfaces.obtenerInterfazUso("RecursoVisualizadorEntornoSimulacionRobocop");
 
 			String idAgente = this.getIdentAgente();
+			itfCompMov.mostrarRobotEnOrigen(idAgente);
 			
-			EstadoComisaria eComisaria = new EstadoComisaria(idAgente);
-			Coordenada c = itfCompMov.getRobotOrigen(idAgente);
-			c.setIdAgente(idAgente);
-			eComisaria.setCoordenadas(c);
-			this.getEnvioHechos().insertarHechoWithoutFireRules(eComisaria);
+			EstadoLadron eLadron = new EstadoLadron(idAgente);
+			eLadron.setCoordenadas(itfCompMov.getRobotOrigen(idAgente));
+			this.getEnvioHechos().insertarHechoWithoutFireRules(eLadron);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

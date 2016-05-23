@@ -30,7 +30,7 @@ public class VisorMovimientoRobocop extends JFrame {
 	 * Inicializar contenido de la ventana.
 	 */
 	private void initialize() {
-		this.setBounds(500, 500, 384, 384);
+		this.setBounds(950, 100, 384, 384);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JFrame.setDefaultLookAndFeelDecorated(true);
@@ -54,7 +54,6 @@ public class VisorMovimientoRobocop extends JFrame {
 		Integer pos = tablaEntidades.get(idRobot);
 		Coordenada c = mapa.getPosicionInicial(idRobot);
 		int newPos = c.getPosArray(mapa.getNumeroColumnas());
-		System.out.println("----OOOOO----"+idRobot+" "+c.toString());
 		EnumAgentes agente = tipoAgente(idRobot);
 		if (pos != null) {
 			botonesMapa.get(pos).eliminarAgente(agente);
@@ -65,7 +64,6 @@ public class VisorMovimientoRobocop extends JFrame {
 	}
 
 	public synchronized void cambiarPosicionRobot(String idRobot, int x, int y) {
-		System.out.println("----OOOOO----"+idRobot+" ("+x+", "+y+") ");
 		Integer pos = tablaEntidades.get(idRobot);
 		int newPos = y*mapa.getNumeroColumnas() + x;
 		EnumAgentes agente = tipoAgente(idRobot);
@@ -78,7 +76,11 @@ public class VisorMovimientoRobocop extends JFrame {
 	}
 	
 	public synchronized void cambiarPosicionRobot(String idRobot, Coordenada c) {
-		System.out.println("----OOOOO----"+idRobot+" "+c.toString());
+		try {
+			wait(200);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		Integer pos = tablaEntidades.get(idRobot);
 		int newPos = c.getPosArray(mapa.getNumeroColumnas());
 		EnumAgentes agente = tipoAgente(idRobot);
@@ -88,6 +90,7 @@ public class VisorMovimientoRobocop extends JFrame {
 		
 		tablaEntidades.put(idRobot, newPos);
 		botonesMapa.get(newPos).añadirAgente(agente);
+		this.repaint();
 	}
 	
 	private EnumAgentes tipoAgente(String idRobot) {
@@ -109,6 +112,18 @@ public class VisorMovimientoRobocop extends JFrame {
 		mapa.obtenerCaminoMinimo(cInicio, cFinal);
 	}
 
+	public Coordenada getCoordenadasOrigen(String identRobot) {
+		return mapa.getPosicionInicial(identRobot);
+	}
+
+	public int getNumeroLadronesEn(Coordenada c){
+		return this.botonesMapa.get(c.getPosArray(mapa.getNumeroColumnas())).getNumeroLadrones();
+	}
+
+	public int getNumeroPoliciasEn(Coordenada c) {
+		return this.botonesMapa.get(c.getPosArray(mapa.getNumeroColumnas())).getNumeroPolicias();
+	}
+	
 	/**
 	 * Ejecutar ventana.
 	 */

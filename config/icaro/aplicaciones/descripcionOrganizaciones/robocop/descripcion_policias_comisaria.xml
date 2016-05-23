@@ -56,6 +56,12 @@
        				tipo="Cognitivo"
        				localizacionFicheroReglas="icaro.aplicaciones.agentes.agentePolicia.reglas.reglasPolicia.drl"/>
      		<icaro:DescComportamientoAgente  
+       				nombreComportamiento="AgenteAplicacionLadron" 
+       				rol="AgenteAplicacion" 
+       				localizacionComportamiento="icaro.aplicaciones.agentes.agenteLadron" 
+       				tipo="Cognitivo"
+       				localizacionFicheroReglas="icaro.aplicaciones.agentes.agenteLadron.reglas.reglasLadron.drl"/>		
+     		<icaro:DescComportamientoAgente  
        				nombreComportamiento="AgenteAplicacionComisaria" 
        				rol="AgenteAplicacion" 
        				localizacionComportamiento="icaro.aplicaciones.agentes.agenteComisaria" 
@@ -95,6 +101,11 @@
 	                <icaro:componenteGestionado refId="AgenteControladorSimuladorRosaceReactivo1" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Policia1" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Policia2" tipoComponente="AgenteAplicacion"/>
+	                <icaro:componenteGestionado refId="Policia3" tipoComponente="AgenteAplicacion"/>
+	                <icaro:componenteGestionado refId="Policia4" tipoComponente="AgenteAplicacion"/>
+	                <icaro:componenteGestionado refId="Ladron1" tipoComponente="AgenteAplicacion"/>
+	                <icaro:componenteGestionado refId="Ladron2" tipoComponente="AgenteAplicacion"/>
+	                <icaro:componenteGestionado refId="Ladron3" tipoComponente="AgenteAplicacion"/>
 	                <icaro:componenteGestionado refId="Comisaria" tipoComponente="AgenteAplicacion"/>
 				</icaro:componentesGestionados>
 			</icaro:InstanciaGestor>
@@ -121,6 +132,26 @@
 	        <icaro:Instancia 
 	        	id="Policia2" 
 	        	refDescripcion="AgenteAplicacionPolicia">
+	        </icaro:Instancia>
+	        <icaro:Instancia 
+	        	id="Policia3" 
+	        	refDescripcion="AgenteAplicacionPolicia">
+	        </icaro:Instancia>
+	        <icaro:Instancia 
+	        	id="Policia4" 
+	        	refDescripcion="AgenteAplicacionPolicia">
+	        </icaro:Instancia>
+	        <icaro:Instancia 
+	        	id="Ladron1" 
+	        	refDescripcion="AgenteAplicacionLadron">
+	        </icaro:Instancia>
+	        <icaro:Instancia 
+	        	id="Ladron2" 
+	        	refDescripcion="AgenteAplicacionLadron">
+	        </icaro:Instancia>
+	        <icaro:Instancia 
+	        	id="Ladron3" 
+	        	refDescripcion="AgenteAplicacionLadron">
 	        </icaro:Instancia>
 	        <icaro:Instancia 
 	        	id="Comisaria" 

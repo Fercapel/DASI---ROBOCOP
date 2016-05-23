@@ -73,7 +73,23 @@ public class ClaseGeneradoraVisualizacionRobocop extends ImplRecursoSimple imple
 
 	@Override
 	public void mostrarPosicionRobot(String identRobot, Coordenada c) throws Exception {
-		visorMovimiento.moverOrigenRobot(identRobot);
+		controladorIUSimulador.peticionMostrarEscenarioMovimiento();
+		visorMovimiento.cambiarPosicionRobot(identRobot, c);
+	}
+
+	@Override
+	public Coordenada getRobotOrigen(String identRobot) throws Exception {
+		return visorMovimiento.getCoordenadasOrigen(identRobot);
+	}
+
+	@Override
+	public int getNumeroLadronesDibujadosEn(Coordenada coordenadas) throws Exception {
+		return visorMovimiento.getNumeroLadronesEn(coordenadas);
+	}
+
+	@Override
+	public int getNumeroPoliciasDibujadosEn(Coordenada coordenadas) throws Exception {
+		return visorMovimiento.getNumeroPoliciasEn(coordenadas);
 	}
 
 }

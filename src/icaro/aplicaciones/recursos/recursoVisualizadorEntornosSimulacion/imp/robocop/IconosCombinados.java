@@ -158,4 +158,12 @@ public class IconosCombinados implements Icon{
 		return null;
 	}
 
+	public ArrayList<Icon> getIconosLadrones() {
+		return this.ladrones;
+	}
+
+	public ArrayList<Icon> getIconosPolicias() {
+		return this.policias;
+	}
+
 }

@@ -20,5 +20,11 @@ public interface ItfUsoRecursoVisualizadorEntornoSimulacion extends ItfUsoRecurs
 	public void mostrarPosicionRobot(String identRobot, Coordenada c)throws Exception;
 	
 	public void mostrarRobotEnOrigen(String identRobot)throws Exception;
+
+	public Coordenada getRobotOrigen(String identRobot) throws Exception;
+
+	public int getNumeroLadronesDibujadosEn(Coordenada coordenadas) throws Exception;
+
+	public int getNumeroPoliciasDibujadosEn(Coordenada coordenadas) throws Exception;
 		 
 }
