@@ -14,6 +14,7 @@ public class EstadoComisaria extends EstadoAgente {
 	private ArrayList<Coordenada> robosASofocar;
 	private ArrayList<RoboEnProceso> robosAEnviarRefuerzos;
 	private ArrayList<Coordenada> robosSofocados;
+	private ArrayList<Coordenada> robosExplorados;
 	
 	private boolean puedoEvaluarCaminos;
 	
@@ -21,9 +22,12 @@ public class EstadoComisaria extends EstadoAgente {
 		super(id);
 		puedoEvaluarCaminos = false;
 		misAgentes = new ArrayList<String>();
+		
 		robosASofocar = new ArrayList<Coordenada>();
 		robosAEnviarRefuerzos = new ArrayList<RoboEnProceso>();
 		robosSofocados = new ArrayList<Coordenada>();
+		robosExplorados = new ArrayList<Coordenada>();
+		
 		coordenadasAgente = new HashMap<String, Coordenada>();
 		agentesOcupados = new ArrayList<String>();
 	}
@@ -89,6 +93,16 @@ public class EstadoComisaria extends EstadoAgente {
 	 * LISTA DE ROBOS A SOFOCAR
 	 */
 	public boolean añadirRoboASofocar(Coordenada c){
+		for(Coordenada cd : this.robosExplorados){
+			if(cd.getX()==c.getX() && cd.getY() == c.getY()){
+				return false;
+			}
+		}
+		for(RoboEnProceso robo : this.robosAEnviarRefuerzos){
+			if(robo.getCoordenadaRobo().getX()==c.getX() && robo.getCoordenadaRobo().getY() == c.getY()){
+				return false;
+			}
+		}
 		for(Coordenada cord : this.robosASofocar){
 			if(cord.getX()==c.getX() && 
 					cord.getY() == c.getY()){
@@ -102,6 +116,31 @@ public class EstadoComisaria extends EstadoAgente {
 	
 	public ArrayList<Coordenada> getRobosSofocados() {
 		return robosSofocados;
+	}
+	
+	/*
+	 * LISTA DE ROBOS EXPLORADOS
+	 */
+	public boolean añadirRoboExplorado(Coordenada c){
+		for(Coordenada cd : this.robosExplorados){
+			if(cd.getX()==c.getX() && cd.getY() == c.getY()){
+				return false;
+			}
+		}
+		for(Coordenada cord : this.robosASofocar){
+			if(cord.getX()==c.getX() && 
+					cord.getY() == c.getY()){
+				robosASofocar.remove(c);
+				break;
+			}
+		}
+				
+		this.robosExplorados.add(c);
+		return true;
+	}
+	
+	public ArrayList<Coordenada> getRobosExplorados() {
+		return robosExplorados;
 	}
 	
 	/*
@@ -130,7 +169,12 @@ public class EstadoComisaria extends EstadoAgente {
 	/*
 	 * LISTA DE ROBOS A ENVIAR REFUERZOS
 	 */
-	public boolean añadirRoboAEnviarRefuerzos(RoboEnProceso robo){			
+	public boolean añadirRoboAEnviarRefuerzos(RoboEnProceso robo){	
+		for(Coordenada cd : this.robosSofocados){
+			if(cd.getX()==robo.getCoordenadaRobo().getX() && cd.getY() == robo.getCoordenadaRobo().getY()){
+				return false;
+			}
+		}
 		for(RoboEnProceso roboExt : this.robosAEnviarRefuerzos){
 			if(robo.getCoordenadaRobo().getX()==roboExt.getCoordenadaRobo().getX() && 
 					robo.getCoordenadaRobo().getY() == roboExt.getCoordenadaRobo().getY()){

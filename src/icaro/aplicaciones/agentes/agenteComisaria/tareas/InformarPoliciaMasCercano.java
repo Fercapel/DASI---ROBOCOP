@@ -16,17 +16,18 @@ public class InformarPoliciaMasCercano extends TareaSincrona{
 	public void ejecutar(Object... params) {
 
 		EstadoComisaria eComisaria = (EstadoComisaria) params[0];
-		int cantidadAgentesNecesarios = 1;
+		int cantidadAgentesNecesarios = 0;
 		
 		Coordenada coordenadaObj = null;
-		if(!eComisaria.getRobosASofocar().isEmpty())
+		if(!eComisaria.getRobosASofocar().isEmpty()){
+			cantidadAgentesNecesarios=1;
 			coordenadaObj = eComisaria.getRobosASofocar().get(0);
-		else if(!eComisaria.getRobosAEnviarRefuerzos().isEmpty()){
+			eComisaria.añadirRoboExplorado(coordenadaObj);
+		}else if(!eComisaria.getRobosAEnviarRefuerzos().isEmpty()){
 			coordenadaObj = eComisaria.getRobosAEnviarRefuerzos().get(0).getCoordenadaRobo();
 			cantidadAgentesNecesarios = eComisaria.getRobosAEnviarRefuerzos().get(0).getEfectivos();
+			eComisaria.añadirRoboSofocados(coordenadaObj);
 		}
-		
-		this.getEnvioHechos().actualizarHechoWithoutFireRules(eComisaria);
 		
 		if(coordenadaObj != null){
 			InfoMapa mapa;
@@ -52,9 +53,10 @@ public class InformarPoliciaMasCercano extends TareaSincrona{
 					policiasQueVan.add(agenteCercano);
 					eComisaria.anadirAgenteOcupado(agenteCercano);
 				}
-				this.getEnvioHechos().actualizarHechoWithoutFireRules(eComisaria);
-
+				
 				this.getComunicator().informaraGrupoAgentes(new RoboEnProceso(coordenadaObj), policiasQueVan);
+				
+				this.getEnvioHechos().actualizarHechoWithoutFireRules(eComisaria);
 				
 				trazas.aceptaNuevaTraza(new InfoTraza(this.identAgente, "Agente Mas Cercado -> "+policiasQueVan.toString(), InfoTraza.NivelTraza.info));     
 		        System.out.println("Agente Mas Cercado -> "+policiasQueVan.toString());
