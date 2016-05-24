@@ -1,5 +1,9 @@
 # ROBOCOP
-ROBOCOP es una práctica de un sistema de robots creado a partir del proyecto ROSACE, para la asignatura de Desarrollo De Aplicaciones y Servicios Inteligentes (DASI) del Máster de Ingeniería Enformática de la Universidad Complutense de Madrid
+ROBOCOP es una práctica de un sistema de robots creado a partir del proyecto ROSACE, para la asignatura de Desarrollo De Aplicaciones y Servicios Inteligentes (DASI) del Máster de Ingeniería Enformática de la Universidad Complutense de Madrid por los alumnos:
+- Antonio Calvo Morata
+- Fernando Capellán Pizarroso
+- Marta Caro Martínez
+- Mariela Paola Espinoza Martínez
 
 ###EJECUCION
 Para arrancarlo una vez descargado e instalado el proyecto en un IDE ( Net beans o Eclipse ) es necesario:
