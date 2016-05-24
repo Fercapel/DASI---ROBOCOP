@@ -95,7 +95,8 @@ Los mapas tienen la siguiente forma:
   .      .
   CH....HH
   IdAgente;X;Y;Equipo
-  IdAgente2;X;Y;Equipo
+  IdAgente2;X;Y;
+  IdAgente3;X;Y;Equipo
   ```
   Ejemplo de mapa:
   ```
