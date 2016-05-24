@@ -124,3 +124,4 @@ Los mapas tienen la siguiente forma:
   Comisaria;0;0;
   
   ```
+  ![mapa](https://cloud.githubusercontent.com/assets/5657407/15498969/134e1740-21a2-11e6-9e56-39397de74664.png)
